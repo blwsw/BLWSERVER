@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e63f09ba-02f2-4f1d-a576-afc9309cdfdc" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/tools/apache-maven-3.3.3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ekptQsCeAfDrnJuS5N4o1wxF10" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../view/warning" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+  </component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.hopedove.ucserver.dao.node" />
+      <recent name="com.hopedove.ucserver.vo.node" />
+      <recent name="com.hopedove.ucserver.dao.socket" />
+      <recent name="com.hopedove.ucserver.dao" />
+      <recent name="com.hopedove.ucserver.service.impl.xmlvo" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\WorkSpace\YJXT\BLWSERVER\uc-server\src\main\resources\mapper" />
+      <recent name="E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo" />
+      <recent name="E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service" />
+      <recent name="E:\WorkSpace\YJXT\BLWSERVER\uc-server\src\main\java\com\hopedove\ucserver\service\impl" />
+      <recent name="E:\WorkSpace\SZST\trunk\SZSTSERVER\core-server\src\main\resources\images" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+    <option name="hiddenConfigurations">
+      <map>
+        <entry key="SpringBootApplicationConfigurationType">
+          <value>
+            <set>
+              <option value="AdminServerApplication" />
+              <option value="BatchServerApplication" />
+              <option value="CoreServerApplication" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.SocketServiceImpl">
+    <configuration name="Hex" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hopedove.ucserver.service.impl.socket.Hex" />
+      <module name="uc-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hopedove.ucserver.service.impl.socket.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SocketServiceImpl" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hopedove.ucserver.service.impl.socket.SocketServiceImpl" />
+      <module name="uc-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hopedove.ucserver.service.impl.socket.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SynchServiceImpl" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hopedove.streamserver.service.impl.synch.SynchServiceImpl" />
+      <module name="stream-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hopedove.streamserver.service.impl.synch.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AdminServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="admin-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hopedove.AdminServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BatchServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="batch-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hopedove.batchserver.BatchServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CoreServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="core-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hopedove.coreserver.CoreServerApplication" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="eureka-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hopedove.eurekaserver.EurekaServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="gateway-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hopedove.gatewayserver.GatewayServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StreamServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="stream-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hopedove.streamserver.StreamServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserCenterServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="uc-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hopedove.ucserver.UserCenterServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Hex" />
+      <item itemvalue="Application.SocketServiceImpl" />
+      <item itemvalue="Application.SynchServiceImpl" />
+      <item itemvalue="Spring Boot.UserCenterServerApplication" />
+      <item itemvalue="Spring Boot.AdminServerApplication" />
+      <item itemvalue="Spring Boot.BatchServerApplication" />
+      <item itemvalue="Spring Boot.CoreServerApplication" />
+      <item itemvalue="Spring Boot.EurekaServerApplication" />
+      <item itemvalue="Spring Boot.GatewayServerApplication" />
+      <item itemvalue="Spring Boot.StreamServerApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.SocketServiceImpl" />
+        <item itemvalue="Application.Hex" />
+        <item itemvalue="Application.SynchServiceImpl" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\87438\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e63f09ba-02f2-4f1d-a576-afc9309cdfdc" name="Default Changelist" comment="" />
+      <created>1594458592000</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1594458592000</updated>
+      <workItem from="1594458595266" duration="2129000" />
+      <workItem from="1594602343986" duration="1531000" />
+      <workItem from="1594606264680" duration="187000" />
+      <workItem from="1594606502763" duration="1132000" />
+      <workItem from="1594609069175" duration="68000" />
+      <workItem from="1594609159637" duration="1849000" />
+      <workItem from="1594611492126" duration="15000" />
+      <workItem from="1594611531460" duration="3422000" />
+      <workItem from="1594861141398" duration="2801000" />
+      <workItem from="1594875660466" duration="20000" />
+      <workItem from="1594882338757" duration="889000" />
+      <workItem from="1594883286012" duration="2700000" />
+      <workItem from="1594952670437" duration="102000" />
+      <workItem from="1594954599582" duration="69000" />
+      <workItem from="1595207062568" duration="1199000" />
+      <workItem from="1595226596268" duration="504000" />
+      <workItem from="1595228299446" duration="539000" />
+      <workItem from="1595292794638" duration="98000" />
+      <workItem from="1595297110080" duration="839000" />
+      <workItem from="1595300288376" duration="5605000" />
+      <workItem from="1595379853385" duration="2524000" />
+      <workItem from="1595396849934" duration="4861000" />
+      <workItem from="1595402743806" duration="8164000" />
+      <workItem from="1595465372098" duration="5514000" />
+      <workItem from="1595488719827" duration="599000" />
+      <workItem from="1595552473512" duration="7333000" />
+      <workItem from="1595811118179" duration="529000" />
+      <workItem from="1595811714031" duration="4592000" />
+      <workItem from="1595900151531" duration="15201000" />
+      <workItem from="1595983989587" duration="1039000" />
+      <workItem from="1595987893923" duration="1254000" />
+      <workItem from="1596069976302" duration="1197000" />
+      <workItem from="1596156355230" duration="6599000" />
+      <workItem from="1596177053174" duration="2027000" />
+      <workItem from="1596415733404" duration="5989000" />
+      <workItem from="1596502364158" duration="2074000" />
+      <workItem from="1596505917689" duration="141000" />
+      <workItem from="1596506147870" duration="354000" />
+      <workItem from="1596506596663" duration="6019000" />
+      <workItem from="1596523772912" duration="303000" />
+      <workItem from="1596524548741" duration="5784000" />
+      <workItem from="1596531536836" duration="8448000" />
+      <workItem from="1596588351255" duration="3515000" />
+      <workItem from="1596592499549" duration="13565000" />
+      <workItem from="1596675119079" duration="2753000" />
+      <workItem from="1596681260807" duration="166000" />
+      <workItem from="1596682090930" duration="743000" />
+      <workItem from="1596682970778" duration="3920000" />
+      <workItem from="1596703978055" duration="2402000" />
+      <workItem from="1596761116922" duration="607000" />
+      <workItem from="1596761939487" duration="78000" />
+      <workItem from="1596764161069" duration="36000" />
+      <workItem from="1596764271238" duration="8506000" />
+      <workItem from="1596784568451" duration="2423000" />
+      <workItem from="1597022966155" duration="15104000" />
+      <workItem from="1597106646778" duration="11484000" />
+      <workItem from="1597128947458" duration="10446000" />
+      <workItem from="1597193788727" duration="7789000" />
+      <workItem from="1597207022995" duration="595000" />
+      <workItem from="1597207934767" duration="311000" />
+      <workItem from="1597214725615" duration="5025000" />
+      <workItem from="1597240921657" duration="1390000" />
+      <workItem from="1597246149260" duration="598000" />
+      <workItem from="1597247003479" duration="595000" />
+      <workItem from="1597280024940" duration="1287000" />
+      <workItem from="1597297114733" duration="4530000" />
+      <workItem from="1597367009619" duration="4338000" />
+      <workItem from="1597393410991" duration="2537000" />
+      <workItem from="1597418349031" duration="918000" />
+      <workItem from="1597421785992" duration="4700000" />
+      <workItem from="1597451250446" duration="1271000" />
+      <workItem from="1597452792519" duration="1493000" />
+      <workItem from="1597456807482" duration="3012000" />
+      <workItem from="1597462039452" duration="458000" />
+      <workItem from="1597462647321" duration="4181000" />
+      <workItem from="1597468566547" duration="14645000" />
+      <workItem from="1597548022857" duration="2672000" />
+      <workItem from="1597551431338" duration="936000" />
+      <workItem from="1597553281949" duration="3232000" />
+      <workItem from="1597625897970" duration="4188000" />
+      <workItem from="1597652437224" duration="2927000" />
+      <workItem from="1597731277720" duration="337000" />
+      <workItem from="1597805645094" duration="340000" />
+      <workItem from="1597806192424" duration="65000" />
+      <workItem from="1597806297000" duration="1601000" />
+      <workItem from="1597808191595" duration="598000" />
+      <workItem from="1597812058404" duration="288000" />
+      <workItem from="1597812461754" duration="66000" />
+      <workItem from="1597812551185" duration="14000" />
+      <workItem from="1597824639886" duration="1850000" />
+      <workItem from="1597839702920" duration="2780000" />
+      <workItem from="1597845226520" duration="3853000" />
+      <workItem from="1597887125051" duration="691000" />
+      <workItem from="1597891764836" duration="2170000" />
+      <workItem from="1597894351171" duration="598000" />
+      <workItem from="1597894996517" duration="623000" />
+      <workItem from="1597899790396" duration="295000" />
+      <workItem from="1597900500468" duration="599000" />
+      <workItem from="1597902765563" duration="6185000" />
+      <workItem from="1597929072822" duration="563000" />
+      <workItem from="1597930020484" duration="702000" />
+      <workItem from="1597931103145" duration="1057000" />
+      <workItem from="1597932703698" duration="1420000" />
+      <workItem from="1597934522401" duration="1153000" />
+      <workItem from="1597972999194" duration="4008000" />
+      <workItem from="1597979358425" duration="241000" />
+      <workItem from="1597980519423" duration="5868000" />
+      <workItem from="1597995786109" duration="603000" />
+      <workItem from="1597997592534" duration="1397000" />
+      <workItem from="1597999669595" duration="3077000" />
+      <workItem from="1598005164734" duration="305000" />
+      <workItem from="1598017377509" duration="4046000" />
+      <workItem from="1598070156384" duration="6295000" />
+      <workItem from="1598082499357" duration="590000" />
+      <workItem from="1598084669007" duration="2335000" />
+      <workItem from="1598098117517" duration="5935000" />
+      <workItem from="1598143952588" duration="593000" />
+      <workItem from="1598231615297" duration="2636000" />
+      <workItem from="1598238032682" duration="11305000" />
+      <workItem from="1598320728968" duration="11638000" />
+      <workItem from="1598346394530" duration="4670000" />
+      <workItem from="1598361736988" duration="7718000" />
+      <workItem from="1598427473162" duration="598000" />
+      <workItem from="1598429361817" duration="21689000" />
+      <workItem from="1598583709477" duration="134000" />
+      <workItem from="1598585072807" duration="3024000" />
+      <workItem from="1598686280913" duration="16409000" />
+      <workItem from="1598881274553" duration="994000" />
+      <workItem from="1598882710057" duration="3076000" />
+      <workItem from="1598921209128" duration="1758000" />
+    </task>
+    <task id="LOCAL-00001" summary="打包异常处理">
+      <created>1595404739951</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1595404739951</updated>
+    </task>
+    <task id="LOCAL-00002" summary="打包异常处理">
+      <created>1595404752572</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1595404752572</updated>
+    </task>
+    <task id="LOCAL-00003" summary="打包异常处理">
+      <created>1595415824640</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1595415824640</updated>
+    </task>
+    <task id="LOCAL-00004" summary="打包异常处理">
+      <created>1595418885714</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1595418885715</updated>
+    </task>
+    <task id="LOCAL-00005" summary="appealStatus状态处理">
+      <created>1595926874342</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1595926874342</updated>
+    </task>
+    <task id="LOCAL-00006" summary="联调人脸识别">
+      <created>1595938519002</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1595938519003</updated>
+    </task>
+    <task id="LOCAL-00007" summary="打包异常处理">
+      <created>1596162364928</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1596162364929</updated>
+    </task>
+    <task id="LOCAL-00008" summary="人脸识别返回身份证">
+      <created>1596187775159</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1596187775159</updated>
+    </task>
+    <task id="LOCAL-00009" summary="联调人脸识别">
+      <created>1596505076845</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1596505076845</updated>
+    </task>
+    <task id="LOCAL-00010" summary="测试升级80M文件安装包">
+      <created>1596527623183</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1596527623183</updated>
+    </task>
+    <task id="LOCAL-00011" summary="测试升级80M文件安装包">
+      <created>1596527635802</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1596527635802</updated>
+    </task>
+    <task id="LOCAL-00012" summary="测试升级80M文件安装包">
+      <created>1596532165373</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1596532165373</updated>
+    </task>
+    <task id="LOCAL-00013" summary="测试升级80M文件安装包">
+      <created>1596533240222</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1596533240222</updated>
+    </task>
+    <task id="LOCAL-00014" summary="测试升级80M文件安装包">
+      <created>1596533270502</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1596533270502</updated>
+    </task>
+    <task id="LOCAL-00015" summary="测试升级80M文件安装包">
+      <created>1596533487238</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1596533487238</updated>
+    </task>
+    <task id="LOCAL-00016" summary="测试升级80M文件安装包">
+      <created>1596539479569</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1596539479570</updated>
+    </task>
+    <task id="LOCAL-00017" summary="测试升级80M文件安装包">
+      <created>1596592791211</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1596592791211</updated>
+    </task>
+    <task id="LOCAL-00018" summary="测试升级80M文件安装包">
+      <created>1596592822399</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1596592822399</updated>
+    </task>
+    <task id="LOCAL-00019" summary="测试升级80M文件安装包">
+      <created>1596594832329</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1596594832329</updated>
+    </task>
+    <task id="LOCAL-00020" summary="测试升级80M文件安装包">
+      <created>1596597458327</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1596597458327</updated>
+    </task>
+    <task id="LOCAL-00021" summary="测试升级80M文件安装包">
+      <created>1596597584851</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1596597584851</updated>
+    </task>
+    <task id="LOCAL-00022" summary="测试升级80M文件安装包">
+      <created>1596597771664</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1596597771664</updated>
+    </task>
+    <task id="LOCAL-00023" summary="9735 【微信小程序】充值记录，应显示登录用户的员工号对应的充值记录，目前是通过身份证和实体卡号查询的，请调整">
+      <created>1596612026915</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1596612026916</updated>
+    </task>
+    <task id="LOCAL-00024" summary="9735 【微信小程序】充值记录，应显示登录用户的员工号对应的充值记录，目前是通过身份证和实体卡号查询的，请调整">
+      <created>1596619770366</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1596619770367</updated>
+    </task>
+    <task id="LOCAL-00025" summary="9735 【微信小程序】充值记录，应显示登录用户的员工号对应的充值记录，目前是通过身份证和实体卡号查询的，请调整">
+      <created>1596698228876</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1596698228876</updated>
+    </task>
+    <task id="LOCAL-00026" summary="返回人脸为在职状态">
+      <created>1596764569507</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1596764569507</updated>
+    </task>
+    <task id="LOCAL-00027" summary="返回人脸为在职状态">
+      <created>1597115269215</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1597115269215</updated>
+    </task>
+    <task id="LOCAL-00028" summary="调试同步接口">
+      <created>1597200292875</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1597200292875</updated>
+    </task>
+    <task id="LOCAL-00029" summary="调试同步接口">
+      <created>1597222620686</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1597222620687</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="appealStatus状态处理" />
+    <MESSAGE value="打包异常处理" />
+    <MESSAGE value="人脸识别返回身份证" />
+    <MESSAGE value="联调人脸识别" />
+    <MESSAGE value="测试升级80M文件安装包" />
+    <MESSAGE value="9735 【微信小程序】充值记录，应显示登录用户的员工号对应的充值记录，目前是通过身份证和实体卡号查询的，请调整" />
+    <MESSAGE value="返回人脸为在职状态" />
+    <MESSAGE value="调试同步接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="调试同步接口" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="277" y="0" width="741" height="680" key="#CoreServerApplication" timestamp="1597048038308">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="277" y="0" width="741" height="680" key="#CoreServerApplication/0.0.1280.680@0.0.1280.680" timestamp="1597048038308" />
+    <state x="524" y="203" width="481" height="275" key="#Notifications" timestamp="1597196487621">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="524" y="203" width="481" height="275" key="#Notifications/0.0.1280.680@0.0.1280.680" timestamp="1597196487621" />
+    <state x="121" y="0" key="#Project_Structure" timestamp="1597379072255">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="121" y="0" key="#Project_Structure/0.0.1280.680@0.0.1280.680" timestamp="1597379072255" />
+    <state x="219" y="141" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1596765139489">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="219" y="141" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1596765139489" />
+    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser" timestamp="1598707732383">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1598707732383" />
+    <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598516347969">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="371" y="87" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1598516347969" />
+    <state x="168" y="0" key="CommitChangelistDialog2" timestamp="1597222618382">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="168" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1597222618382" />
+    <state width="463" height="438" key="DebuggerActiveHint" timestamp="1598503423569">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="463" height="438" key="DebuggerActiveHint/0.0.1280.680@0.0.1280.680" timestamp="1598503423569" />
+    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog" timestamp="1596545158728">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1596545158728" />
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1598883433366">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1598883433366" />
+    <state width="899" height="260" key="GridCell.Tab.0.bottom" timestamp="1598925442605">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="260" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
+    <state width="899" height="260" key="GridCell.Tab.0.center" timestamp="1598925442605">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="260" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
+    <state width="899" height="260" key="GridCell.Tab.0.left" timestamp="1598925442605">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="260" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
+    <state width="899" height="260" key="GridCell.Tab.0.right" timestamp="1598925442605">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="260" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
+    <state width="899" height="260" key="GridCell.Tab.1.bottom" timestamp="1598925442605">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="260" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
+    <state width="899" height="260" key="GridCell.Tab.1.center" timestamp="1598925442605">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="260" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
+    <state width="899" height="260" key="GridCell.Tab.1.left" timestamp="1598925442605">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="260" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
+    <state width="899" height="260" key="GridCell.Tab.1.right" timestamp="1598925442605">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="260" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
+    <state width="899" height="259" key="GridCell.Tab.2.bottom" timestamp="1598885410104">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="259" key="GridCell.Tab.2.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598885410104" />
+    <state width="899" height="259" key="GridCell.Tab.2.center" timestamp="1598885410104">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="259" key="GridCell.Tab.2.center/0.0.1280.680@0.0.1280.680" timestamp="1598885410104" />
+    <state width="899" height="259" key="GridCell.Tab.2.left" timestamp="1598885410104">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="259" key="GridCell.Tab.2.left/0.0.1280.680@0.0.1280.680" timestamp="1598885410104" />
+    <state width="899" height="259" key="GridCell.Tab.2.right" timestamp="1598885410104">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="899" height="259" key="GridCell.Tab.2.right/0.0.1280.680@0.0.1280.680" timestamp="1598885410104" />
+    <state x="171" y="0" key="Maven.ArtifactSearchDialog" timestamp="1597488442000">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="171" y="0" key="Maven.ArtifactSearchDialog/0.0.1280.680@0.0.1280.680" timestamp="1597488442000" />
+    <state x="277" y="101" key="MultipleFileMergeDialog" timestamp="1595556769244">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="277" y="101" key="MultipleFileMergeDialog/0.0.1280.680@0.0.1280.680" timestamp="1595556769244" />
+    <state x="358" y="60" key="RollbackChangesDialog" timestamp="1597129651094">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="358" y="60" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1597129651094" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1597048076276">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1597048076276" />
+    <state x="221" y="75" key="VcsDiffUtil.ChangesDialog" timestamp="1596769109147">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="221" y="75" key="VcsDiffUtil.ChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1596769109147" />
+    <state x="455" y="180" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1597112722209">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="455" y="180" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1597112722209" />
+    <state x="344" y="0" width="879" height="680" key="find.popup" timestamp="1598882896127">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="344" y="0" width="879" height="680" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1598882896127" />
+    <state x="297" y="151" key="run.anything.popup" timestamp="1597912759175">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1597912759175" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1596526376537">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1596526376537" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/stream-server/src/main/java/com/hopedove/streamserver/service/impl/synch/SynchServiceImpl.java</url>
+          <line>892</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/android/AndroidServiceImpl.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/socket/SocketServiceImpl.java</url>
+          <line>375</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-websocket/8.5.31/tomcat-embed-websocket-8.5.31.jar!/javax/websocket/Session.class</url>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo typeName="com.hopedove.ucserver.vo.xmlvo.UploadCollect" fieldName="subItem" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+</project>

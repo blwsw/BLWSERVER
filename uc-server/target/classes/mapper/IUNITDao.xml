@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.ucserver.dao.node.INodeDao">
+
+    <sql id="unitWhere">
+        where disabled = 0
+        <if test=" name != null and name != '' ">
+            and name like concat('%', #{name}, '%')
+        </if>
+        <if test=" factoryId != null and factoryId != '' ">
+            and factoryId = #{factoryId}
+        </if>
+        <if test=" type != null and type != '' ">
+            and type = #{type}
+        </if>
+    </sql>
+
+    <select id="getunits" parameterType="map" resultType="unitVO">
+        select * from unit
+        <include refid="unitWhere"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+
+    <select id="getunitCount" parameterType="map" resultType="int">
+        select
+        count(*)
+        from
+        unit
+        <include refid="unitWhere"></include>
+    </select>
+
+    <select id="getunitVO" parameterType="int" resultType="unitVO">
+        select
+            t1.*
+        from
+        unit t1
+        where id = #{id} and t1.disabled = 0
+    </select>
+
+    <insert id="addunit" parameterType="unitVO">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID() as id
+        </selectKey>
+        insert into unit (addr,name,descript,unitid)
+        values (#{addr},#{name},#{descript},#{unitid})
+    </insert>
+
+    <update id="modifyunit" parameterType="unitVO">
+        update
+        unit
+        <set>
+            <if test=" name != null and name != '' ">
+                name = #{name},
+            </if>
+            <if test=" descript != null and descript != '' ">
+                descript = #{descript},
+            </if>
+            <if test=" unitid != null and unitid != '' ">
+                unitid = #{unitid},
+            </if>
+
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="removeunit" parameterType="unitVO">
+        update unit set disabled = '1' where id = #{id}
+    </delete>
+
+
+</mapper>

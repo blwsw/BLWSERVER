@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.ucserver.dao.ITokenDao">
+
+    <select id="login" parameterType="AuthTokenFormVO" resultType="UserVO">
+        select t1.* from uc_user t1
+        where t1.username = #{username}
+
+        and t1.disabled = 0
+    </select>
+
+    <select id="getUserById" parameterType="int" resultType="UserVO">
+        select t1.* from uc_user t1
+        where t1.id = #{id} and t1.disabled = 0
+    </select>
+
+    <select id="getPMRMenus" resultType="UserMenuVO">
+        select
+            t3.*
+        from
+        uc_role_template t1
+        left join uc_role_template_menu_rec t2 on t2.roleTemplateId = t1.id
+        left join uc_permission_menu t3 on t2.menuId = t3.id
+        where t1.code = 'PMR'
+        and t1.disabled = 0
+        and t3.disabled = 0
+    </select>
+
+    <select id="getUserMenus" parameterType="int" resultType="UserMenuVO">
+        select
+            t4.*
+        from
+        uc_user_factory_role_rec t1
+
+        left join uc_role_template_menu_rec t3 on t1.roleId = t3.roleTemplateId
+        left join uc_permission_menu t4 on t3.menuId = t4.id
+        where t1.userId = #{userId}
+        and t4.disabled = 0
+
+    </select>
+
+    <select id="getUserRoles" parameterType="int" resultType="UserRoleVO">
+        select
+            t1.roleId roleId,
+            t3.name roleName,
+            t3.id roleTemplateId,
+            t3.name roleTemplateName
+        from
+        uc_user_factory_role_rec t1
+
+        left join uc_role_template t3 on t3.id = t1.roleId
+        where t1.userId = #{userId}
+
+        and t3.disabled = 0
+    </select>
+
+    <select id="getUserUserPermissions" parameterType="int" resultType="UserPermissionVO">
+        select
+            t2.dataPermType,
+            t3.*
+        from
+        uc_user_factory_role_rec t1
+        left join uc_role_template_function_rec t2 on t1.roleId = t2.roleTemplateId
+        left join uc_permission_function t3 on t2.functionId = t3.id
+        where t1.userId = #{userId}
+        and t3.disabled = 0
+    </select>
+
+</mapper>

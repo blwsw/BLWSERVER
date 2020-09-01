@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.ucserver.dao.IGlobalDao">
+    <resultMap type="DictTypeVO" id="dictTypeMap">
+        <id column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="disabled" property="disabled"/>
+        <collection property="dicts" ofType="DictVO">
+            <id column="scode" property="code"/><!-- 这里的column对应的是下面查询的别名，而不是表字段名 -->
+            <result column="sname" property="name"/><!-- property对应JavaBean中的属性名 -->
+            <result column="typeCode" property="typeCode"/><!-- property对应JavaBean中的属性名 -->
+            <result column="sortSeq" property="sortSeq"/>
+            <result column="sdisabled" property="disabled"/>
+        </collection>
+    </resultMap>
+
+    <select id="getDicts" parameterType="string" resultMap="dictTypeMap">
+        select
+            t1.code,
+            t1.name,
+            t1.disabled,
+            t2.typeCode,
+            t2.code scode,
+            t2.name sname,
+            t2.sortSeq,
+            t2.disabled sdisabled
+        from
+        dict_type t1
+        left join
+        dict t2
+        on t1.code = t2.typeCode
+        where t1.disabled = 0 and t2.disabled = 0
+    </select>
+
+</mapper>

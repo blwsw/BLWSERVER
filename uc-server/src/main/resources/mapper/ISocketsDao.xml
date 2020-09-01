@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.ucserver.dao.socket.ISocketDataDao">
+
+    <sql id="RealsWhere">
+        where 1=1
+        <if test=" name != null and name != '' ">
+            and name like concat('%', #{name}, '%')
+        </if>
+        <if test=" factoryId != null and factoryId != '' ">
+            and factoryId = #{factoryId}
+        </if>
+        <if test=" type != null and type != '' ">
+            and type = #{type}
+        </if>
+    </sql>
+
+    <select id="getReals" parameterType="map" resultType="RealVO">
+        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.pdcid pdcNo from `real` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
+        <include refid="RealsWhere"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+
+    <select id="getRealsCount" parameterType="map" resultType="int">
+        select
+        count(*)
+        from
+        `real`
+        <include refid="RealsWhere"></include>
+    </select>
+
+    <select id="getRealVO" parameterType="int" resultType="RealVO">
+        select
+            t1.*
+        from
+        `real` t1
+        where id = #{id} and t1.disabled = 0
+    </select>
+
+    <insert id="addReals" parameterType="RealVO">
+
+        insert into `Real` (addr,seqNo,ErrFlag,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time)
+        values (#{addr},#{seqNo},#{ErrFlag},#{TCurrent},#{OTemp},#{LCurrent1},#{LCurrent2},#{LCurrent3},#{ErrThunder},#{ErrTemp},#{ErrLeihua},#{ErrLC1},#{ErrLC2},#{ErrLC3},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{In_Time})
+    </insert>
+
+
+
+</mapper>

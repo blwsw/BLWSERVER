@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.ucserver.dao.node.INodeDao">
+
+    <sql id="nodesWhere">
+        where disabled = 0
+        <if test=" name != null and name != '' ">
+            and name like concat('%', #{name}, '%')
+        </if>
+        <if test=" factoryId != null and factoryId != '' ">
+            and factoryId = #{factoryId}
+        </if>
+        <if test=" type != null and type != '' ">
+            and type = #{type}
+        </if>
+    </sql>
+
+    <select id="getNodes" parameterType="map" resultType="NodesVO">
+        select * from nodes
+        <include refid="nodesWhere"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+
+    <select id="getNodesCount" parameterType="map" resultType="int">
+        select
+        count(*)
+        from
+        nodes
+        <include refid="nodesWhere"></include>
+    </select>
+
+    <select id="getNodesVO" parameterType="int" resultType="NodesVO">
+        select
+            t1.*
+        from
+        nodes t1
+        where id = #{id} and t1.disabled = 0
+    </select>
+
+    <insert id="addNodes" parameterType="NodesVO">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID() as id
+        </selectKey>
+        insert into nodes (addr,name,descript,serialserver_ip,pdcid,serialserver_port)
+        values (#{addr},#{name},#{descript},#{serialserver_ip},#{pdcid},#{serialserver_port})
+    </insert>
+
+    <update id="modifyNode" parameterType="NodesVO">
+        update
+        nodes
+        <set>
+            <if test=" name != null and name != '' ">
+                name = #{name},
+            </if>
+            <if test=" descript != null and descript != '' ">
+                descript = #{descript},
+            </if>
+            <if test=" serialserver_ip != null and serialserver_ip != '' ">
+                serialserver_ip = #{serialserver_ip},
+            </if>
+            <if test=" pdcid != null and pdcid != '' ">
+                pdcid = #{pdcid},
+            </if>
+            <if test=" serialserver_port != null and serialserver_port != '' ">
+                serialserver_port = #{serialserver_port},
+            </if>
+
+        </set>
+        where addr = #{addr}
+    </update>
+
+    <delete id="removeNodes" parameterType="NodesVO">
+        update nodes set disabled = '1' where addr = #{addr}
+    </delete>
+
+
+</mapper>

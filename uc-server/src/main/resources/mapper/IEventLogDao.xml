@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.ucserver.dao.IEventLogDao">
+
+    <sql id="dictsWhere">
+        where 1=1
+          <if test=" seqNo != null and seqNo != '' ">
+              and seqNo like concat('%', #{seqNo}, '%')
+          </if>
+          <if test=" eventType != null and eventType != '' ">
+              and eventType = #{eventType}
+          </if>
+
+    </sql>
+
+    <select id="getEventLogs" parameterType="Map" resultType="EventLogVO">
+       select * from t_event_log
+        <include refid="dictsWhere"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+
+    <select id="getEventLogCount" parameterType="Map" resultType="int">
+        select count(*) from t_event_log
+        <include refid="dictsWhere"></include>
+    </select>
+
+    <select id="getEventLog" parameterType="EventLogVO" resultType="EventLogVO">
+        select top 1 * from t_event_log
+        <include refid="dictsWhere"></include>
+    </select>
+
+    <insert id="addEventLog" parameterType="EventLogVO" >
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID() as id
+        </selectKey>
+        insert into t_event_log (seqNo,eventType,requestBody,responseBody,requestTime)
+        values (#{seqNo},#{eventType},#{requestBody},#{responseBody}, #{requestTime})
+    </insert>
+
+    <update id="modifyEventLog" parameterType="EventLogVO" >
+        update t_event_log
+        <trim prefix="set" suffixOverrides=",">
+            <if test=" responseBody != null and responseBody != '' ">responseBody=#{responseBody},</if>
+            <if test=" seqNo != null and seqNo != '' ">seqNo=#{seqNo},</if>
+            <if test=" disabled != null and disabled != '' ">disabled=#{disabled},</if>
+            <if test=" updateUserId != null and updateUserId != '' ">updateUserId=#{updateUserId},</if>
+            <if test=" updateUserName != null and updateUserName != '' ">updateUserName=#{updateUserName},</if>
+            <if test=" updateDatetime != null ">updateDatetime=#{updateDatetime},</if>
+            <if test=" updateDeptId != null and updateDeptId != '' ">updateDeptId=#{updateDeptId},</if>
+            <if test=" updateIp != null and updateIp != '' ">updateIp=#{updateIp},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="removeEventLogVO" parameterType="DictVo">
+        delete from dict where typeCode = #{typeCode}
+        <if test=" code != null and code != '' ">
+            and code = #{code}
+        </if>
+         and disabled=0
+    </delete>
+
+    <insert id="addSubitem" parameterType="Subitem" >
+        <!--<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID() as id
+        </selectKey>-->
+        insert into subitem (seqNo,addr,TCurrentAlarm,TAlarm,TRiseMax,LCurrentMax,BOut,Switch1,Switch2,Switch3,Switch4,Switch5,TCurrent1,TCurrent2,TCurrent3,TCurrent4,ErrFlag,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrTempLeihua,ErrLCLeihua1,ErrLCLeihua2,ErrLCLeihua3,OptFlag,FaultHint)
+        values (#{seqNo},#{addr},#{TCurrentAlarm},#{TAlarm},#{TRiseMax},#{LCurrentMax},#{BOut},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{Switch5},#{TCurrent1},#{TCurrent2},#{TCurrent3},#{TCurrent4},#{ErrFlag},#{TCurrent},#{OTemp},#{LCurrent1},#{LCurrent2},#{LCurrent3},#{ErrThunder},#{ErrTemp},#{ErrTempLeihua},#{ErrLCLeihua1},#{ErrLCLeihua2},#{ErrLCLeihua3},#{OptFlag},#{FaultHint})
+    </insert>
+
+    <insert id="addReal" parameterType="RealVO" >
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID() as id
+        </selectKey>
+        insert into subitem (addr,seq_no,ErrFlag,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrTempLeihua,ErrLCLeihua1,ErrLCLeihua2,ErrLCLeihua3,Switch1,Switch2,Switch3,Switch4,In_Time)
+        values (addr},#{seq_no},#{ErrFlag},#{TCurrent},#{OTemp},#{LCurrent1},#{LCurrent2},#{LCurrent3},#{ErrThunder},#{ErrTemp},#{ErrTempLeihua},#{ErrLCLeihua1},#{ErrLCLeihua2},#{ErrLCLeihua3},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{In_Time})
+    </insert>
+</mapper>

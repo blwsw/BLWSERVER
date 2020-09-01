@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.ucserver.dao.IUserDao">
+
+    <sql id="usersWhere">
+        where a.disabled = 0
+        <if test=" username != null and username != '' ">
+            and a.username like concat(#{username}, '%')
+        </if>
+        <if test=" name != null and name != '' ">
+            and a.name like concat(#{name}, '%')
+        </if>
+        <if test=" userType != null and userType != '' ">
+            and a.userType = #{userType}
+        </if>
+        <if test=" enterpriseId != null and enterpriseId != '' ">
+            and a.enterpriseId = #{enterpriseId}
+        </if>
+        <if test=" factoryId != null and factoryId != '' ">
+            and a.factoryId = #{factoryId}
+        </if>
+        <if test=" deptId != null and deptId != '' ">
+            and a.deptId = #{deptId}
+        </if>
+        <if test=" workcenterId != null and workcenterId != '' ">
+            and a.workcenterId = #{workcenterId}
+        </if>
+    </sql>
+
+    <select id="getUsers" parameterType="Map" resultType="UserVO">
+
+        select  a.* from uc_user a
+
+        <include refid="usersWhere"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+
+    <select id="getUsersCount" parameterType="Map" resultType="int">
+        select count(*) from uc_user a
+
+        <include refid="usersWhere"></include>
+    </select>
+
+    <select id="getUser" parameterType="UserVO" resultType="UserVO">
+        select a.*  from uc_user a
+
+        where a.disabled = 0
+        <if test=" id != null ">
+            and a.id = #{id}
+        </if>
+    </select>
+
+    <insert id="addUser" parameterType="UserVO" >
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID() as id
+        </selectKey>
+        insert into uc_user
+        (username, password, name, userType, enterpriseId, factoryId, deptId, uid,
+        disabled, createUserId, createUserName, createDatetime, createDeptId, createIp, updateUserId, updateUserName, updateDatetime, updateDeptId, updateIp, KFID, KFBH)
+        values
+        (#{username}, #{password}, #{name}, #{userType}, #{enterpriseId}, #{factoryId}, #{deptId}, #{uid},
+        #{disabled}, #{createUserId}, #{createUserName}, #{createDatetime}, #{createDeptId}, #{createIp}, #{updateUserId}, #{updateUserName}, #{updateDatetime}, #{updateDeptId}, #{updateIp}, #{KFID}, #{KFBH})
+
+
+    </insert>
+
+    <update id="modifyUser" parameterType="UserVO" >
+        update uc_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test=" username != null and username != '' ">username=#{username},</if>
+            <if test=" password != null and password != '' ">password=#{password},</if>
+            <if test=" name != null and name != '' ">name=#{name},</if>
+            <if test=" userType != null and userType != '' ">userType=#{userType},</if>
+            <if test=" enterpriseId != null and enterpriseId != '' ">enterpriseId=#{enterpriseId},</if>
+            <if test=" factoryId != null and factoryId != '' ">factoryId=#{factoryId},</if>
+            <if test=" deptId != null and deptId != '' ">deptId=#{deptId},</if>
+            <if test=" workcenterId != null and workcenterId != '' ">workcenterId=#{workcenterId},</if>
+            <if test=" uid != null and uid != '' ">uid=#{uid},</if>
+            <if test=" disabled != null and disabled != '' ">disabled=#{disabled},</if>
+            <if test=" updateUserId != null and updateUserId != '' ">updateUserId=#{updateUserId},</if>
+            <if test=" updateUserName != null and updateUserName != '' ">updateUserName=#{updateUserName},</if>
+            <if test=" updateDatetime != null ">updateDatetime=#{updateDatetime},</if>
+            <if test=" updateDeptId != null and updateDeptId != '' ">updateDeptId=#{updateDeptId},</if>
+            <if test=" updateIp != null and updateIp != '' ">updateIp=#{updateIp},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="modifyUserPwd" parameterType="UserVO" >
+        update uc_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test=" password != null and password != '' ">password=#{password},</if>
+            <if test=" updateUserId != null and updateUserId != '' ">updateUserId=#{updateUserId},</if>
+            <if test=" updateUserName != null and updateUserName != '' ">updateUserName=#{updateUserName},</if>
+            <if test=" updateDatetime != null ">updateDatetime=#{updateDatetime},</if>
+            <if test=" updateDeptId != null and updateDeptId != '' ">updateDeptId=#{updateDeptId},</if>
+            <if test=" updateIp != null and updateIp != '' ">updateIp=#{updateIp},</if>
+        </trim>
+        where id = #{id} and disabled = 0
+    </update>
+
+    <delete id="removeUserFactoryRoleRec" parameterType="java.lang.Integer">
+        delete from uc_user_factory_role_rec where userId = #{userId}
+    </delete>
+
+    <select id="getUserFactoryRoleRec" parameterType="java.lang.Integer" resultType="UserFactoryRoleRecVO">
+        select * from uc_user_factory_role_rec
+        where userId = #{userId}
+    </select>
+
+    <insert id="batchAddRoleRecs" parameterType="List">
+        insert into uc_user_factory_role_rec (userId, roleId) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userId}, #{item.roleId})
+        </foreach>
+    </insert>
+
+	<select id="testDB" parameterType="map" resultType="int">
+      select COUNT(0) from dict_type
+    </select>
+</mapper>
