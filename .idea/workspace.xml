@@ -21,6 +21,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -45,7 +48,7 @@
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../view/warning" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -55,10 +58,10 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="vcs.Subversion" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
@@ -351,6 +354,10 @@
       <workItem from="1598881274553" duration="994000" />
       <workItem from="1598882710057" duration="3076000" />
       <workItem from="1598921209128" duration="1758000" />
+      <workItem from="1599015037771" duration="4293000" />
+      <workItem from="1599034108848" duration="17000" />
+      <workItem from="1599039986699" duration="466000" />
+      <workItem from="1599040847236" duration="260000" />
     </task>
     <task id="LOCAL-00001" summary="打包异常处理">
       <created>1595404739951</created>
@@ -581,10 +588,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="524" y="203" width="481" height="275" key="#Notifications/0.0.1280.680@0.0.1280.680" timestamp="1597196487621" />
-    <state x="121" y="0" key="#Project_Structure" timestamp="1597379072255">
+    <state x="121" y="0" key="#Project_Structure" timestamp="1599015185545">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="121" y="0" key="#Project_Structure/0.0.1280.680@0.0.1280.680" timestamp="1597379072255" />
+    <state x="121" y="0" key="#Project_Structure/0.0.1280.680@0.0.1280.680" timestamp="1599015185545" />
     <state x="219" y="141" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1596765139489">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -613,38 +620,38 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1598883433366" />
-    <state width="899" height="260" key="GridCell.Tab.0.bottom" timestamp="1598925442605">
+    <state width="899" height="178" key="GridCell.Tab.0.bottom" timestamp="1599016059633">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="899" height="260" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
-    <state width="899" height="260" key="GridCell.Tab.0.center" timestamp="1598925442605">
+    <state width="899" height="178" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599016059633" />
+    <state width="899" height="178" key="GridCell.Tab.0.center" timestamp="1599016059633">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="899" height="260" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
-    <state width="899" height="260" key="GridCell.Tab.0.left" timestamp="1598925442605">
+    <state width="899" height="178" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1599016059633" />
+    <state width="899" height="178" key="GridCell.Tab.0.left" timestamp="1599016059633">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="899" height="260" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
-    <state width="899" height="260" key="GridCell.Tab.0.right" timestamp="1598925442605">
+    <state width="899" height="178" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1599016059633" />
+    <state width="899" height="178" key="GridCell.Tab.0.right" timestamp="1599016059633">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="899" height="260" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
-    <state width="899" height="260" key="GridCell.Tab.1.bottom" timestamp="1598925442605">
+    <state width="899" height="178" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599016059633" />
+    <state width="899" height="178" key="GridCell.Tab.1.bottom" timestamp="1599016059633">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="899" height="260" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
-    <state width="899" height="260" key="GridCell.Tab.1.center" timestamp="1598925442605">
+    <state width="899" height="178" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599016059633" />
+    <state width="899" height="178" key="GridCell.Tab.1.center" timestamp="1599016059633">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="899" height="260" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
-    <state width="899" height="260" key="GridCell.Tab.1.left" timestamp="1598925442605">
+    <state width="899" height="178" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1599016059633" />
+    <state width="899" height="178" key="GridCell.Tab.1.left" timestamp="1599016059633">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="899" height="260" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
-    <state width="899" height="260" key="GridCell.Tab.1.right" timestamp="1598925442605">
+    <state width="899" height="178" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1599016059633" />
+    <state width="899" height="178" key="GridCell.Tab.1.right" timestamp="1599016059633">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="899" height="260" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1598925442605" />
+    <state width="899" height="178" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1599016059633" />
     <state width="899" height="259" key="GridCell.Tab.2.bottom" timestamp="1598885410104">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -673,10 +680,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="358" y="60" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1597129651094" />
-    <state x="142" y="0" key="SettingsEditor" timestamp="1597048076276">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="213" y="0" key="SettingsEditor" timestamp="1599041030217">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1597048076276" />
+    <state x="213" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1599041030217" />
     <state x="221" y="75" key="VcsDiffUtil.ChangesDialog" timestamp="1596769109147">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -713,7 +721,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/socket/SocketServiceImpl.java</url>
-          <line>375</line>
+          <line>376</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

@@ -70,11 +70,11 @@ spring:
   profiles: dev
   datasource:
     name: test
-    url: jdbc:sqlserver://47.105.107.250:1433;databasename=zhouwx_szst
-    username: sa
-    password: Root123abc@hd
+    url: jdbc:mysql://127.0.0.1:3306/warning?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    driver-class-name: com.mysql.jdbc.Driver
     filters: stat
     maxActive: 20
     initialSize: 1
@@ -103,7 +103,7 @@ spring:
   profiles: test
   datasource:
     name: test
-    url: jdbc:sqlserver://47.105.107.250:1433;databasename=zhouwx_szst
+    url: jdbc:sqlserver://127.0.0.1:3306;databasename=warning
     username: sa
     password: Root123abc@hd
     type: com.alibaba.druid.pool.DruidDataSource
@@ -133,16 +133,16 @@ gateway-config:
 ---
 #生产环境配置
 server:
-  port: 8764
+  port: 18764
 spring:
   profiles: prod1
   datasource:
     name: test
-    url: jdbc:sqlserver://192.168.1.43:1433;databasename=SZST
-    username: st
-    password: st.20200602
+    url: jdbc:mysql://127.0.0.1:3306/warning?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 1QAzxsw@
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    driver-class-name: com.mysql.jdbc.Driver
     filters: stat
     maxActive: 5000
     initialSize: 100
@@ -159,7 +159,7 @@ logging:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://10.10.31.109:8761/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/
 gateway-config:
   rsaPrivateKey: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ4QScPdDOqFr030Ue4FdBoLg3ixyA3s92U5M0xOSbb+DSdlBO54fRPGmw1hkoZHeQUDP+dYsP5JMJRyHfYFj0ycUX8pke3GarbLy5VdrAyEkrvayn5aWWB0VtcgdI95HRv6T71DyrYAKjZbgq84xEwmtnZCMM3MzeQNKh5xF/BjAgMBAAECgYBXI5+nDRxrxluI3GK2l+cT3LkUNt6VXshc05YGQTq+WXyi9Twsw9wgpOMiE2KWCJ0dOFdokSqyZWMU03zU/ueqclHe54R07DyC/3YIIGKq6pPi/wu1qBOCPNxf0kITcgBE/JKRb/c79o4srV3UlLXXi6LV4YcOQHf+NLFNb7+jcQJBAOmk+YjEj1Pow4hDoyngTx351bgLtl83VsFhxfmwooumzMNksp9jiWkPLAgtIDqwVvs4aZL/WmV65lgdmzCzXFUCQQCtL/4HmoGEBuwxUF7DhvVhuxxj2zBsUrL0l9+TnSfWChehNENoWwQTo8vggKrSEug/5V/EQkX9H+ZOU5C/xNHXAkEAtcIgWTRIJ8eQrSWo/b/A7JnZl8aMxj+/nsrX/2lY2fkVm/9vMa12TSN/ZpDsXJun3uFAyBkcEovsO6o0e0tczQJAOSYPE38+ocyPAC7fNnJAYsGVurXHotcfSmsbUeCYFp858O4IGFWAYOK6EhkjRTMMBJmyIlckNUTjgJE+wKk3/QJBAN/E05QAv8YlS8NVfqylS9OCcbuH+pSkYJHc14P7+cNG2mrcWh5Y10QWhV+aHruutOLTtBQBN71tsvUu2l3O4Go=
   rsaPublicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCeEEnD3Qzqha9N9FHuBXQaC4N4scgN7PdlOTNMTkm2/g0nZQTueH0TxpsNYZKGR3kFAz/nWLD+STCUch32BY9MnFF/KZHtxmq2y8uVXawMhJK72sp+WllgdFbXIHSPeR0b+k+9Q8q2ACo2W4KvOMRMJrZ2QjDNzM3kDSoecRfwYwIDAQAB

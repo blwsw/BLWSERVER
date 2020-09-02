@@ -148,28 +148,28 @@ public class SocketServiceImpl implements ISocketService {
             System.out.println("xmlleng="+xmlleng);
             System.out.println("pacLen="+pacLen);
             System.out.println("content="+new String(content));
-          //包头　　　　　　
-          content[0]=(byte) 0x11;
-          content[1]=(byte) 0x22;
-          content[2]=(byte) 0x33;
-          content[3]=(byte) 0x44;
-         //总长
-         content[4] = (byte)(pacLen & 0xff);
-         content[5] = (byte)((pacLen>>8) & 0xff);
-         content[6] = (byte)((pacLen>>16) & 0xff);
-         content[7] = (byte)((pacLen>>24) & 0xff);
-          //消息类型
-          content[8]=type;//(byte) 0x31;
+            //包头　　　　　　
+            content[0]=(byte) 0x11;
+            content[1]=(byte) 0x22;
+            content[2]=(byte) 0x33;
+            content[3]=(byte) 0x44;
+            //总长
+            content[4] = (byte)(pacLen & 0xff);
+            content[5] = (byte)((pacLen>>8) & 0xff);
+            content[6] = (byte)((pacLen>>16) & 0xff);
+            content[7] = (byte)((pacLen>>24) & 0xff);
+            //消息类型
+            content[8]=type;//(byte) 0x31;
 
             //XML流长度
             content[9] = (byte) (xmlleng & 0xff);
             content[10] = (byte) ((xmlleng >> 8) & 0xff);
             content[11] = (byte) ((xmlleng >> 16) & 0xff);
             content[12] = (byte) ((xmlleng >> 24) & 0xff);
-     //xml内容
-        for(int i=0;i<b.length;i++){
-            content[i+13]=b[i];
-        }
+         //xml内容
+            for(int i=0;i<b.length;i++){
+                content[i+13]=b[i];
+            }
      //包尾
             content[pacLen-4] = (byte)  0xFF;
             content[pacLen-3] = (byte)  0xFF;
@@ -181,8 +181,8 @@ public class SocketServiceImpl implements ISocketService {
 //            output.write(content, 0, content.length);
 //            output.close();
 
-            System.out.println(byte2HexStr(content));
-            System.out.println(Hex.encodeHexStr(content));
+           // System.out.println(byte2HexStr(content));
+           // System.out.println(Hex.encodeHexStr(content));
 //         //传输字节流
             outputStream.write(content, 0, content.length);
 //            pw.write(content);
@@ -265,6 +265,7 @@ public class SocketServiceImpl implements ISocketService {
     @GetMapping("/sendAllWebSocket")
     public String sendWebSocket(String jsonData) {
         String text="你们好！这是websocket群体发送！";
+        log.debug("=sendWebSocket向前台发送信息=="+jsonData);
         if(StringUtils.isEmpty(jsonData)){
             jsonData = text;
         }
