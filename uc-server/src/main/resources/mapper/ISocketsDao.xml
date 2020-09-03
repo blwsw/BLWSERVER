@@ -16,7 +16,7 @@
     </sql>
 
     <select id="getReals" parameterType="map" resultType="RealVO">
-        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.pdcid pdcNo from `real` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
+        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `real` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
         <include refid="RealsWhere"></include>
         <if test=" sorts != null and sorts != '' ">
             order by ${sorts}

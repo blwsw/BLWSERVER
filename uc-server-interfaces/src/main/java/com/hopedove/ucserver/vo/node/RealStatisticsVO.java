@@ -7,9 +7,11 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.time.LocalDateTime;
 
-@ApiModel("实时数据表")
+@ApiModel("实时数据统计表")
 public class RealStatisticsVO extends BasicVO {
+
     private static final long serialVersionUID = 3L;
+
     @ApiModelProperty("节点编号")
     private Integer  addr;
 

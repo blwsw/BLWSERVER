@@ -3,16 +3,16 @@
 <mapper namespace="com.hopedove.ucserver.dao.node.INodeDao">
 
     <sql id="nodesWhere">
-        where disabled = 0
+        where 1=1
         <if test=" name != null and name != '' ">
-            and name like concat('%', #{name}, '%')
+            and (
+            name like concat('%', #{name}, '%')
+            or addr like concat('%', #{name}, '%')
+            or descript like concat('%', #{name}, '%')
+            or InstallPos like concat('%', #{name}, '%')
+            )
         </if>
-        <if test=" factoryId != null and factoryId != '' ">
-            and factoryId = #{factoryId}
-        </if>
-        <if test=" type != null and type != '' ">
-            and type = #{type}
-        </if>
+
     </sql>
 
     <select id="getNodes" parameterType="map" resultType="NodesVO">

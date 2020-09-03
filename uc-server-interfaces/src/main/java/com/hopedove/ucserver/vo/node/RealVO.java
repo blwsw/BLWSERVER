@@ -88,6 +88,8 @@ public class RealVO extends BasicVO {
 
     private String pdcNo;//配电箱号
 
+    private String InstallPos;//安装地址
+
     public Integer getAddr() {
         return addr;
     }
@@ -286,5 +288,13 @@ public class RealVO extends BasicVO {
 
     public void setPdcNo(String pdcNo) {
         this.pdcNo = pdcNo;
+    }
+
+    public String getInstallPos() {
+        return InstallPos;
+    }
+
+    public void setInstallPos(String installPos) {
+        InstallPos = installPos;
     }
 }
