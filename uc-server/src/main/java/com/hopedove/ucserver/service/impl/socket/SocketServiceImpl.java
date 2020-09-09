@@ -295,7 +295,7 @@ public class SocketServiceImpl implements ISocketService {
             realVO.setLCurrent1(Integer.parseInt(s.getLCurrent1()));
             realVO.setLCurrent2(Integer.parseInt(s.getLCurrent2()));
             realVO.setLCurrent3(Integer.parseInt(s.getLCurrent3()));
-            //this.iSocketDataDao.addReals(realVO);
+            this.iSocketDataDao.addReals(realVO);
             this.sendWebSocket(JsonUtil.writeValueAsString(realVO));
         }
 

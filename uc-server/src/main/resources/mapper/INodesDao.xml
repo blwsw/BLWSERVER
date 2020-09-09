@@ -43,11 +43,8 @@
     </select>
 
     <insert id="addNodes" parameterType="NodesVO">
-        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
-            select LAST_INSERT_ID() as id
-        </selectKey>
-        insert into nodes (addr,name,descript,serialserver_ip,pdcid,serialserver_port)
-        values (#{addr},#{name},#{descript},#{serialserver_ip},#{pdcid},#{serialserver_port})
+        insert into nodes (addr,`delete`,`name`,descript,InstallPos,serialserver_ip,serialserver_port,TCurrentAlarm,TAlarm,TRiseMax,LCurrentMax,BOut,Switch1,Switch2,Switch3,Switch4,TCurrent1,TCurrent2,TCurrent3)
+        values (#{addr},#{delete},#{name},#{descript},#{InstallPos},#{serialserver_ip},#{serialserver_port},#{TCurrentAlarm},#{TAlarm},#{TRiseMax},#{LCurrentMax},#{BOut},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{TCurrent1},#{TCurrent2},#{TCurrent3})
     </insert>
 
     <update id="modifyNode" parameterType="NodesVO">
@@ -63,13 +60,51 @@
             <if test=" serialserver_ip != null and serialserver_ip != '' ">
                 serialserver_ip = #{serialserver_ip},
             </if>
-            <if test=" pdcid != null and pdcid != '' ">
-                pdcid = #{pdcid},
+            <if test=" delete != null and delete != '' ">
+                `delete` = #{delete},
             </if>
             <if test=" serialserver_port != null and serialserver_port != '' ">
                 serialserver_port = #{serialserver_port},
             </if>
-
+            <if test=" InstallPos != null and InstallPos != '' ">
+                InstallPos = #{InstallPos},
+            </if>
+            <if test=" TCurrentAlarm != null and TCurrentAlarm != '' ">
+                TCurrentAlarm = #{TCurrentAlarm},
+            </if>
+            <if test=" TAlarm != null and TAlarm != '' ">
+                TAlarm = #{TAlarm},
+            </if>
+            <if test=" TRiseMax != null and TRiseMax != '' ">
+                TRiseMax = #{TRiseMax},
+            </if>
+            <if test=" LCurrentMax != null and LCurrentMax != '' ">
+                LCurrentMax = #{LCurrentMax},
+            </if>
+            <if test=" BOut != null and BOut != '' ">
+                BOut = #{BOut},
+            </if>
+            <if test=" Switch1 != null and Switch1 != '' ">
+                Switch1 = #{Switch1},=-0po''
+            </if>
+            <if test=" Switch2 != null and Switch2 != '' ">
+                Switch2 = #{Switch2},
+            </if>
+            <if test=" Switch3 != null and Switch3 != '' ">
+                Switch3 = #{Switch3},
+            </if>
+            <if test=" Switch4 != null and Switch4 != '' ">
+                Switch4 = #{Switch4},
+            </if>
+            <if test=" TCurrent1 != null and TCurrent1 != '' ">
+                TCurrent1 = #{TCurrent1},
+            </if>
+            <if test=" TCurrent2 != null and TCurrent2 != '' ">
+                TCurrent2 = #{TCurrent2},
+            </if>
+            <if test=" TCurrent3 != null and TCurrent3 != '' ">
+                TCurrent3 = #{TCurrent3},
+            </if>
         </set>
         where addr = #{addr}
     </update>

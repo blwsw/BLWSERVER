@@ -148,18 +148,18 @@ public class UserServiceImpl implements IUserService {
     		}
         }
         Integer node = userDao.modifyUser(userVO);
-        userDao.removeUserFactoryRoleRec(id);
-        List<Integer> roleRecs = userVO.getRoleRecs();
-        List<UserFactoryRoleRecVO> recVOS = new ArrayList<>();
-        for (Integer roleId : roleRecs) {
-            UserFactoryRoleRecVO recVO = new UserFactoryRoleRecVO();
-            recVO.setRoleId(roleId);
-            recVO.setUserId(id);
-            recVOS.add(recVO);
-        }
-        if (recVOS.size() > 0) {
-            userDao.batchAddRoleRecs(recVOS);
-        }
+//        userDao.removeUserFactoryRoleRec(id);
+//        List<Integer> roleRecs = userVO.getRoleRecs();
+//        List<UserFactoryRoleRecVO> recVOS = new ArrayList<>();
+//        for (Integer roleId : roleRecs) {
+//            UserFactoryRoleRecVO recVO = new UserFactoryRoleRecVO();
+//            recVO.setRoleId(roleId);
+//            recVO.setUserId(id);
+//            recVOS.add(recVO);
+//        }
+//        if (recVOS.size() > 0) {
+//            userDao.batchAddRoleRecs(recVOS);
+//        }
 
         return new RestResponse<>(node);
     }
