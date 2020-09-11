@@ -9,6 +9,7 @@ import com.hopedove.ucserver.dao.IEnterpriseDao;
 import com.hopedove.ucserver.dao.IEventLogDao;
 import com.hopedove.ucserver.dao.socket.ISocketDataDao;
 import com.hopedove.ucserver.service.ISocketService;
+import com.hopedove.ucserver.service.impl.node.NodesServiceImpl;
 import com.hopedove.ucserver.service.impl.websocket.WebSocket;
 
 import com.hopedove.ucserver.vo.EnterpriseVO;
@@ -64,6 +65,12 @@ public class SocketServiceImpl implements ISocketService {
     @Value("${socket.pool-queue-init}")
     private Integer poolQueueInit;
 
+    @Value("${socket.server-ip}")
+    private String sererIp;
+
+    @Value("${socket.server-port}")
+    private Integer sererPort;
+
     @Autowired
     private IEventLogDao eventLogDao;
 
@@ -118,29 +125,52 @@ public class SocketServiceImpl implements ISocketService {
         return new RestPageResponse<>();
     }
 
+    @PostMapping("/add/event/logs")
+    public Integer addSendClientLog(@RequestParam(required = false)String xmlData,@RequestParam(required = false) byte type,@RequestParam(required = false) String seqNo){
+        EventLogVO eventLogVO = new EventLogVO();
+        eventLogVO.setEventType(type+"");
+        eventLogVO.setRequestBody(xmlData);
+        eventLogVO.setSeqNo(seqNo);
+        eventLogVO.setRequestTime(LocalDateTime.now());
+        eventLogVO.setStatus("0");
+        this.eventLogDao.addEventLog(eventLogVO);
+        return eventLogVO.getId();
+    }
+
     public void addSendClientLog(String xmlData,byte type){
         EventLogVO eventLogVO = new EventLogVO();
         eventLogVO.setEventType(type+"");
         eventLogVO.setRequestBody(xmlData);
         eventLogVO.setRequestTime(LocalDateTime.now());
         this.eventLogDao.addEventLog(eventLogVO);
-        String seqNo = this.getSeqNo(eventLogVO.getId());
-        eventLogVO.setId(eventLogVO.getId());
-        eventLogVO.setSeqNo(seqNo);
-        eventLogVO.setResponseBody("ok");
-        this.modifyEventLog(seqNo,eventLogVO);
+//        String seqNo = this.getSeqNo(eventLogVO.getId());
+//        eventLogVO.setId(eventLogVO.getId());
+//        eventLogVO.setSeqNo(seqNo);
+//        eventLogVO.setResponseBody("ok");
+//        this.modifyEventLog(seqNo,eventLogVO);
     }
 
     @GetMapping("/client")
-    public RestResponse<EnterpriseVO> client(String xmlData,byte type) {
+    public RestResponse client(String xmlData,byte type) {
+        RestResponse response = new RestResponse();
+
+        //记录日志
+       // this.addSendClientLog(xmlData,type);
+
         //创建客户端socket建立连接，指定服务器地址和端口
         try {
-            Socket socket = new Socket("127.0.0.1",9006);//port);
+            if(sererPort == null){
+                sererPort = 9006;
+            }
+            if(StringUtils.isEmpty(sererIp)){
+                sererIp = "127.0.0.1";
+            }
+            Socket socket = new Socket(sererIp,sererPort);//port);
             //获取输出流，向服务器端发送信息
             OutputStream outputStream = socket.getOutputStream();//字节输出流
             PrintWriter pw = new PrintWriter(outputStream); //将输出流包装为打印流
             String instr = xmlData;
-            addSendClientLog(xmlData,type);
+
             byte[] b= instr.getBytes();
             int xmlleng=b.length;
             int pacLen= 4+4+1+4+xmlleng+4;
@@ -210,8 +240,10 @@ public class SocketServiceImpl implements ISocketService {
 
         } catch (IOException e) {
             e.printStackTrace();
+            response.setMessage("socket 发送异常"+e.getMessage());
+            response.setCode(500);
         }
-        return new RestResponse<>();
+        return response;
     }
 
 
@@ -222,6 +254,12 @@ public class SocketServiceImpl implements ISocketService {
         return new RestResponse<>(eventLogVO.getId());
     }
 
+    @GetMapping("/eventLog/entity")
+    public RestResponse<EventLogVO> getEventLog(@RequestBody EventLogVO eventLogVO){
+        eventLogVO = this.eventLogDao.getEventLog(eventLogVO);
+        return new RestResponse<>(eventLogVO);
+    }
+    
     //更新一个交互日志
     @PutMapping("/eventLog}")
     public RestResponse<Integer> modifyEventLog(@PathVariable String seqNo, @RequestBody EventLogVO eventLogVO){
@@ -245,8 +283,10 @@ public class SocketServiceImpl implements ISocketService {
         //2.获得前端排序数据
         sort = SortUtil.format(sort);
         Map<String, Object> param = new HashMap<>();
+        if(StringUtils.isNotEmpty(eventType)){
+            param.put("eventType", eventType);
+        }
 
-        param.put("eventType", eventType);
         param.put("seqNo", seqNo);
         param.put(QueryEnum.PAGES.getValue(), page);
         param.put(QueryEnum.SORTS.getValue(), sort);
@@ -286,7 +326,7 @@ public class SocketServiceImpl implements ISocketService {
         RealVO realVO = new RealVO();
         for(SubItem s:subItems){
             s.setSeqNo(uploadCollect.getSeqno());
-            this.eventLogDao.addSubitem(s);
+            //this.eventLogDao.addSubitem(s);
             BeanUtils.copyProperties(s,realVO);
             realVO.setAddr(Integer.parseInt(s.getAddr()));
             realVO.setIn_Time(LocalDateTime.now());
@@ -295,7 +335,7 @@ public class SocketServiceImpl implements ISocketService {
             realVO.setLCurrent1(Integer.parseInt(s.getLCurrent1()));
             realVO.setLCurrent2(Integer.parseInt(s.getLCurrent2()));
             realVO.setLCurrent3(Integer.parseInt(s.getLCurrent3()));
-            this.iSocketDataDao.addReals(realVO);
+           // this.iSocketDataDao.addReals(realVO);
             this.sendWebSocket(JsonUtil.writeValueAsString(realVO));
         }
 
@@ -332,13 +372,6 @@ public class SocketServiceImpl implements ISocketService {
         //3.返回
         return new RestPageResponse<>(datas, page);
     }
-    public String getSeqNo(int id){
-        String seqNo = LocalDateTimeUtil.formatTime(LocalDateTime.now(),"yyyyMMddHHmmSS");
-        DecimalFormat df=new DecimalFormat("000000");
-        String str2=df.format(id);
-        seqNo+=str2;
-        return  seqNo;
-    }
 
     public static void main(String[] args) {
 //        byte[] content = new byte[4];
@@ -362,6 +395,9 @@ public class SocketServiceImpl implements ISocketService {
 //        byte type = (byte) 0x31;
 //        SocketServiceImpl socketService = new SocketServiceImpl();
 //        socketService.client(xml,type);
+
+        NodesServiceImpl i = new NodesServiceImpl();
+        System.out.println(i.getSeqNo(2));
          String a= "<UploadCollect seqno=\"20200812122023000001\">\n" +
                  "    <SubItem addr=\"1\">\n" +
                  "        <ErrFlag>F</ErrFlag>\n" +

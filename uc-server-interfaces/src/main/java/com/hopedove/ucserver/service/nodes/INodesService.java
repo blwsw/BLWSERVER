@@ -24,4 +24,19 @@ public interface INodesService {
     @GetMapping("/nodes")
     RestPageResponse<List<NodesVO>> getNodes(@RequestParam(required = false) String querySring, @RequestParam(required = false) Integer currentPage, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sort);
 
+    //表示前端下发设备参数33
+    @PutMapping("/send/nodes/{seqNo}")
+    RestResponse<Integer> setParams(@PathVariable String seqNo, @RequestBody NodesVO NodesVO);
+
+    //1.4  0x34前端通知服务初始化（XMLInitHint）
+    @PutMapping("nodes/initHint")
+    RestResponse<Integer> initHint(@RequestBody NodesVO NodesVO);
+
+    //1.5  0x35前端通知服务清除设备故障（XMLClearFault）
+    @PutMapping("nodes/clearFault")
+    RestResponse<Integer> clearFault(@RequestParam(required = false) String addrs);
+
+
+    @GetMapping("get/seqno")
+    String getSeqNo(int id);
 }

@@ -1,19 +1,20 @@
 package com.hopedove.ucserver.vo.xmlvo;
 
 import javax.xml.bind.annotation.*;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {
         "seqno",
         "subItem",
         }) //控制JAXB 绑定类中属性和字段的排序
-@XmlRootElement(name="SetParams")
-public class SetParams {//前端下发设备参数
+@XmlRootElement(name="ClearFault")
+public class ClearFault {
 
     @XmlAttribute
     private String seqno;
 
-    private SubItem subItem;
+    private List<SubItem> subItem;
 
     public String getSeqno() {
         return seqno;
@@ -23,11 +24,11 @@ public class SetParams {//前端下发设备参数
         this.seqno = seqno;
     }
 
-    public SubItem getSubItem() {
+    public List<SubItem> getSubItem() {
         return subItem;
     }
 
-    public void setSubItem(SubItem subItem) {
+    public void setSubItem(List<SubItem> subItem) {
         this.subItem = subItem;
     }
 }

@@ -4,12 +4,12 @@
 
     <sql id="nodesWhere">
         where 1=1
-        <if test=" name != null and name != '' ">
+        <if test=" querySring != null and querySring != '' ">
             and (
-            name like concat('%', #{name}, '%')
-            or addr like concat('%', #{name}, '%')
-            or descript like concat('%', #{name}, '%')
-            or InstallPos like concat('%', #{name}, '%')
+            name like concat('%', #{querySring}, '%')
+            or addr like concat('%', #{querySring}, '%')
+            or descript like concat('%', #{querySring}, '%')
+            or InstallPos like concat('%', #{querySring}, '%')
             )
         </if>
 

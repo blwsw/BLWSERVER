@@ -10,6 +10,9 @@
           <if test=" eventType != null and eventType != '' ">
               and eventType = #{eventType}
           </if>
+        <if test=" id != null and id != '' ">
+            and id = #{id}
+        </if>
 
     </sql>
 
@@ -30,16 +33,17 @@
     </select>
 
     <select id="getEventLog" parameterType="EventLogVO" resultType="EventLogVO">
-        select top 1 * from t_event_log
+        select * from t_event_log
         <include refid="dictsWhere"></include>
+        limit 1
     </select>
 
     <insert id="addEventLog" parameterType="EventLogVO" >
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID() as id
         </selectKey>
-        insert into t_event_log (seqNo,eventType,requestBody,responseBody,requestTime)
-        values (#{seqNo},#{eventType},#{requestBody},#{responseBody}, #{requestTime})
+        insert into t_event_log (seqNo,eventType,requestBody,responseBody,requestTime,status,responseTime)
+        values (#{seqNo},#{eventType},#{requestBody},#{responseBody}, #{requestTime},#{status},#{responseTime})
     </insert>
 
     <update id="modifyEventLog" parameterType="EventLogVO" >
@@ -47,22 +51,14 @@
         <trim prefix="set" suffixOverrides=",">
             <if test=" responseBody != null and responseBody != '' ">responseBody=#{responseBody},</if>
             <if test=" seqNo != null and seqNo != '' ">seqNo=#{seqNo},</if>
-            <if test=" disabled != null and disabled != '' ">disabled=#{disabled},</if>
-            <if test=" updateUserId != null and updateUserId != '' ">updateUserId=#{updateUserId},</if>
-            <if test=" updateUserName != null and updateUserName != '' ">updateUserName=#{updateUserName},</if>
-            <if test=" updateDatetime != null ">updateDatetime=#{updateDatetime},</if>
-            <if test=" updateDeptId != null and updateDeptId != '' ">updateDeptId=#{updateDeptId},</if>
-            <if test=" updateIp != null and updateIp != '' ">updateIp=#{updateIp},</if>
+            <if test=" status != null and status != '' ">status=#{status},</if>
+            <if test=" responseTime != null ">responseTime=#{responseTime},</if>
         </trim>
         where id = #{id}
     </update>
 
     <delete id="removeEventLogVO" parameterType="DictVo">
-        delete from dict where typeCode = #{typeCode}
-        <if test=" code != null and code != '' ">
-            and code = #{code}
-        </if>
-         and disabled=0
+       update t_event_log set status = 4 where id = #{id}
     </delete>
 
     <insert id="addSubitem" parameterType="Subitem" >

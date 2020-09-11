@@ -1,6 +1,5 @@
 package com.hopedove.ucserver.dao;
 
-import com.hopedove.ucserver.vo.DictVO;
 import com.hopedove.ucserver.vo.EventLogVO;
 import com.hopedove.ucserver.vo.node.RealVO;
 import com.hopedove.ucserver.vo.xmlvo.SubItem;
@@ -14,11 +13,11 @@ public interface IEventLogDao {
 
     int getEventLogCount(Map<String, Object> param);
 
-    EventLogVO getEventLog(EventLogVO dictVO);
+    EventLogVO getEventLog(EventLogVO eventLogVO);
 
-    int addEventLog(EventLogVO dictVO);
+    int addEventLog(EventLogVO eventLogVO);
 
-    int modifyEventLog(EventLogVO dictVO);
+    int modifyEventLog(EventLogVO eventLogVO);
 
     int removeEventLogVO(String code,String typeCode);
 

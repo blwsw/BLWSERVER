@@ -49,7 +49,7 @@ public class ServerConfig extends Thread {
     private SocketServiceImpl service = SpringUtil.getBean(SocketServiceImpl.class);
 
     private String handle(InputStream inputStream) throws IOException, ParserConfigurationException, SAXException {
-        EventLogVO eventLogVO = new EventLogVO();
+
         byte[] bytes = new byte[1024];
         int len = inputStream.read(bytes);
         if (len != -1) {
@@ -74,18 +74,8 @@ public class ServerConfig extends Thread {
             this.dispatch(btype,request.toString());
             //System.out.println("接受的数据: " + request);
             //System.out.println("from client ... " + request + "当前线程" + Thread.currentThread().getName());
-            Map<String, Object> map = XMLParser.getMapFromXML(request.toString());
-            eventLogVO.setEventType(type+"");
-            eventLogVO.setRequestBody(request.toString());
-            eventLogVO.setRequestTime(LocalDateTime.now());
-            RestResponse<Integer> restResponse = this.service.addEventLog(eventLogVO);
-            String seqNo = service.getSeqNo(restResponse.getResponseBody());
-            eventLogVO.setId(restResponse.getResponseBody());
-            eventLogVO.setSeqNo(seqNo);
             //System.out.println("处理的数据" + request.toString());
-            //Integer res = service.addEnvironment(map);
-            eventLogVO.setResponseBody("ok");
-            this.service.modifyEventLog(seqNo,eventLogVO);
+           // this.service.modifyEventLog(seqNo,eventLogVO);
             if (1 == 1) {
                 return "ok";
             } else {
@@ -161,17 +151,42 @@ public class ServerConfig extends Thread {
      */
     public void dispatch(byte btype,String xmlData){
         int type = (int) (btype & 0xFF);
+        String seqNo = "";
         if (type == 65){//0x41	表示服务反馈/推送采集数据
             UploadCollect uploadCollect= (UploadCollect)XMLParser.convertXmlStrToObject(UploadCollect.class,xmlData);
+            seqNo = uploadCollect.getSeqno();
             this.service.sendRealNewData(uploadCollect);
-        }else if(type == 4){//0x42	表示服务召唤设备参数反馈
+        }else if(type == 66){//0x42	表示服务召唤设备参数反馈
             GetParamsRet getParamsRet= (GetParamsRet)XMLParser.convertXmlStrToObject(GetParamsRet.class,xmlData);
-        }else if(type == 5){//0x43	表示服务下发设备参数反馈
+
+        }else if(type == 67){//0x43	表示服务下发设备参数反馈
             SetParamsRet setParamsRet= (SetParamsRet)XMLParser.convertXmlStrToObject(SetParamsRet.class,xmlData);
-        }else if(type == 6){//0x44	表示服务初始化反馈
+
+        }else if(type == 68){//0x44	表示服务初始化反馈
             InitHintRet initHintRet= (InitHintRet)XMLParser.convertXmlStrToObject(InitHintRet.class,xmlData);
+
+        }else if(type == 69){//0x45	表示服务下发设备参数反馈
+            SetParamsRet setParamsRet= (SetParamsRet)XMLParser.convertXmlStrToObject(SetParamsRet.class,xmlData);
+
         }
 
+        EventLogVO eventLogVO = new EventLogVO();
+        eventLogVO.setSeqNo(seqNo);
+        //
+        RestResponse<EventLogVO> logResponse = this.service.getEventLog(eventLogVO);
+        if(logResponse != null && logResponse.getResponseBody() != null){
+            EventLogVO sendEventLog = logResponse.getResponseBody();
+            sendEventLog.setStatus("1");//数据返回
+            sendEventLog.setResponseBody(xmlData);
+            sendEventLog.setResponseTime(LocalDateTime.now());
+            this.service.modifyEventLog(sendEventLog.getSeqNo(),sendEventLog);
+        }else{
+            eventLogVO.setEventType(type+"");
+            eventLogVO.setStatus("6");//数据返回
+            eventLogVO.setResponseBody(xmlData);
+            eventLogVO.setResponseTime(LocalDateTime.now());
+            RestResponse<Integer> restResponse = this.service.addEventLog(eventLogVO);
+        }
     }
 
 

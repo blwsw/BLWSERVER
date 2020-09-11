@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {
-        "seq_no",
+        "seqno",
         "CFGPath",
         }) //控制JAXB 绑定类中属性和字段的排序
 @XmlRootElement(name="InitHint")
@@ -12,16 +12,16 @@ import javax.xml.bind.annotation.*;
 public class InitHint {
 
     @XmlAttribute
-    private String seq_no;
+    private String seqno;
 
     private String CFGPath;//提供配置文件的地址，服务会去下载并初始化
 
-    public String getSeq_no() {
-        return seq_no;
+    public String getSeqno() {
+        return seqno;
     }
 
-    public void setSeq_no(String seq_no) {
-        this.seq_no = seq_no;
+    public void setSeqno(String seqno) {
+        this.seqno = seqno;
     }
 
     public String getCFGPath() {

@@ -94,6 +94,10 @@ socket:
   pool-max: 30
   # 线程队列容量 10
   pool-queue-init: 10
+  #serverId
+  server-ip: 127.0.0.1
+  #serverport
+  server-port: 9006
 ---
 #测试环境配置
 #容器端口
@@ -206,6 +210,10 @@ socket:
   pool-max: 30
   # 线程队列容量 10
   pool-queue-init: 10
+  #serverId
+  server-ip: 127.0.0.1
+  #serverport
+  server-port: 9006
 ---
 
 spring:

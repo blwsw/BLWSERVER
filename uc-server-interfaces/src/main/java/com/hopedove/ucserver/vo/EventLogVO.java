@@ -22,6 +22,13 @@ public class EventLogVO extends BasicVO {
     )
     private LocalDateTime requestTime;
 
+    @JsonFormat(
+            pattern = "yyyy-MM-dd HH:mm:ss"
+    )
+    private LocalDateTime responseTime;
+
+    private String status;
+
     public Integer getId() {
         return id;
     }
@@ -68,5 +75,21 @@ public class EventLogVO extends BasicVO {
 
     public void setSeqNo(String seqNo) {
         this.seqNo = seqNo;
+    }
+
+    public LocalDateTime getResponseTime() {
+        return responseTime;
+    }
+
+    public void setResponseTime(LocalDateTime responseTime) {
+        this.responseTime = responseTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -19,11 +19,17 @@ public interface ISocketService {
     RestResponse server();
 
     @GetMapping("/client")
-    RestResponse<EnterpriseVO> client(String xmlData,byte type);
+    RestResponse client(String xmlData,byte type);
 
     //创建一个交互日志
     @PostMapping("/eventLog")
     RestResponse<Integer> addEventLog(@RequestBody EventLogVO eventLogVO);
+
+    @GetMapping("/eventLog/entity")
+    RestResponse<EventLogVO> getEventLog(@RequestBody EventLogVO eventLogVO);
+
+    @PostMapping("/add/event/logs")
+    Integer addSendClientLog(@RequestParam(required = false)String xmlData,@RequestParam(required = false) byte type,@RequestParam(required = false) String seqNo);
 
     //更新一个交互日志
     @PutMapping("/eventLog")

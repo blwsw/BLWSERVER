@@ -60,11 +60,11 @@
             select LAST_INSERT_ID() as id
         </selectKey>
         insert into uc_user
-        (username, password, name, userType, enterpriseId, factoryId, deptId, uid,
-        disabled, createUserId, createUserName, createDatetime, createDeptId, createIp, updateUserId, updateUserName, updateDatetime, updateDeptId, updateIp, KFID, KFBH)
+        (username, password, name, userType, uid,
+        disabled, createUserId, createUserName, createDatetime, createDeptId, createIp, updateUserId, updateUserName, updateDatetime, updateDeptId, updateIp)
         values
-        (#{username}, #{password}, #{name}, #{userType}, #{enterpriseId}, #{factoryId}, #{deptId}, #{uid},
-        #{disabled}, #{createUserId}, #{createUserName}, #{createDatetime}, #{createDeptId}, #{createIp}, #{updateUserId}, #{updateUserName}, #{updateDatetime}, #{updateDeptId}, #{updateIp}, #{KFID}, #{KFBH})
+        (#{username}, #{password}, #{name}, #{userType}, #{uid},
+        #{disabled}, #{createUserId}, #{createUserName}, #{createDatetime}, #{createDeptId}, #{createIp}, #{updateUserId}, #{updateUserName}, #{updateDatetime}, #{updateDeptId}, #{updateIp})
 
 
     </insert>
