@@ -4,10 +4,7 @@ import com.hopedove.commons.response.RestResponse;
 import com.hopedove.commons.utils.LocalDateTimeUtil;
 import com.hopedove.commons.utils.XMLParser;
 import com.hopedove.ucserver.vo.EventLogVO;
-import com.hopedove.ucserver.vo.xmlvo.GetParamsRet;
-import com.hopedove.ucserver.vo.xmlvo.InitHintRet;
-import com.hopedove.ucserver.vo.xmlvo.SetParamsRet;
-import com.hopedove.ucserver.vo.xmlvo.UploadCollect;
+import com.hopedove.ucserver.vo.xmlvo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -158,16 +155,17 @@ public class ServerConfig extends Thread {
             this.service.sendRealNewData(uploadCollect);
         }else if(type == 66){//0x42	表示服务召唤设备参数反馈
             GetParamsRet getParamsRet= (GetParamsRet)XMLParser.convertXmlStrToObject(GetParamsRet.class,xmlData);
+            seqNo = getParamsRet.getSeqno();
 
         }else if(type == 67){//0x43	表示服务下发设备参数反馈
             SetParamsRet setParamsRet= (SetParamsRet)XMLParser.convertXmlStrToObject(SetParamsRet.class,xmlData);
-
+            seqNo = setParamsRet.getSeqno();
         }else if(type == 68){//0x44	表示服务初始化反馈
             InitHintRet initHintRet= (InitHintRet)XMLParser.convertXmlStrToObject(InitHintRet.class,xmlData);
-
-        }else if(type == 69){//0x45	表示服务下发设备参数反馈
-            SetParamsRet setParamsRet= (SetParamsRet)XMLParser.convertXmlStrToObject(SetParamsRet.class,xmlData);
-
+            seqNo = initHintRet.getSeqno();
+        }else if(type == 69){//0x45	0x45	表示服务清除设备故障反馈
+            ClearFault clearFault= (ClearFault)XMLParser.convertXmlStrToObject(ClearFault.class,xmlData);
+            seqNo = clearFault.getSeqno();
         }
 
         EventLogVO eventLogVO = new EventLogVO();

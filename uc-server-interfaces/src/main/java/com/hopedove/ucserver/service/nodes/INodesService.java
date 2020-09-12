@@ -17,8 +17,8 @@ public interface INodesService {
     RestResponse<Integer> addNodes(@RequestBody NodesVO NodesVO);
 
     //更新一个节点
-    @PutMapping("/nodes")
-    RestResponse<Integer> modifyNodes(@PathVariable String seqNo, @RequestBody NodesVO NodesVO);
+    @PutMapping("/nodes/{addr}")
+    RestResponse<Integer> modifyNodes(@PathVariable String addr, @RequestBody NodesVO NodesVO);
 
     @ApiOperation(value = "查询节点")
     @GetMapping("/nodes")

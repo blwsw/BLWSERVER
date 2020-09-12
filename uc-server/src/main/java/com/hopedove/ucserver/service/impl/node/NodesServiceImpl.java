@@ -1,5 +1,6 @@
 package com.hopedove.ucserver.service.impl.node;
 
+import com.hopedove.commons.exception.BusinException;
 import com.hopedove.commons.response.RestPageResponse;
 import com.hopedove.commons.response.RestResponse;
 import com.hopedove.commons.utils.JsonUtil;
@@ -60,13 +61,17 @@ public class NodesServiceImpl implements INodesService{
     //创建一个节点
     @PostMapping("/nodes")
     public RestResponse<Integer> addNodes(@RequestBody NodesVO nodesVO){
+        NodesVO nodesVO1 = this.iNodeDao.getNodesVO(nodesVO);
+        if(nodesVO1 != null){
+            throw new BusinException("","已存在节点编号为["+nodesVO.getAddr()+"]的设备节点");
+        }
         this.iNodeDao.addNodes(nodesVO);
         return new RestResponse<>(nodesVO.getAddr());
     }
 
     //更新一个节点
-    @PutMapping("/nodes")
-    public RestResponse<Integer> modifyNodes(@PathVariable String seqNo, @RequestBody NodesVO nodesVO){
+    @PutMapping("/nodes/{addr}")
+    public RestResponse<Integer> modifyNodes(@PathVariable String addr, @RequestBody NodesVO nodesVO){
         this.iNodeDao.modifyNodes(nodesVO);
         return new RestResponse<>(nodesVO.getAddr());
     }

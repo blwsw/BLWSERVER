@@ -128,6 +128,7 @@ public class SocketServiceImpl implements ISocketService {
     @PostMapping("/add/event/logs")
     public Integer addSendClientLog(@RequestParam(required = false)String xmlData,@RequestParam(required = false) byte type,@RequestParam(required = false) String seqNo){
         EventLogVO eventLogVO = new EventLogVO();
+        VOUtil.fillCreate(eventLogVO);
         eventLogVO.setEventType(type+"");
         eventLogVO.setRequestBody(xmlData);
         eventLogVO.setSeqNo(seqNo);
@@ -396,8 +397,8 @@ public class SocketServiceImpl implements ISocketService {
 //        SocketServiceImpl socketService = new SocketServiceImpl();
 //        socketService.client(xml,type);
 
-        NodesServiceImpl i = new NodesServiceImpl();
-        System.out.println(i.getSeqNo(2));
+        //NodesServiceImpl i = new NodesServiceImpl();
+        //System.out.println(i.getSeqNo(2));
          String a= "<UploadCollect seqno=\"20200812122023000001\">\n" +
                  "    <SubItem addr=\"1\">\n" +
                  "        <ErrFlag>F</ErrFlag>\n" +
@@ -424,6 +425,11 @@ public class SocketServiceImpl implements ISocketService {
         if(StringUtils.isNotEmpty(gh) && gh.toUpperCase().startsWith("Z")) {
             System.out.println(gh);
         }
+        LocalDateTime nowTime= LocalDateTime.now();
+        LocalDateTime becareTime = LocalDateTime.of(nowTime.getYear(), nowTime.getMonth(), nowTime.getDayOfMonth(),8, nowTime.getMinute(), nowTime.getSecond());
+        System.out.println(nowTime);
+        System.out.println(becareTime);
+        System.out.println(nowTime.isBefore(becareTime));
     }
 
     public static void dolsit(List<String> b){

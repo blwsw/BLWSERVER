@@ -39,7 +39,7 @@
             t1.*
         from
         nodes t1
-        where id = #{id} and t1.disabled = 0
+        where addr = #{addr}
     </select>
 
     <insert id="addNodes" parameterType="NodesVO">
@@ -47,7 +47,7 @@
         values (#{addr},#{delete},#{name},#{descript},#{InstallPos},#{serialserver_ip},#{serialserver_port},#{TCurrentAlarm},#{TAlarm},#{TRiseMax},#{LCurrentMax},#{BOut},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{TCurrent1},#{TCurrent2},#{TCurrent3})
     </insert>
 
-    <update id="modifyNode" parameterType="NodesVO">
+    <update id="modifyNodes" parameterType="NodesVO">
         update
         nodes
         <set>
@@ -85,7 +85,7 @@
                 BOut = #{BOut},
             </if>
             <if test=" Switch1 != null and Switch1 != '' ">
-                Switch1 = #{Switch1},=-0po''
+                Switch1 = #{Switch1},
             </if>
             <if test=" Switch2 != null and Switch2 != '' ">
                 Switch2 = #{Switch2},
@@ -110,7 +110,7 @@
     </update>
 
     <delete id="removeNodes" parameterType="NodesVO">
-        update nodes set disabled = '1' where addr = #{addr}
+        update nodes set `delete` = '0' where addr = #{addr}
     </delete>
 
 

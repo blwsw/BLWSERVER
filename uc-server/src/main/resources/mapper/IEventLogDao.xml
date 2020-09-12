@@ -42,8 +42,8 @@
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID() as id
         </selectKey>
-        insert into t_event_log (seqNo,eventType,requestBody,responseBody,requestTime,status,responseTime)
-        values (#{seqNo},#{eventType},#{requestBody},#{responseBody}, #{requestTime},#{status},#{responseTime})
+        insert into t_event_log (seqNo,eventType,requestBody,responseBody,requestTime,status,responseTime,createUserId,createUserName)
+        values (#{seqNo},#{eventType},#{requestBody},#{responseBody}, #{requestTime},#{status},#{responseTime},#{createUserId},#{createUserName})
     </insert>
 
     <update id="modifyEventLog" parameterType="EventLogVO" >
