@@ -204,7 +204,42 @@ public class NodesServiceImpl implements INodesService{
         }
         return restResponse;
     }
+    // 1.2  0x32前端召唤设备参数（XMLGetParams）
+    @PutMapping("nodes/getParams")
+    public RestResponse<Integer> getParams(@RequestParam(required = false) String addrs){
+        RestResponse<Integer> restResponse = new RestResponse<>();
+        GetParams getParams = new GetParams();
+        String seqNo = this.getSeqNo(1);
+        getParams.setSeqno(seqNo);
+        if(StringUtils.isNotBlank(addrs)){
+            String [] addrArr = addrs.split(",");
+            List<SubItem> subItemList = new ArrayList<>();
+            SubItem subItem =null;
+            for(String addr : addrArr){
+                subItem = new SubItem();
+                subItem.setAddr(addr);
+                subItemList.add(subItem);
+            }
+            getParams.setSubItem(subItemList);
+        }
+        String xml  =XMLParser.convertToXml(getParams);
+        byte type = (byte) 0x32;
 
+        Integer eventLogId =this.iSocketService.addSendClientLog(xml,type,seqNo);//记录日志
+
+        RestResponse response =iSocketService.client(xml,type);
+        if(response.getCode() !=200){
+            restResponse.setCode(response.getCode());
+            restResponse.setMessage(response.getMessage());
+            EventLogVO eventLogVO = new EventLogVO();
+            eventLogVO.setSeqNo(seqNo);
+            eventLogVO.setResponseBody(response.getMessage());
+            eventLogVO.setId(eventLogId);
+            eventLogVO.setStatus("3");//异常
+            this.iSocketService.modifyEventLog(seqNo,eventLogVO);
+        }
+        return restResponse;
+    }
     @GetMapping("get/seqno")
     public String getSeqNo(int id){
         String seqNo = LocalDateTimeUtil.formatTime(LocalDateTime.now(),"yyyyMMddHHmmSS");

@@ -11,31 +11,37 @@ import java.time.LocalDateTime;
 public class HistoryVO extends BasicVO {
     private static final long serialVersionUID = 3L;
     @ApiModelProperty("节点编号")
-    private Integer  addr;
+    private Integer addr;
 
     @ApiModelProperty("序列号")
-    private Integer  seq_no;
+    private Integer seqNo;
+    private String name;//名称
+    private String descript;//说明
+
+    @ApiModelProperty("安装位置")
+    private String InstallPos;
+    private String pdcNo;//配电箱号
 
     @ApiModelProperty("故障标志位，T有故障，F无故障，D离线")
-    private String   ErrFlag;
+    private String ErrFlag;
 
     @ApiModelProperty("雷击故障代码，00正常01预警10报警")
-    private Integer  ErrThunder;
+    private String  ErrThunder;
 
     @ApiModelProperty("温度故障代码，00正常01预警10报警")
-    private String   ErrTemp;
+    private String ErrTemp;
 
     @ApiModelProperty("温度劣化故障代码，00正常01预警10报警")
-    private String   ErrTempLeihua;
+    private String ErrTempLeihua;
 
     @ApiModelProperty("漏电劣化1故障代码，00正常01预警10报警")
-    private String   ErrLCLeihua1;
+    private String ErrLCLeihua1;
 
     @ApiModelProperty("漏电劣化2故障代码，00正常01预警10报警")
-    private String   ErrLCLeihua2;
+    private String ErrLCLeihua2;
 
     @ApiModelProperty("漏电劣化3故障代码，00正常01预警10报警")
-    private String   ErrLCLeihua3;
+    private String ErrLCLeihua3;
 
     @ApiModelProperty("录入时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -49,12 +55,12 @@ public class HistoryVO extends BasicVO {
         this.addr = addr;
     }
 
-    public Integer getSeq_no() {
-        return seq_no;
+    public Integer getSeqNo() {
+        return seqNo;
     }
 
-    public void setSeq_no(Integer seq_no) {
-        this.seq_no = seq_no;
+    public void setSeqNo(Integer seqNo) {
+        this.seqNo = seqNo;
     }
 
     public String getErrFlag() {
@@ -65,11 +71,11 @@ public class HistoryVO extends BasicVO {
         ErrFlag = errFlag;
     }
 
-    public Integer getErrThunder() {
+    public String getErrThunder() {
         return ErrThunder;
     }
 
-    public void setErrThunder(Integer errThunder) {
+    public void setErrThunder(String errThunder) {
         ErrThunder = errThunder;
     }
 
@@ -119,5 +125,37 @@ public class HistoryVO extends BasicVO {
 
     public void setIn_Time(LocalDateTime in_Time) {
         In_Time = in_Time;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescript() {
+        return descript;
+    }
+
+    public void setDescript(String descript) {
+        this.descript = descript;
+    }
+
+    public String getInstallPos() {
+        return InstallPos;
+    }
+
+    public void setInstallPos(String installPos) {
+        InstallPos = installPos;
+    }
+
+    public String getPdcNo() {
+        return pdcNo;
+    }
+
+    public void setPdcNo(String pdcNo) {
+        this.pdcNo = pdcNo;
     }
 }

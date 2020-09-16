@@ -7,6 +7,7 @@ import com.hopedove.commons.vo.BasicPageVO;
 import com.hopedove.commons.vo.QueryEnum;
 import com.hopedove.ucserver.dao.IEnterpriseDao;
 import com.hopedove.ucserver.dao.IEventLogDao;
+import com.hopedove.ucserver.dao.node.INodeDao;
 import com.hopedove.ucserver.dao.socket.ISocketDataDao;
 import com.hopedove.ucserver.service.ISocketService;
 import com.hopedove.ucserver.service.impl.node.NodesServiceImpl;
@@ -15,11 +16,15 @@ import com.hopedove.ucserver.service.impl.websocket.WebSocket;
 import com.hopedove.ucserver.vo.EnterpriseVO;
 import com.hopedove.ucserver.vo.EventLogVO;
 import com.hopedove.ucserver.vo.UserVO;
+import com.hopedove.ucserver.vo.node.HistoryVO;
+import com.hopedove.ucserver.vo.node.NodesVO;
 import com.hopedove.ucserver.vo.node.RealVO;
+import com.hopedove.ucserver.vo.xmlvo.GetParamsRet;
 import com.hopedove.ucserver.vo.xmlvo.SubItem;
 import com.hopedove.ucserver.vo.xmlvo.UploadCollect;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -79,6 +84,9 @@ public class SocketServiceImpl implements ISocketService {
 
     @Autowired
     ISocketDataDao iSocketDataDao;
+
+    @Autowired
+    private INodeDao iNodeDao;
 
     @ApiOperation(value = "server服务端", notes = "server服务端")// 使用该注解描述接口方法信息
     @GetMapping("/server")
@@ -325,7 +333,11 @@ public class SocketServiceImpl implements ISocketService {
     public void sendRealNewData(@RequestBody UploadCollect uploadCollect){
         List<SubItem> subItems = uploadCollect.getSubItem();
         RealVO realVO = new RealVO();
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("type","real");
+        NodesVO nodesVO =null;
         for(SubItem s:subItems){
+            nodesVO = new NodesVO();
             s.setSeqNo(uploadCollect.getSeqno());
             //this.eventLogDao.addSubitem(s);
             BeanUtils.copyProperties(s,realVO);
@@ -337,12 +349,38 @@ public class SocketServiceImpl implements ISocketService {
             realVO.setLCurrent2(Integer.parseInt(s.getLCurrent2()));
             realVO.setLCurrent3(Integer.parseInt(s.getLCurrent3()));
            // this.iSocketDataDao.addReals(realVO);
-            this.sendWebSocket(JsonUtil.writeValueAsString(realVO));
+            paramMap.put("data",realVO);
+            nodesVO.setAddr(realVO.getAddr());
+            nodesVO = iNodeDao.getNodesVO(nodesVO);
+            if(nodesVO != null){
+                realVO.setInstallPos(nodesVO.getInstallPos());
+                realVO.setPdcNo(nodesVO.getName());
+            }
+
+            this.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
         }
 
         //this.sendWebSocket(JsonUtil.writeValueAsString(uploadCollect));
     }
-
+    //发送接收的数据
+    @PostMapping("/new/node")
+    public void sendNodeNewData(@RequestBody GetParamsRet getParamsRet){
+        List<SubItem> subItems = getParamsRet.getSubItem();
+        NodesVO nodesVO = new NodesVO();
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("type","node");
+        for(SubItem s:subItems){
+            s.setSeqNo(getParamsRet.getSeqno());
+            BeanUtils.copyProperties(s,nodesVO);
+            nodesVO.setAddr(Integer.parseInt(s.getAddr()));
+            nodesVO.setTCurrentAlarm(Integer.parseInt(s.getTCurrent()));
+            nodesVO.setTAlarm(Integer.parseInt(s.getTAlarm()));
+            nodesVO.setTRiseMax(Integer.parseInt(s.getTRiseMax()));
+            nodesVO.setLCurrentMax(Integer.parseInt(s.getLCurrentMax()));
+            paramMap.put("data",nodesVO);
+            this.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
+        }
+    }
     //获取实时的数据
     @GetMapping("/get/reals")
     public RestPageResponse<List<RealVO>> getReals(@RequestParam(required = false) Integer currentPage,
@@ -374,6 +412,44 @@ public class SocketServiceImpl implements ISocketService {
         return new RestPageResponse<>(datas, page);
     }
 
+    //获取历史的数据
+    @GetMapping("/get/history")
+    public RestPageResponse<List<HistoryVO>> getHistorys(@RequestParam(required = false) Integer currentPage,
+                                                         @RequestParam(required = false) Integer pageSize,
+                                                         @RequestParam(required = false) String sort){
+        //1.查询主数据
+        BasicPageVO page = null;
+        if (currentPage != null) {
+            page = new BasicPageVO(currentPage, pageSize);
+        }
+
+        //2.获得前端排序数据
+        sort = SortUtil.format(sort);
+        Map<String, Object> param = new HashMap<>();
+
+//        param.put("eventType", eventType);
+//        param.put("seqNo", seqNo);
+        param.put(QueryEnum.PAGES.getValue(), page);
+        param.put(QueryEnum.SORTS.getValue(), sort);
+
+        //2.查询总记录数，用于计算出总分页数
+        if (page != null) {
+            int count = this.iSocketDataDao.getHistorysCount(param);
+            page.setPage_total(count);
+        }
+        param.put("pageIndex",(page.getPage_currentPage()-1)*page.getPage_pages());
+        List<HistoryVO> datas = this.iSocketDataDao.getHistorys(param);
+        //3.返回
+        return new RestPageResponse<>(datas, page);
+    }
+
+    //创建历史记录
+    @PostMapping("/history")
+    public RestResponse<Integer> addHistroys(@RequestBody HistoryVO historyVO){
+        historyVO.setIn_Time(LocalDateTime.now());
+        iSocketDataDao.addHistorys(historyVO);
+        return new RestResponse<>(1);
+    }
     public static void main(String[] args) {
 //        byte[] content = new byte[4];
 //        int pacLen = 135;
@@ -430,6 +506,9 @@ public class SocketServiceImpl implements ISocketService {
         System.out.println(nowTime);
         System.out.println(becareTime);
         System.out.println(nowTime.isBefore(becareTime));
+
+        byte [] lx = int2Bytes(84);
+        System.out.println(byte2HexStr(lx));
     }
 
     public static void dolsit(List<String> b){
@@ -439,7 +518,15 @@ public class SocketServiceImpl implements ISocketService {
         System.out.println("3" + b.isEmpty());
     }
 
-
+    public static byte[] int2Bytes( int value )
+    {
+        byte[] src = new byte[4];
+        src[3] =  (byte) ((value>>24) & 0xFF);
+        src[2] =  (byte) ((value>>16) & 0xFF);
+        src[1] =  (byte) ((value>>8) & 0xFF);
+        src[0] =  (byte) (value & 0xFF);
+        return src;
+    }
     public static String byte2HexStr(byte[] b) {
         String hs = "";
         String stmp = "";

@@ -3,7 +3,10 @@ package com.hopedove.ucserver.service;
 import com.hopedove.commons.response.RestPageResponse;
 import com.hopedove.commons.response.RestResponse;
 import com.hopedove.ucserver.vo.*;
+import com.hopedove.ucserver.vo.node.HistoryVO;
+import com.hopedove.ucserver.vo.node.NodesVO;
 import com.hopedove.ucserver.vo.node.RealVO;
+import com.hopedove.ucserver.vo.xmlvo.GetParamsRet;
 import com.hopedove.ucserver.vo.xmlvo.UploadCollect;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -49,10 +52,22 @@ public interface ISocketService {
     @PostMapping("/new/real")
     public void sendRealNewData(@RequestBody UploadCollect uploadCollect);
 
+    //发送接收的数据
+    @PostMapping("/new/node")
+    public void sendNodeNewData(@RequestBody GetParamsRet getParamsRet);
+
     //获取实时的数据
     @GetMapping("/get/reals")
     public RestPageResponse<List<RealVO>> getReals(@RequestParam(required = false) Integer currentPage,
                                                    @RequestParam(required = false) Integer pageSize,
                                                    @RequestParam(required = false) String sort);
 
+    //获取历史的数据
+    @GetMapping("/get/history")
+    public RestPageResponse<List<HistoryVO>> getHistorys(@RequestParam(required = false) Integer currentPage,
+                                                      @RequestParam(required = false) Integer pageSize,
+                                                      @RequestParam(required = false) String sort);
+    //创建历史记录
+    @PostMapping("/history")
+    RestResponse<Integer> addHistroys(@RequestBody HistoryVO historyVO);
 }

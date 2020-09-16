@@ -36,6 +36,9 @@ public interface INodesService {
     @PutMapping("nodes/clearFault")
     RestResponse<Integer> clearFault(@RequestParam(required = false) String addrs);
 
+    // 1.2  0x32前端召唤设备参数（XMLGetParams）
+    @PutMapping("nodes/getParams")
+    RestResponse<Integer> getParams(@RequestParam(required = false) String addrs);
 
     @GetMapping("get/seqno")
     String getSeqNo(int id);

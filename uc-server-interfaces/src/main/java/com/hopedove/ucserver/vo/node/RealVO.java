@@ -90,6 +90,10 @@ public class RealVO extends BasicVO {
 
     private String InstallPos;//安装地址
 
+    @ApiModelProperty("劣化度，单位：%")
+    private String Deterior;
+
+
     public Integer getAddr() {
         return addr;
     }
@@ -296,5 +300,13 @@ public class RealVO extends BasicVO {
 
     public void setInstallPos(String installPos) {
         InstallPos = installPos;
+    }
+
+    public String getDeterior() {
+        return Deterior;
+    }
+
+    public void setDeterior(String deterior) {
+        Deterior = deterior;
     }
 }

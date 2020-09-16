@@ -1,5 +1,6 @@
 package com.hopedove.ucserver.dao.socket;
 import com.hopedove.ucserver.vo.EventLogVO;
+import com.hopedove.ucserver.vo.node.HistoryVO;
 import com.hopedove.ucserver.vo.node.RealVO;
 import com.hopedove.ucserver.vo.xmlvo.SubItem;
 
@@ -17,4 +18,10 @@ public interface ISocketDataDao {
   int addReals(RealVO dictVO);
 
   int removeRealVO(String code, String typeCode);
+
+  int getHistorysCount(Map<String, Object> param);
+
+  List<HistoryVO> getHistorys(Map<String, Object> param);
+
+  int addHistorys(HistoryVO historyVO);
 }

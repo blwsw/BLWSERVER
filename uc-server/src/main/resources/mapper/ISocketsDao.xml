@@ -49,5 +49,27 @@
     </insert>
 
 
+    <select id="getHistorys" parameterType="map" resultType="HistoryVO">
+        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `history` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='1')
+        <include refid="RealsWhere"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
 
+    <select id="getHistorysCount" parameterType="map" resultType="int">
+        select
+        count(*)
+        from
+        `history`
+        <include refid="RealsWhere"></include>
+    </select>
+
+    <insert id="addHistorys" parameterType="HistoryVO">
+        insert into `history` (addr,ErrFlag,ErrThunder,ErrTemp,ErrTempLeihua,ErrLCLeihua1,ErrLCLeihua2,ErrLCLeihua3,In_Time)
+        values (#{addr},#{ErrFlag},#{ErrThunder},#{ErrTemp},#{ErrTempLeihua},#{ErrLCLeihua1},#{ErrLCLeihua2},#{ErrLCLeihua3},#{In_Time})
+    </insert>
 </mapper>

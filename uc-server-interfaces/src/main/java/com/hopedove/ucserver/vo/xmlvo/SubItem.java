@@ -84,6 +84,9 @@ public class SubItem {
     @ApiModelProperty("雷击次数")
     private Integer  TTime;
 
+    @ApiModelProperty("劣化度，单位：%")
+    private String Deterior;
+
     public String getAddr() {
         return addr;
     }
@@ -362,5 +365,13 @@ public class SubItem {
 
     public void setTTime(Integer TTime) {
         this.TTime = TTime;
+    }
+
+    public String getDeterior() {
+        return Deterior;
+    }
+
+    public void setDeterior(String deterior) {
+        Deterior = deterior;
     }
 }

@@ -46,14 +46,20 @@ public class ServerConfig extends Thread {
     private SocketServiceImpl service = SpringUtil.getBean(SocketServiceImpl.class);
 
     private String handle(InputStream inputStream) throws IOException, ParserConfigurationException, SAXException {
-
-        byte[] bytes = new byte[1024];
+        int inSize = 0;
+        while (inSize == 0) {
+            inSize = inputStream.available();
+        }
+        byte[] bytes = new byte[inSize];
+        logger.debug(" inputStream.available();="+ inSize);
         int len = inputStream.read(bytes);
         if (len != -1) {
             //前4位包头 4位总长，1位类型，4位xml长度  xml内容。4位包尾
             byte btype = bytes[8];//类型
             int type =(int) (btype & 0xFF);
             System.out.println(type);
+            logger.debug("type="+type);
+            logger.debug("bytes.length="+bytes.length);
 //          bytes：byte源数组
 //          srcPos：截取源byte数组起始位置（0位置有效）
 //          dest,：byte目的数组（截取后存放的数组）
@@ -73,11 +79,7 @@ public class ServerConfig extends Thread {
             //System.out.println("from client ... " + request + "当前线程" + Thread.currentThread().getName());
             //System.out.println("处理的数据" + request.toString());
            // this.service.modifyEventLog(seqNo,eventLogVO);
-            if (1 == 1) {
-                return "ok";
-            } else {
-                throw new BusinException("500","数据处理异常");
-            }
+            return "数据接收成功";
         } else {
             throw new BusinException("500","数据处理异常");
         }
@@ -106,6 +108,22 @@ public class ServerConfig extends Thread {
                 writer.newLine();
                 writer.flush();
                 System.out.println("发生异常");
+                //记录日志
+                EventLogVO eventLogVO = new EventLogVO();
+                eventLogVO.setResponseTime(LocalDateTime.now());
+                int inSize = 0;
+                while (inSize == 0) {
+                    inSize = inputStream.available();
+                }
+                byte[] bytes = new byte[inSize];
+                logger.debug(" inputStream.available();="+ inSize);
+                int len = inputStream.read(bytes);
+                String instr = new String(bytes, 0, inSize, "UTF-8");
+                eventLogVO.setRequestBody(instr);
+                eventLogVO.setResponseBody(e.getMessage());
+                eventLogVO.setStatus("3");
+                eventLogVO.setEventType("err");
+                this.service.addEventLog(eventLogVO);
                 try {
                     System.out.println("再次接受!");
                     result = handle(inputStream);
@@ -115,6 +133,7 @@ public class ServerConfig extends Thread {
                 } catch (ParserConfigurationException |IOException | SAXException  ex) {
                     ex.printStackTrace();
                     System.out.println("再次接受, 发生异常,连接关闭");
+
                 }
             }
         } catch (SocketException socketException) {
