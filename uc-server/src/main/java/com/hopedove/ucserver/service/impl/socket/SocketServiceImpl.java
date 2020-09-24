@@ -369,16 +369,18 @@ public class SocketServiceImpl implements ISocketService {
         NodesVO nodesVO = new NodesVO();
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("type","node");
-        for(SubItem s:subItems){
-            s.setSeqNo(getParamsRet.getSeqno());
-            BeanUtils.copyProperties(s,nodesVO);
-            nodesVO.setAddr(Integer.parseInt(s.getAddr()));
-            nodesVO.setTCurrentAlarm(Integer.parseInt(s.getTCurrent()));
-            nodesVO.setTAlarm(Integer.parseInt(s.getTAlarm()));
-            nodesVO.setTRiseMax(Integer.parseInt(s.getTRiseMax()));
-            nodesVO.setLCurrentMax(Integer.parseInt(s.getLCurrentMax()));
-            paramMap.put("data",nodesVO);
-            this.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
+        if(subItems != null){
+            for(SubItem s:subItems){
+                s.setSeqNo(getParamsRet.getSeqno());
+                BeanUtils.copyProperties(s,nodesVO);
+                nodesVO.setAddr(Integer.parseInt(s.getAddr()));
+                nodesVO.setTCurrentAlarm(Integer.parseInt(s.getTCurrentAlarm()));
+                nodesVO.setTAlarm(Integer.parseInt(s.getTAlarm()));
+                nodesVO.setTRiseMax(Integer.parseInt(s.getTRiseMax()));
+                nodesVO.setLCurrentMax(Integer.parseInt(s.getLCurrentMax()));
+                paramMap.put("data",nodesVO);
+                this.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
+            }
         }
     }
     //获取实时的数据

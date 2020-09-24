@@ -45,7 +45,7 @@ public class ServerConfig extends Thread {
     // 获取spring容器管理的类，可以获取到sevrice的类
     private SocketServiceImpl service = SpringUtil.getBean(SocketServiceImpl.class);
 
-    private String handle(InputStream inputStream) throws IOException, ParserConfigurationException, SAXException {
+    private String handle(InputStream inputStream) throws IOException, ParserConfigurationException, Exception {
         int inSize = 0;
         while (inSize == 0) {
             inSize = inputStream.available();
@@ -102,7 +102,7 @@ public class ServerConfig extends Thread {
                 writer.write(result);
                 writer.newLine();
                 writer.flush();
-            } catch (IOException | BusinException| IllegalArgumentException|ParserConfigurationException| SAXException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 writer.write("error");
                 writer.newLine();
@@ -130,7 +130,7 @@ public class ServerConfig extends Thread {
                     writer.write(result);
                     writer.newLine();
                     writer.flush();
-                } catch (ParserConfigurationException |IOException | SAXException  ex) {
+                } catch (Exception  ex) {
                     ex.printStackTrace();
                     System.out.println("再次接受, 发生异常,连接关闭");
 
@@ -175,7 +175,7 @@ public class ServerConfig extends Thread {
         }else if(type == 66){//0x42	表示服务召唤设备参数反馈
             GetParamsRet getParamsRet= (GetParamsRet)XMLParser.convertXmlStrToObject(GetParamsRet.class,xmlData);
             seqNo = getParamsRet.getSeqno();
-
+            this.service.sendNodeNewData(getParamsRet);
         }else if(type == 67){//0x43	表示服务下发设备参数反馈
             SetParamsRet setParamsRet= (SetParamsRet)XMLParser.convertXmlStrToObject(SetParamsRet.class,xmlData);
             seqNo = setParamsRet.getSeqno();
