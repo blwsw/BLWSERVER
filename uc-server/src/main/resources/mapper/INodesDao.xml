@@ -16,7 +16,7 @@
     </sql>
 
     <select id="getNodes" parameterType="map" resultType="NodesVO">
-        select * from nodes
+        select * from Nodes
         <include refid="nodesWhere"></include>
         <if test=" sorts != null and sorts != '' ">
             order by ${sorts}
@@ -30,7 +30,7 @@
         select
         count(*)
         from
-        nodes
+        Nodes
         <include refid="nodesWhere"></include>
     </select>
 
@@ -38,18 +38,18 @@
         select
             t1.*
         from
-        nodes t1
+        Nodes t1
         where addr = #{addr}
     </select>
 
     <insert id="addNodes" parameterType="NodesVO">
-        insert into nodes (addr,`delete`,`name`,descript,InstallPos,serialserver_ip,serialserver_port,TCurrentAlarm,TAlarm,TRiseMax,LCurrentMax,BOut,Switch1,Switch2,Switch3,Switch4,TCurrent1,TCurrent2,TCurrent3)
+        insert into Nodes (addr,`delete`,`name`,descript,InstallPos,serialserver_ip,serialserver_port,TCurrentAlarm,TAlarm,TRiseMax,LCurrentMax,BOut,Switch1,Switch2,Switch3,Switch4,TCurrent1,TCurrent2,TCurrent3)
         values (#{addr},#{delete},#{name},#{descript},#{InstallPos},#{serialserver_ip},#{serialserver_port},#{TCurrentAlarm},#{TAlarm},#{TRiseMax},#{LCurrentMax},#{BOut},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{TCurrent1},#{TCurrent2},#{TCurrent3})
     </insert>
 
     <update id="modifyNodes" parameterType="NodesVO">
         update
-        nodes
+        Nodes
         <set>
             <if test=" name != null and name != '' ">
                 name = #{name},
@@ -110,7 +110,7 @@
     </update>
 
     <delete id="removeNodes" parameterType="NodesVO">
-        update nodes set `delete` = '0' where addr = #{addr}
+        update Nodes set `delete` = '0' where addr = #{addr}
     </delete>
 
 
