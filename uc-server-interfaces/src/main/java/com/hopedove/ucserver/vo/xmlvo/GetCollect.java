@@ -6,7 +6,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {
         "seqno",
-        "subItem",
+        "SubItem",
         }) //控制JAXB 绑定类中属性和字段的排序
 @XmlRootElement(name="GetCollect")
 public class GetCollect {
@@ -14,7 +14,7 @@ public class GetCollect {
     @XmlAttribute
     private String seqno;
 
-    private List<SubItem> subItem;
+    private List<SubItem> SubItem;
 
     public String getSeqno() {
         return seqno;
@@ -25,10 +25,10 @@ public class GetCollect {
     }
 
     public List<SubItem> getSubItem() {
-        return subItem;
+        return SubItem;
     }
 
     public void setSubItem(List<SubItem> subItem) {
-        this.subItem = subItem;
+        this.SubItem = subItem;
     }
 }
