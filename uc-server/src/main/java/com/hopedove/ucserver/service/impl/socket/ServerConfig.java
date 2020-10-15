@@ -74,7 +74,11 @@ public class ServerConfig extends Thread {
 
             StringBuffer request = new StringBuffer();
             request.append(new String(xmlb, 0, xmlLent, "UTF-8"));
-            this.dispatch(btype,request.toString());
+
+            //异步处理消息内容
+            new Thread(() -> {
+                this.dispatch(btype,request.toString());
+            }).start();
             //System.out.println("接受的数据: " + request);
             //System.out.println("from client ... " + request + "当前线程" + Thread.currentThread().getName());
             //System.out.println("处理的数据" + request.toString());

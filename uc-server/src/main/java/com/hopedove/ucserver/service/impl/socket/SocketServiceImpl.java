@@ -338,6 +338,7 @@ public class SocketServiceImpl implements ISocketService {
         NodesVO nodesVO =null;
         for(SubItem s:subItems){
             nodesVO = new NodesVO();
+            realVO = new RealVO();
             s.setSeqNo(uploadCollect.getSeqno());
             //this.eventLogDao.addSubitem(s);
             BeanUtils.copyProperties(s,realVO);

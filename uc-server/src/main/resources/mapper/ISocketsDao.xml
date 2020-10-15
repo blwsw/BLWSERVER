@@ -16,7 +16,7 @@
     </sql>
 
     <select id="getReals" parameterType="map" resultType="RealVO">
-        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `Real` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='1')
+        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `Real` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
         <include refid="RealsWhere"></include>
         <if test=" sorts != null and sorts != '' ">
             order by ${sorts}
@@ -50,7 +50,7 @@
 
 
     <select id="getHistorys" parameterType="map" resultType="HistoryVO">
-        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `History` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='1')
+        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `History` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
         <include refid="RealsWhere"></include>
         <if test=" sorts != null and sorts != '' ">
             order by ${sorts}
@@ -69,7 +69,7 @@
     </select>
 
     <insert id="addHistorys" parameterType="HistoryVO">
-        insert into `History` (addr,ErrFlag,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,In_Time)
-        values (#{addr},#{ErrFlag},#{ErrThunder},#{ErrTemp},#{ErrLeihua},#{ErrLC1},#{ErrLC2},#{ErrLC3},#{In_Time})
+        insert into `History` (addr,ErrFlag,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time)
+        values (#{addr},#{ErrFlag},#{ErrThunder},#{ErrTemp},#{ErrLeihua},#{ErrLC1},#{ErrLC2},#{ErrLC3},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{In_Time})
     </insert>
 </mapper>

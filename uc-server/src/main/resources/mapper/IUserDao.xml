@@ -111,6 +111,7 @@
     <select id="getUserFactoryRoleRec" parameterType="java.lang.Integer" resultType="UserFactoryRoleRecVO">
         select * from uc_user_factory_role_rec
         where userId = #{userId}
+
     </select>
 
     <insert id="batchAddRoleRecs" parameterType="List">

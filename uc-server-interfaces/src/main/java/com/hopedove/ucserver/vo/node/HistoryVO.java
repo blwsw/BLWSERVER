@@ -47,6 +47,29 @@ public class HistoryVO extends BasicVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime In_Time;
 
+
+    @ApiModelProperty("温度劣化故障代码，00正常01预警10报警")
+    private String   ErrLeihua;
+
+    @ApiModelProperty("漏电劣化1故障代码，00正常01预警10报警")
+    private String   ErrLC1;
+
+    @ApiModelProperty("漏电劣化2故障代码，00正常01预警10报警")
+    private String   ErrLC2;
+
+    @ApiModelProperty("漏电劣化3故障代码，00正常01预警10报警")
+    private String   ErrLC3;
+    @ApiModelProperty("开关量1，0关，1开")
+    private String   Switch1;
+
+    @ApiModelProperty("开关量2，0关，1开")
+    private String   Switch2;
+
+    @ApiModelProperty("开关量3，0关，1开")
+    private String   Switch3;
+
+    @ApiModelProperty("开关量4，0关，1开")
+    private String   Switch4;
     public Integer getAddr() {
         return addr;
     }
@@ -157,5 +180,69 @@ public class HistoryVO extends BasicVO {
 
     public void setPdcNo(String pdcNo) {
         this.pdcNo = pdcNo;
+    }
+
+    public String getErrLeihua() {
+        return ErrLeihua;
+    }
+
+    public void setErrLeihua(String errLeihua) {
+        ErrLeihua = errLeihua;
+    }
+
+    public String getErrLC1() {
+        return ErrLC1;
+    }
+
+    public void setErrLC1(String errLC1) {
+        ErrLC1 = errLC1;
+    }
+
+    public String getErrLC2() {
+        return ErrLC2;
+    }
+
+    public void setErrLC2(String errLC2) {
+        ErrLC2 = errLC2;
+    }
+
+    public String getErrLC3() {
+        return ErrLC3;
+    }
+
+    public void setErrLC3(String errLC3) {
+        ErrLC3 = errLC3;
+    }
+
+    public String getSwitch1() {
+        return Switch1;
+    }
+
+    public void setSwitch1(String switch1) {
+        Switch1 = switch1;
+    }
+
+    public String getSwitch2() {
+        return Switch2;
+    }
+
+    public void setSwitch2(String switch2) {
+        Switch2 = switch2;
+    }
+
+    public String getSwitch3() {
+        return Switch3;
+    }
+
+    public void setSwitch3(String switch3) {
+        Switch3 = switch3;
+    }
+
+    public String getSwitch4() {
+        return Switch4;
+    }
+
+    public void setSwitch4(String switch4) {
+        Switch4 = switch4;
     }
 }
