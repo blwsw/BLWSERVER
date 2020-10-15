@@ -118,7 +118,7 @@ public class NodesServiceImpl implements INodesService{
         item.setTRiseMax(nodesVO.getTRiseMax().toString());
         item.setLCurrentMax(nodesVO.getLCurrentMax().toString());
         seqNo = this.getSeqNo(1);
-        GetCollect p = new GetCollect();
+        SetParams p = new SetParams();
         p.setSeqno(seqNo);
         List<SubItem> items = new ArrayList<>();
 
