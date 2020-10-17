@@ -5,7 +5,7 @@
     <sql id="dictsWhere">
         where 1=1
           <if test=" seqNo != null and seqNo != '' ">
-              and seqNo like concat('%', #{seqNo}, '%')
+              and seqNo = #{seqNo}
           </if>
           <if test=" eventType != null and eventType != '' ">
               and eventType = #{eventType}
@@ -39,11 +39,16 @@
     </select>
 
     <insert id="addEventLog" parameterType="EventLogVO" >
-        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
-            select LAST_INSERT_ID() as id
-        </selectKey>
-        insert into t_event_log (seqNo,eventType,requestBody,responseBody,requestTime,status,responseTime,createUserId,createUserName)
+       insert into t_event_log (seqNo,eventType,requestBody,responseBody,requestTime,status,responseTime,createUserId,createUserName)
         values (#{seqNo},#{eventType},#{requestBody},#{responseBody}, #{requestTime},#{status},#{responseTime},#{createUserId},#{createUserName})
+    </insert>
+
+    <insert id="addEventLogBatch" parameterType="map" useGeneratedKeys="false">
+        insert into t_event_log (seqNo,eventType,requestBody,responseBody,requestTime,status,responseTime,createUserId,createUserName)
+        values
+        <foreach collection="logList" item="item" index="index" separator=",">
+            (#{item.seqNo},#{item.eventType},#{item.requestBody},#{item.responseBody}, #{item.requestTime},#{item.status},#{item.responseTime},#{item.createUserId},#{item.createUserName})
+        </foreach>
     </insert>
 
     <update id="modifyEventLog" parameterType="EventLogVO" >
@@ -54,13 +59,15 @@
             <if test=" status != null and status != '' ">status=#{status},</if>
             <if test=" responseTime != null ">responseTime=#{responseTime},</if>
         </trim>
-        where id = #{id}
+        where seqNo=#{seqNo}
     </update>
 
     <delete id="removeEventLogVO" parameterType="DictVo">
        update t_event_log set status = 4 where id = #{id}
     </delete>
-
+    <delete id="deleteEventLogVO">
+       delete from  t_event_log
+    </delete>
     <insert id="addSubitem" parameterType="Subitem" >
         <!--<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID() as id
