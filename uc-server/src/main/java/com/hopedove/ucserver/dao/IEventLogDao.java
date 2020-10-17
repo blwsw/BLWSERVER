@@ -20,9 +20,10 @@ public interface IEventLogDao {
     int modifyEventLog(EventLogVO eventLogVO);
 
     int removeEventLogVO(String code,String typeCode);
-
+    int deleteEventLogVO();
     int addSubitem(SubItem subItem);
 
     int addReal(RealVO realVO);
 
+    int addEventLogBatch(Map<String,Object> paramMap);
 }

@@ -1,6 +1,9 @@
 package com.hopedove.ucserver.service.impl.socket;
 
+import com.hopedove.commons.utils.UserUtil;
 import com.hopedove.ucserver.service.ISocketService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -21,10 +24,9 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @Component
 public class TestRunner implements CommandLineRunner {
+    private final static Logger logger = LoggerFactory.getLogger(TestRunner.class);
 
-   // @Autowired
-   // private SocketServiceImpl socketService = SpringUtil.getBean(SocketServiceImpl.class);
-
+  //  private SocketServiceImpl socketService = SpringUtil.getBean(SocketServiceImpl.class);
     @Value("${socket.port}")
     private Integer port;
 
@@ -43,10 +45,12 @@ public class TestRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
        // System.out.println(socketService.getPoolMax());
+        //socketService.initReals();
         ServerSocket server = null;
         Socket socket = null;
         server = new ServerSocket(port);
-        System.out.println("设备服务器已经开启, 监听端口:" + port);
+        int scount=0;
+        logger.debug("设备服务器已经开启, 监听端口:" + port);
         ThreadPoolExecutor pool = new ThreadPoolExecutor(
                 poolCore,
                 poolMax,
@@ -57,6 +61,8 @@ public class TestRunner implements CommandLineRunner {
         );
         while (true) {
             socket = server.accept();
+            scount++;//
+            logger.debug("serversocket-Count="+scount);
             pool.execute(new ServerConfig(socket));
         }
     }

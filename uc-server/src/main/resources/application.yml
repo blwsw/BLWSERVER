@@ -207,14 +207,16 @@ socket:
   # 线程池 - 核心线程数 10
   pool-core: 10
   # 线程池 - 最大线程数 20
-  pool-max: 30
+  pool-max: 20
   # 线程队列容量 10
   pool-queue-init: 10
   #serverId
   server-ip: 127.0.0.1
   #serverport
-  server-port: 9006
+  server-port: 9003
+logsLimit: 100000
 ---
+
 
 spring:
   profiles: preprod1
