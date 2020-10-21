@@ -27,6 +27,8 @@ public interface ISocketService {
     //创建一个交互日志
     @PostMapping("/eventLog")
     RestResponse<Integer> addEventLog(@RequestBody EventLogVO eventLogVO);
+    @PostMapping("/eventLog/batch")
+    public RestResponse<Integer> addEventLogBatch(@RequestBody EventLogVO eventLogVO);
 
     @GetMapping("/eventLog/entity")
     RestResponse<EventLogVO> getEventLog(@RequestBody EventLogVO eventLogVO);
@@ -56,6 +58,8 @@ public interface ISocketService {
     @PostMapping("/new/node")
     public void sendNodeNewData(@RequestBody GetParamsRet getParamsRet);
 
+    @GetMapping("/init/reals")
+    public void initReals();
     //获取实时的数据
     @GetMapping("/get/reals")
     public RestPageResponse<List<RealVO>> getReals(@RequestParam(required = false) Integer currentPage,
