@@ -46,6 +46,8 @@ public class ServerConfig extends Thread {
     private SocketServiceImpl service = SpringUtil.getBean(SocketServiceImpl.class);
 
     private String handle(InputStream inputStream) throws IOException, ParserConfigurationException, Exception {
+        long startTime = System.currentTimeMillis();
+        logger.debug("handle--------------startTime="+startTime);
         int inSize = 0;
         while (inSize == 0) {
             inSize = inputStream.available();
@@ -76,9 +78,11 @@ public class ServerConfig extends Thread {
             request.append(new String(xmlb, 0, xmlLent, "UTF-8"));
 
             //异步处理消息内容
-            new Thread(() -> {
+            //new Thread(() -> {
                 this.dispatch(btype,request.toString());
-            }).start();
+           // }).start();
+            long endTime = System.currentTimeMillis();
+            logger.debug("dispatch-formatdata-------------endTime-startTime(ms)="+(endTime-startTime));
             //System.out.println("接受的数据: " + request);
             //System.out.println("from client ... " + request + "当前线程" + Thread.currentThread().getName());
             //System.out.println("处理的数据" + request.toString());
@@ -87,18 +91,19 @@ public class ServerConfig extends Thread {
         } else {
             throw new BusinException("500","数据处理异常");
         }
+
     }
 
     @Override
     public void run() {
         BufferedWriter writer = null;
+        long startTime = System.currentTimeMillis();
+        logger.debug("ServerConfig-run--------------startTime="+startTime);
         try {
-            // 设置连接超时9秒
-            socket.setSoTimeout(9000);
+            // 设置连接超时5秒
+            socket.setSoTimeout(5000);
             System.out.println("客户 - " + socket.getRemoteSocketAddress() + " -> 机连接成功");
-
             InputStream inputStream = socket.getInputStream();
-
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             String result = null;
             try {
@@ -155,7 +160,12 @@ public class ServerConfig extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            try{
+                if(socket != null) socket.close(); //断开连接
+            }catch(IOException e){}
         }
+        long endTime = System.currentTimeMillis();
+        logger.debug("ServerConfig-run-end-getData-------------endTime-startTime(ms)="+(endTime-startTime));
     }
 
     /**
@@ -187,26 +197,37 @@ public class ServerConfig extends Thread {
             InitHintRet initHintRet= (InitHintRet)XMLParser.convertXmlStrToObject(InitHintRet.class,xmlData);
             seqNo = initHintRet.getSeqno();
         }else if(type == 69){//0x45	0x45	表示服务清除设备故障反馈
-            ClearFault clearFault= (ClearFault)XMLParser.convertXmlStrToObject(ClearFault.class,xmlData);
+            ClearFaultRet clearFault= (ClearFaultRet)XMLParser.convertXmlStrToObject(ClearFaultRet.class,xmlData);
             seqNo = clearFault.getSeqno();
         }
 
         EventLogVO eventLogVO = new EventLogVO();
         eventLogVO.setSeqNo(seqNo);
         //
-        RestResponse<EventLogVO> logResponse = this.service.getEventLog(eventLogVO);
-        if(logResponse != null && logResponse.getResponseBody() != null){
-            EventLogVO sendEventLog = logResponse.getResponseBody();
-            sendEventLog.setStatus("1");//数据返回
-            sendEventLog.setResponseBody(xmlData);
-            sendEventLog.setResponseTime(LocalDateTime.now());
-            this.service.modifyEventLog(sendEventLog.getSeqNo(),sendEventLog);
-        }else{
+        if (type != 65){
+            RestResponse<EventLogVO> logResponse = this.service.getEventLog(eventLogVO);
+            if(logResponse != null && logResponse.getResponseBody() != null){
+                EventLogVO sendEventLog = logResponse.getResponseBody();
+                sendEventLog.setStatus("1");//数据返回
+                sendEventLog.setResponseBody(xmlData);
+                sendEventLog.setResponseTime(LocalDateTime.now());
+                this.service.modifyEventLog(sendEventLog.getSeqNo(),sendEventLog);
+            }else{
+                eventLogVO.setEventType(type+"");
+                eventLogVO.setStatus("6");//数据返回
+                eventLogVO.setResponseBody(xmlData);
+                eventLogVO.setResponseTime(LocalDateTime.now());
+//                RestResponse<Integer> restResponse = this.service.addEventLog(eventLogVO);
+                this.service.addEventLogBatch(eventLogVO);
+            }
+        }
+        else{
             eventLogVO.setEventType(type+"");
             eventLogVO.setStatus("6");//数据返回
             eventLogVO.setResponseBody(xmlData);
             eventLogVO.setResponseTime(LocalDateTime.now());
-            RestResponse<Integer> restResponse = this.service.addEventLog(eventLogVO);
+            //RestResponse<Integer> restResponse = this.service.addEventLog(eventLogVO);
+            this.service.addEventLogBatch(eventLogVO);
         }
     }
 

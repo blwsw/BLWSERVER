@@ -98,6 +98,7 @@ socket:
   server-ip: 127.0.0.1
   #serverport
   server-port: 9006
+logsLimit: 20000
 ---
 #测试环境配置
 #容器端口
@@ -214,7 +215,7 @@ socket:
   server-ip: 127.0.0.1
   #serverport
   server-port: 9003
-logsLimit: 100000
+logsLimit: 10000
 ---
 
 

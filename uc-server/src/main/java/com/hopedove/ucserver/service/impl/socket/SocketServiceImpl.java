@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,6 +77,9 @@ public class SocketServiceImpl implements ISocketService {
     @Value("${socket.server-port}")
     private Integer sererPort;
 
+    @Value("${logsLimit}")
+    private Integer logsLimit;
+
     @Autowired
     private IEventLogDao eventLogDao;
 
@@ -87,6 +91,11 @@ public class SocketServiceImpl implements ISocketService {
 
     @Autowired
     private INodeDao iNodeDao;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    private String realsKey = "blwRealskey";
 
     @ApiOperation(value = "server服务端", notes = "server服务端")// 使用该注解描述接口方法信息
     @GetMapping("/server")
@@ -186,7 +195,7 @@ public class SocketServiceImpl implements ISocketService {
             byte[] content=new byte[pacLen];
             System.out.println("xmlleng="+xmlleng);
             System.out.println("pacLen="+pacLen);
-            System.out.println("content="+new String(content));
+           // System.out.println("xmlData="+xmlData);
             //包头　　　　　　
             content[0]=(byte) 0x11;
             content[1]=(byte) 0x22;
@@ -262,6 +271,30 @@ public class SocketServiceImpl implements ISocketService {
         int node = this.eventLogDao.addEventLog(eventLogVO);
         return new RestResponse<>(eventLogVO.getId());
     }
+    public List<EventLogVO> eventLogList =null;
+    //创建一个交互日志
+    @PostMapping("/eventLog/batch")
+    public RestResponse<Integer> addEventLogBatch(@RequestBody EventLogVO eventLogVO){
+        if(eventLogVO == null){
+            return null;
+        }
+        if(eventLogList ==null){
+            eventLogList = new ArrayList<>();
+        }
+        eventLogList.add(eventLogVO);
+        if(eventLogList.size() >100){
+            Map<String,Object> paramMap = new HashMap<>();
+            paramMap.put("logList",eventLogList);
+            this.eventLogDao.addEventLogBatch(paramMap);
+            eventLogList = new ArrayList<>();
+            int logCount = this.eventLogDao.getEventLogCount(paramMap);
+            if(logCount>=logsLimit){
+                this.eventLogDao.deleteEventLogVO();
+            }
+        }
+        //int node = this.eventLogDao.addEventLog(eventLogVO);
+        return new RestResponse<>(1);
+    }
 
     @GetMapping("/eventLog/entity")
     public RestResponse<EventLogVO> getEventLog(@RequestBody EventLogVO eventLogVO){
@@ -332,6 +365,8 @@ public class SocketServiceImpl implements ISocketService {
     @PostMapping("/new/real")
     public void sendRealNewData(@RequestBody UploadCollect uploadCollect){
         List<SubItem> subItems = uploadCollect.getSubItem();
+        String newValues = "";
+        String oldValues = "";
         RealVO realVO = new RealVO();
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("type","real");
@@ -349,16 +384,28 @@ public class SocketServiceImpl implements ISocketService {
             realVO.setLCurrent1(Integer.parseInt(s.getLCurrent1()));
             realVO.setLCurrent2(Integer.parseInt(s.getLCurrent2()));
             realVO.setLCurrent3(Integer.parseInt(s.getLCurrent3()));
-           // this.iSocketDataDao.addReals(realVO);
-            paramMap.put("data",realVO);
-            nodesVO.setAddr(realVO.getAddr());
-            nodesVO = iNodeDao.getNodesVO(nodesVO);
-            if(nodesVO != null){
-                realVO.setInstallPos(nodesVO.getInstallPos());
-                realVO.setPdcNo(nodesVO.getName());
+            newValues = realVO.getErrFlag()+"-"+realVO.getTCurrent()+"-"+
+                    realVO.getTTime()+"-"+realVO.getDeterior()+"-"+realVO.getOTemp()+
+                    realVO.getLCurrent1()+"-"+realVO.getLCurrent2()+"-"+realVO.getLCurrent3()+
+                    realVO.getErrThunder()+"-"+realVO.getErrTemp()+"-"+realVO.getErrLeihua()+
+                    realVO.getErrLC1()+"-"+realVO.getErrLC2()+"-"+realVO.getErrLC3()+
+                    realVO.getSwitch1()+"-"+realVO.getSwitch2()+realVO.getSwitch3()+
+                    realVO.getSwitch4();
+            oldValues= this.stringRedisTemplate.opsForValue().get(this.realsKey+s.getAddr());
+            log.debug("newValues=="+newValues);
+            log.debug("oldValues=="+oldValues);
+            if(!newValues.equals(oldValues)){
+                paramMap.put("data",realVO);
+                nodesVO.setAddr(realVO.getAddr());
+                nodesVO = iNodeDao.getNodesVO(nodesVO);
+                if(nodesVO != null){
+                    realVO.setInstallPos(nodesVO.getInstallPos());
+                    realVO.setPdcNo(nodesVO.getName());
+                }
+                this.stringRedisTemplate.opsForValue().set(this.realsKey+s.getAddr(),newValues);
+                this.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
             }
-
-            this.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
+           // this.iSocketDataDao.addReals(realVO);
         }
 
         //this.sendWebSocket(JsonUtil.writeValueAsString(uploadCollect));
@@ -383,6 +430,26 @@ public class SocketServiceImpl implements ISocketService {
                 this.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
             }
         }
+    }
+
+    @GetMapping("/init/reals")
+    public void initReals(){
+        List<RealVO> datas = this.iSocketDataDao.getReals(null);
+        if(datas != null && datas.size() >0){
+            String newValues = "";
+           for(RealVO realVO:datas){
+               newValues = realVO.getErrFlag()+"-"+realVO.getTCurrent()+"-"+
+                       realVO.getTTime()+"-"+realVO.getDeterior()+"-"+realVO.getOTemp()+
+                       realVO.getLCurrent1()+"-"+realVO.getLCurrent2()+"-"+realVO.getLCurrent3()+
+                       realVO.getErrThunder()+"-"+realVO.getErrTemp()+"-"+realVO.getErrLeihua()+
+                       realVO.getErrLC1()+"-"+realVO.getErrLC2()+"-"+realVO.getErrLC3()+
+                       realVO.getSwitch1()+"-"+realVO.getSwitch2()+realVO.getSwitch3()+
+                       realVO.getSwitch4();
+               this.stringRedisTemplate.opsForValue().set(this.realsKey+realVO.getAddr(),newValues);
+           }
+
+        }
+
     }
     //获取实时的数据
     @GetMapping("/get/reals")
@@ -512,6 +579,10 @@ public class SocketServiceImpl implements ISocketService {
 
         byte [] lx = int2Bytes(84);
         System.out.println(byte2HexStr(lx));
+        List<String> userFaceVOS = new ArrayList<>();
+        userFaceVOS.add("234234234");
+        String identds = String.join("','",userFaceVOS);
+        System.out.println("'"+identds+"'");
     }
 
     public static void dolsit(List<String> b){
