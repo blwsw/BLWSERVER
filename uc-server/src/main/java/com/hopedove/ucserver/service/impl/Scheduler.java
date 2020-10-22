@@ -29,7 +29,8 @@ public class Scheduler {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     //每隔60秒执行一次
-    @Scheduled(fixedDelay = 60000)
+    //@Scheduled(fixedDelay = 60000)
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void testTasks() {
         log.debug("定时任务执行时间：" + dateFormat.format(new Date()));
         String seqNo = this.iNodesService.getSeqNo(1);
