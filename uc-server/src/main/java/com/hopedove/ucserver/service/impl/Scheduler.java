@@ -4,13 +4,13 @@ import com.hopedove.commons.response.RestResponse;
 import com.hopedove.commons.utils.JsonUtil;
 import com.hopedove.commons.utils.XMLParser;
 import com.hopedove.ucserver.service.ISocketService;
-import com.hopedove.ucserver.service.impl.socket.SocketServiceImpl;
 import com.hopedove.ucserver.service.nodes.INodesService;
-import com.hopedove.ucserver.vo.xmlvo.SetParams;
-import com.hopedove.ucserver.vo.xmlvo.XMLDTCollector;
+import com.hopedove.ucserver.vo.xmlvo.DTCollector;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -24,21 +24,31 @@ public class Scheduler {
     private ISocketService iSocketService;
     @Autowired
     private INodesService iNodesService;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-    //每隔2秒执行一次
-    @Scheduled(fixedDelay = 5000)
+    //每隔60秒执行一次
+    @Scheduled(fixedDelay = 60000)
     public void testTasks() {
-        System.out.println("定时任务执行时间：" + dateFormat.format(new Date()));
+        log.debug("定时任务执行时间：" + dateFormat.format(new Date()));
         String seqNo = this.iNodesService.getSeqNo(1);
-        XMLDTCollector p = new XMLDTCollector();
-        p.setDTCollector("");
+        DTCollector p = new DTCollector();
+        //p.setDTCollector("");
         String xml  = XMLParser.convertToXml(p);
         byte type = (byte) 0x36;
         RestResponse response =iSocketService.client(xml,type);
-        log.debug("response={}"+ JsonUtil.writeValueAsString(response));
-        if(response.getCode() ==500){//异常调用不通
-            this.iNodesService.initHint(null);
+        String codeRuleCache = stringRedisTemplate.opsForValue().get("blwheatxt01");
+        if (StringUtils.isEmpty(codeRuleCache)) {
+            //不存在信息，直接创建新的规则缓存
+            stringRedisTemplate.opsForValue().set("blwheatxt01","1");
+        } else {
+            Long sequence =stringRedisTemplate.opsForValue().increment("blwheatxt01", 1L);
+            if(sequence >10L){
+                stringRedisTemplate.opsForValue().set("blwheatxt01","1");
+                this.iNodesService.initHintNs(null);
+            }
         }
+        log.debug("response={}"+ JsonUtil.writeValueAsString(response));
     }
 }

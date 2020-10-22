@@ -166,6 +166,28 @@ public class NodesServiceImpl implements INodesService{
         return restResponse;
     }
 
+    @PutMapping("nodes/initHint/ns")
+    public RestResponse<Integer> initHintNs(@RequestBody NodesVO NodesVO){
+        RestResponse<Integer> restResponse = new RestResponse<>();
+        InitHint initHint = new InitHint();
+        String seqNo = this.getSeqNo(1);
+        initHint.setSeqno(seqNo);
+        String xml  =XMLParser.convertToXml(initHint);
+        byte type = (byte) 0x34;
+        this.iSocketService.addSendClientLogNoS(xml,type,seqNo);//记录日志
+        RestResponse response =iSocketService.client(xml,type);
+        if(response.getCode() !=200){
+            restResponse.setCode(response.getCode());
+            restResponse.setMessage(response.getMessage());
+            EventLogVO eventLogVO = new EventLogVO();
+            eventLogVO.setSeqNo(seqNo);
+            eventLogVO.setResponseBody(response.getMessage());
+            eventLogVO.setStatus("3");//异常
+            this.iSocketService.modifyEventLog(seqNo,eventLogVO);
+        }
+        return restResponse;
+    }
+
     //1.5  0x35前端通知服务清除设备故障（XMLClearFault）
     @PutMapping("nodes/clearFault")
     public RestResponse<Integer> clearFault(@RequestParam(required = false) String addrs){

@@ -154,18 +154,16 @@ public class SocketServiceImpl implements ISocketService {
         this.eventLogDao.addEventLog(eventLogVO);
         return eventLogVO.getId();
     }
-
-    public void addSendClientLog(String xmlData,byte type){
+    @PostMapping("/add/event/logs/ns")
+    public void addSendClientLogNoS(@RequestParam(required = false)String xmlData,@RequestParam(required = false) byte type,@RequestParam(required = false) String seqNo){
         EventLogVO eventLogVO = new EventLogVO();
         eventLogVO.setEventType(type+"");
         eventLogVO.setRequestBody(xmlData);
+        eventLogVO.setSeqNo(seqNo);
         eventLogVO.setRequestTime(LocalDateTime.now());
+        eventLogVO.setStatus("0");
         this.eventLogDao.addEventLog(eventLogVO);
-//        String seqNo = this.getSeqNo(eventLogVO.getId());
-//        eventLogVO.setId(eventLogVO.getId());
-//        eventLogVO.setSeqNo(seqNo);
-//        eventLogVO.setResponseBody("ok");
-//        this.modifyEventLog(seqNo,eventLogVO);
+
     }
 
     @GetMapping("/client")
@@ -184,6 +182,7 @@ public class SocketServiceImpl implements ISocketService {
                 sererIp = "127.0.0.1";
             }
             Socket socket = new Socket(sererIp,sererPort);//port);
+            socket.setSoTimeout(5000);
             //获取输出流，向服务器端发送信息
             OutputStream outputStream = socket.getOutputStream();//字节输出流
             PrintWriter pw = new PrintWriter(outputStream); //将输出流包装为打印流
@@ -255,7 +254,8 @@ public class SocketServiceImpl implements ISocketService {
             pw.close();
             outputStream.close();
             socket.close();
-
+            log.debug("type="+type);
+            log.debug("send-OK="+xmlData);
         } catch (IOException e) {
             e.printStackTrace();
             response.setMessage("socket 发送异常"+e.getMessage());

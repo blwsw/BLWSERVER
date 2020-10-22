@@ -1,23 +1,19 @@
 package com.hopedove.ucserver.service.impl.socket;
 import com.hopedove.commons.exception.BusinException;
 import com.hopedove.commons.response.RestResponse;
-import com.hopedove.commons.utils.LocalDateTimeUtil;
 import com.hopedove.commons.utils.XMLParser;
 import com.hopedove.ucserver.vo.EventLogVO;
 import com.hopedove.ucserver.vo.xmlvo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 /**
  * @author wsj
@@ -26,7 +22,8 @@ import java.util.Map;
  */
 public class ServerConfig extends Thread {
     private final static Logger logger = LoggerFactory.getLogger(ServerConfig.class);
-
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
     private Socket socket;
     public int [] messageType ={49,50,51};
     //消息类型(十六进制)	说明	XML格式
@@ -199,6 +196,10 @@ public class ServerConfig extends Thread {
         }else if(type == 69){//0x45	0x45	表示服务清除设备故障反馈
             ClearFaultRet clearFault= (ClearFaultRet)XMLParser.convertXmlStrToObject(ClearFaultRet.class,xmlData);
             seqNo = clearFault.getSeqno();
+        }else if(type == 70){//0x46	采集服务发送心跳（XMLDTCollectorRet）
+            DTCollectorRet DTCollectorRet = (DTCollectorRet)XMLParser.convertXmlStrToObject(DTCollectorRet.class,xmlData);
+            seqNo = DTCollectorRet.getDTCollectorRet();
+            stringRedisTemplate.opsForValue().set("blwheatxt01","1");
         }
 
         EventLogVO eventLogVO = new EventLogVO();
