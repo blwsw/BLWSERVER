@@ -32,6 +32,9 @@ public interface INodesService {
     @PutMapping("nodes/initHint")
     RestResponse<Integer> initHint(@RequestBody NodesVO NodesVO);
 
+    @PutMapping("nodes/initHint/ns")
+    RestResponse<Integer> initHintNs(@RequestBody NodesVO NodesVO);
+
     //1.5  0x35前端通知服务清除设备故障（XMLClearFault）
     @PutMapping("nodes/clearFault")
     RestResponse<Integer> clearFault(@RequestParam(required = false) String addrs);

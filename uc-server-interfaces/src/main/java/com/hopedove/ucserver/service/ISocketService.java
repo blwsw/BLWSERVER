@@ -36,6 +36,8 @@ public interface ISocketService {
     @PostMapping("/add/event/logs")
     Integer addSendClientLog(@RequestParam(required = false)String xmlData,@RequestParam(required = false) byte type,@RequestParam(required = false) String seqNo);
 
+    @PostMapping("/add/event/logs/ns")
+    void addSendClientLogNoS(@RequestParam(required = false)String xmlData,@RequestParam(required = false) byte type,@RequestParam(required = false) String seqNo);
     //更新一个交互日志
     @PutMapping("/eventLog")
     RestResponse<Integer> modifyEventLog(@PathVariable String seqNo, @RequestBody EventLogVO eventLogVO);

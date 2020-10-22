@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.*;
 @XmlType(propOrder = {
         "DTCollector",
         }) //控制JAXB 绑定类中属性和字段的排序
-@XmlRootElement(name="XMLDTCollector")
-public class XMLDTCollector {
+@XmlRootElement(name="DTCollector")
+public class DTCollector {
 
     private String DTCollector;
 
