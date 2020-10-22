@@ -260,6 +260,8 @@ public class SocketServiceImpl implements ISocketService {
             e.printStackTrace();
             response.setMessage("socket 发送异常"+e.getMessage());
             response.setCode(500);
+        }finally {
+
         }
         return response;
     }
