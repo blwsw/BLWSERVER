@@ -13,6 +13,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @FeignClient(value = "uc-server")
 public interface ISocketService {
@@ -76,4 +77,14 @@ public interface ISocketService {
     //创建历史记录
     @PostMapping("/history")
     RestResponse<Integer> addHistroys(@RequestBody HistoryVO historyVO);
+
+    //创建历史记录
+    @PostMapping("/batch/historys")
+    RestResponse<Integer> addBatchHistroys(@RequestBody List<HistoryVO> historyVOs);
+
+    @GetMapping("/get/history/tj/count")
+    RestResponse<List<Map<String,Object>>> getHistorysTJCount(@RequestParam(required = false) String days);
+
+    @PostMapping("/real/his")
+    RestResponse<Integer> copyRealsHistroys();
 }
