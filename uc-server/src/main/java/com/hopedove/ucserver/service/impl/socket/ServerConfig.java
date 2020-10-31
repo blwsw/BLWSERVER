@@ -22,8 +22,7 @@ import java.time.LocalDateTime;
  */
 public class ServerConfig extends Thread {
     private final static Logger logger = LoggerFactory.getLogger(ServerConfig.class);
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+
     private Socket socket;
     public int [] messageType ={49,50,51};
     //消息类型(十六进制)	说明	XML格式
@@ -41,6 +40,7 @@ public class ServerConfig extends Thread {
     }
     // 获取spring容器管理的类，可以获取到sevrice的类
     private SocketServiceImpl service = SpringUtil.getBean(SocketServiceImpl.class);
+    private StringRedisTemplate stringRedisTemplate = SpringUtil.getBean(StringRedisTemplate.class);
 
     private String handle(InputStream inputStream) throws IOException, ParserConfigurationException, Exception {
         long startTime = System.currentTimeMillis();
@@ -176,7 +176,7 @@ public class ServerConfig extends Thread {
      * 0x43	表示服务下发设备参数反馈
      * 0x44	表示服务初始化反馈
      */
-    public void dispatch(byte btype,String xmlData){
+    public void dispatch(byte btype,String xmlData) throws Exception{
         int type = (int) (btype & 0xFF);
         String seqNo = "";
         if (type == 65){//0x41	表示服务反馈/推送采集数据

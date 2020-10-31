@@ -63,9 +63,12 @@ public class NodesServiceImpl implements INodesService{
     public RestResponse<Integer> addNodes(@RequestBody NodesVO nodesVO){
         NodesVO nodesVO1 = this.iNodeDao.getNodesVO(nodesVO);
         if(nodesVO1 != null){
-            throw new BusinException("","已存在节点编号为["+nodesVO.getAddr()+"]的设备节点");
+            logger.debug("已存在节点编号为["+nodesVO.getAddr()+"]的设备节点");
+            this.iNodeDao.modifyNodes(nodesVO);
+        }else{
+            this.iNodeDao.addNodes(nodesVO);
         }
-        this.iNodeDao.addNodes(nodesVO);
+
         return new RestResponse<>(nodesVO.getAddr());
     }
 

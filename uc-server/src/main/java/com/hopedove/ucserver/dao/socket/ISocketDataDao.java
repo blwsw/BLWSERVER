@@ -24,4 +24,14 @@ public interface ISocketDataDao {
   List<HistoryVO> getHistorys(Map<String, Object> param);
 
   int addHistorys(HistoryVO historyVO);
+
+  int removeHistory(HistoryVO historyVO);
+
+  int addHistorysBatch(Map<String, Object> param);
+
+  List<Map<String,Object>> getHistorysTJCount(Map<String, Object> param);
+
+  int copyRealsHistroys(Map<String, Object> param);
+
+  List<Map<String,Object>> getRealHisTJCount(Map<String, Object> param);
 }

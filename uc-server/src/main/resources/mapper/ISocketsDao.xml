@@ -72,4 +72,87 @@
         insert into `History` (addr,ErrFlag,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time)
         values (#{addr},#{ErrFlag},#{ErrThunder},#{ErrTemp},#{ErrLeihua},#{ErrLC1},#{ErrLC2},#{ErrLC3},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{In_Time})
     </insert>
+
+    <insert id="addHistorysBatch" parameterType="map" useGeneratedKeys="false">
+        insert into `History` (addr,ErrFlag,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time)
+        values
+        <foreach collection="historyVOs" item="item" index="index" separator=",">
+            (#{item.addr},#{item.ErrFlag},#{item.ErrThunder},#{item.ErrTemp},#{item.ErrLeihua},#{item.ErrLC1},#{item.ErrLC2},#{item.ErrLC3},#{item.Switch1},#{item.Switch2},#{item.Switch3},#{item.Switch4},#{item.In_Time})
+        </foreach>
+    </insert>
+    <delete id="removeHistory">
+       delete from  `History`
+    </delete>
+    <select id="getHistorysTJCount" parameterType="map" resultType="map">
+        SELECT sum(zccount) zccount,sum(gzcount) gzcount,sum(yjcount) yjcount,sum(bjcount) bjcount,In_Time from (
+        SELECT count(*) zccount,0 gzcount,0 yjcount,0 bjcount,date_format(In_Time,'%Y-%m-%d') In_Time FROM history
+        where ErrFlag = 'F'
+        and In_Time > #{near7Day}
+        GROUP BY date_format(In_Time,'%Y-%m-%d')
+        union all
+        SELECT 0 zccount,count(*) gzcount,0 yjcount,0 bjcount,date_format(In_Time,'%Y-%m-%d') In_Time FROM history
+        where ErrFlag = 'D'
+        and In_Time > #{near7Day}
+        GROUP BY date_format(In_Time,'%Y-%m-%d')
+        union all
+        SELECT 0 zccount,0 gzcount,count(*) yjcount,0 bjcount,date_format(In_Time,'%Y-%m-%d') In_Time FROM history
+        where ErrFlag = 'T' and (ErrThunder = '01' or ErrTemp = '01' or ErrLeihua = '01' or ErrLC1 = '01' or ErrLC2 = '01' or ErrLC2 = '01')
+        and In_Time > #{near7Day}
+        GROUP BY date_format(In_Time,'%Y-%m-%d')
+        union all
+        SELECT 0 zccount,0 gzcount,0 yjcount,count(*) bjcount,date_format(In_Time,'%Y-%m-%d') In_Time FROM history
+        where ErrFlag = 'T' and (ErrThunder = '10' or ErrTemp = '10' or ErrLeihua = '10' or ErrLC1 = '10' or ErrLC2 = '10' or ErrLC2 = '10')
+        and In_Time > #{near7Day}
+        GROUP BY date_format(In_Time,'%Y-%m-%d'))a
+        GROUP BY In_Time
+    </select>
+
+    <insert id="copyRealsHistroys" parameterType="map">
+        insert into `real_his` (addr,seqNo,ErrFlag,TTime,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time,createTime)
+        select addr,seqNo,ErrFlag,TTime,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time,#{createTime}
+        from `real`
+    </insert>
+
+    <select id="getRealHisTJCount" parameterType="map" resultType="map">
+        SELECT sum(zccount) zccount,sum(gzcount) gzcount,sum(yjcount) yjcount,sum(bjcount) bjcount,sum(TTime) TTime, In_Time from (
+        SELECT count(*) zccount,0 gzcount,0 yjcount,0 bjcount,0 TTime,date_format(createTime,'%Y-%m-%d') In_Time FROM real_his
+        where ErrFlag = 'F'
+        and createTime > #{near7Day}
+        GROUP BY date_format(createTime,'%Y-%m-%d')
+        union all
+        SELECT 0 zccount,count(*) gzcount,0 yjcount,0 bjcount,0 TTime,date_format(createTime,'%Y-%m-%d') In_Time FROM real_his
+        where ErrFlag = 'D'
+        and createTime > #{near7Day}
+        GROUP BY date_format(createTime,'%Y-%m-%d')
+        union all
+        SELECT 0 zccount,0 gzcount,count(*) yjcount,0 bjcount,0 TTime,date_format(createTime,'%Y-%m-%d') In_Time FROM real_his
+        where ErrFlag = 'T' and (ErrThunder = '01' or ErrTemp = '01' or ErrLeihua = '01' or ErrLC1 = '01' or ErrLC2 = '01' or ErrLC2 = '01')
+        and createTime > #{near7Day}
+        GROUP BY date_format(createTime,'%Y-%m-%d')
+        union all
+        SELECT 0 zccount,0 gzcount,0 yjcount,count(*) bjcount,0 TTime,date_format(createTime,'%Y-%m-%d') In_Time FROM real_his
+        where ErrFlag = 'T' and (ErrThunder = '10' or ErrTemp = '10' or ErrLeihua = '10' or ErrLC1 = '10' or ErrLC2 = '10'
+        or ErrLC2 = '10' or Switch1 ='1' or Switch2 ='1'  or Switch3 ='1' or Switch4 ='1')
+        and createTime > #{near7Day}
+        GROUP BY date_format(createTime,'%Y-%m-%d')
+
+        union all
+
+        	SELECT
+	0 zccount,
+	0 gzcount,
+	0 yjcount,
+	0 bjcount,
+	sum(TTime) TTime,
+	date_format( createTime, '%Y-%m-%d' ) In_Time
+    FROM
+        real_his
+    where
+    createTime > #{near7Day}
+    GROUP BY
+	date_format( createTime, '%Y-%m-%d' )
+
+        )a
+        GROUP BY In_Time
+    </select>
 </mapper>

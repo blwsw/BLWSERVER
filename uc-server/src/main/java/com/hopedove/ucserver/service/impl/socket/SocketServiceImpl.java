@@ -378,6 +378,8 @@ public class SocketServiceImpl implements ISocketService {
             realVO = new RealVO();
             s.setSeqNo(uploadCollect.getSeqno());
             //this.eventLogDao.addSubitem(s);
+            log.debug("errflag="+s.getErrFlag());
+
             BeanUtils.copyProperties(s,realVO);
             realVO.setAddr(Integer.parseInt(s.getAddr()));
             realVO.setIn_Time(LocalDateTime.now());
@@ -521,6 +523,39 @@ public class SocketServiceImpl implements ISocketService {
         historyVO.setIn_Time(LocalDateTime.now());
         iSocketDataDao.addHistorys(historyVO);
         return new RestResponse<>(1);
+    }
+
+    //创建历史记录
+    @PostMapping("/batch/historys")
+    public RestResponse<Integer> addBatchHistroys(@RequestBody List<HistoryVO> historyVOs){
+        iSocketDataDao.removeHistory(null);
+        Map<String,Object> paramMap = new HashMap<>();
+        if(historyVOs != null && historyVOs.size() >0){
+            paramMap.put("historyVOs",historyVOs);
+            iSocketDataDao.addHistorysBatch(paramMap);
+        }
+        return new RestResponse<>(1);
+    }
+    @GetMapping("/get/history/tj/count")
+    public RestResponse<List<Map<String,Object>>> getHistorysTJCount(@RequestParam(required = false) String days){
+        if(StringUtils.isEmpty(days)){
+            days = "7";
+        }
+        int day = Integer.parseInt(days);
+        LocalDateTime near7Day = LocalDateTime.now().minusDays(day);
+        Map<String,Object> param = new HashMap<>();
+        param.put("near7Day",near7Day);
+//        List<Map<String,Object>> retList =this.iSocketDataDao.getHistorysTJCount(param);
+        List<Map<String,Object>> retList =this.iSocketDataDao.getRealHisTJCount(param);
+        return new RestResponse<>(retList);
+    }
+    @PostMapping("/real/his")
+    public RestResponse<Integer> copyRealsHistroys(){
+        Map<String,Object> param = new HashMap<>();
+        LocalDateTime nowDay = LocalDateTime.now();
+        param.put("createTime",nowDay);
+        int ret =this.iSocketDataDao.copyRealsHistroys(param);
+        return new RestResponse<>(ret);
     }
     public static void main(String[] args) {
 //        byte[] content = new byte[4];

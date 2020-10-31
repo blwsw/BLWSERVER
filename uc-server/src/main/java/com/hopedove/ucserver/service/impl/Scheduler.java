@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class Scheduler {
@@ -48,8 +50,21 @@ public class Scheduler {
             if(sequence >10L){
                 stringRedisTemplate.opsForValue().set("blwheatxt01","1");
                 this.iNodesService.initHintNs(null);
+
+                //向前端发送 采集服务挂掉的通知
+                Map<String,Object> paramMap = new HashMap<String,Object>();
+                paramMap.put("type","nsservece");
+                paramMap.put("data",1);
+                this.iSocketService.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
             }
         }
         log.debug("response={}"+ JsonUtil.writeValueAsString(response));
+    }
+
+    //每天23点执行一次
+    @Scheduled(cron = "0 0 23 * * ?")
+    public void copyRealsTasks() {
+        RestResponse<Integer> restResponse = this.iSocketService.copyRealsHistroys();
+        log.debug("copyRealsTasks====ret="+restResponse.getResponseBody());
     }
 }

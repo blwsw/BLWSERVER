@@ -131,7 +131,7 @@ public class Hex {
         return digit;
     }
     public static void main(String[] args) {
-        String srcStr = "180";
+        String srcStr = "70";
         String encodeStr = encodeHexStr(srcStr.getBytes());
         String decodeStr = new String(decodeHex(encodeStr.toCharArray()));
         System.out.println("转换前：" + srcStr);
