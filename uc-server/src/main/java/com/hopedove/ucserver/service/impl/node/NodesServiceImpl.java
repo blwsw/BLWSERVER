@@ -71,7 +71,17 @@ public class NodesServiceImpl implements INodesService{
 
         return new RestResponse<>(nodesVO.getAddr());
     }
-
+    //创建一个节点
+    @PostMapping("/nodes/batch")
+    public RestResponse<Integer> addNodesBatch(@RequestBody List<NodesVO> nodesVOs){
+        this.iNodeDao.removeNodes(null);
+        if(nodesVOs != null && nodesVOs.size() >0){
+            for(NodesVO nodesVO:nodesVOs){
+                this.iNodeDao.addNodes(nodesVO);
+            }
+        }
+        return new RestResponse<>(2);
+    }
     //更新一个节点
     @PutMapping("/nodes/{addr}")
     public RestResponse<Integer> modifyNodes(@PathVariable String addr, @RequestBody NodesVO nodesVO){

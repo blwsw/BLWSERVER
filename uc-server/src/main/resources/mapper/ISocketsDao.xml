@@ -18,9 +18,7 @@
     <select id="getReals" parameterType="map" resultType="RealVO">
         select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `Real` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
         <include refid="RealsWhere"></include>
-        <if test=" sorts != null and sorts != '' ">
-            order by ${sorts}
-        </if>
+            order by t1.addr
         <if test=" pages != null ">
             limit ${pages.page_startIndex},${pages.page_pageSize}
         </if>
@@ -52,9 +50,7 @@
     <select id="getHistorys" parameterType="map" resultType="HistoryVO">
         select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `History` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
         <include refid="RealsWhere"></include>
-        <if test=" sorts != null and sorts != '' ">
-            order by ${sorts}
-        </if>
+            order by t1.In_Time desc
         <if test=" pages != null ">
             limit ${pages.page_startIndex},${pages.page_pageSize}
         </if>

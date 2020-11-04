@@ -18,5 +18,5 @@ public interface INodeDao {
 
   int modifyNodes(NodesVO nodesVO);
 
-  int removeNodes(String code, String typeCode);
+  int removeNodes(NodesVO nodesVO);
 }

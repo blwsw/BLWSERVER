@@ -110,7 +110,11 @@
     </update>
 
     <delete id="removeNodes" parameterType="NodesVO">
-        update Nodes set `delete` = '1' where addr = #{addr}
+        delete from Nodes where 1=1
+        <if test=" addr != null and addr != '' ">
+            and addr = #{addr}
+        </if>
+
     </delete>
 
 
