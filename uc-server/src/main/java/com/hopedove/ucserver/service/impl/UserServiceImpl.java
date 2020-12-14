@@ -180,33 +180,37 @@ public class UserServiceImpl implements IUserService {
     @Override
     public RestResponse<Integer> modifyUserPwd(@PathVariable String uid, @RequestBody ModifyUserPwdVO pwdVO) {
         String sessionUId = UserUtil.get("uid", String.class);
-        Integer id = UserUtil.get("id", Integer.class);
+        Integer id = Integer.parseInt(pwdVO.getUserId());
+
+        if(StringUtils.isEmpty(pwdVO.getUserId())){
+            id = UserUtil.get("id", Integer.class);
+        }
 
         if (!sessionUId.equals(uid)) {
             throw new BusinException(ErrorCode.EXP_USER_NOMATCH);
         }
 
-        if (!pwdVO.getNewPwd().equals(pwdVO.getNewPwd2())) {
-            throw new BusinException(ErrorCode.EXP_PWD_PWD2);
-        }
+//        if (!pwdVO.getNewPwd().equals(pwdVO.getNewPwd2())) {
+//            throw new BusinException(ErrorCode.EXP_PWD_PWD2);
+//        }
 
         UserVO userVO = new UserVO();
         userVO.setId(id);
         userVO = userDao.getUser(userVO);
 
         //加密密码
-        String oldPwd = null;
-        try {
-            oldPwd = RSAUtils.encryptContent(pwdVO.getOldPwd(), RSAUtils.AESKEY);
-        } catch (Exception e) {
-            log.error("密码加密失败", e);
-
-            throw new BusinException(ErrorCode.EXP_PASSWORD_ENCODE);
-        }
-
-        if (!userVO.getPassword().equals(oldPwd)) {
-            throw new BusinException(ErrorCode.EXP_PWD_OLDPWD);
-        }
+//        String oldPwd = null;
+//        try {
+//            oldPwd = RSAUtils.encryptContent(pwdVO.getOldPwd(), RSAUtils.AESKEY);
+//        } catch (Exception e) {
+//            log.error("密码加密失败", e);
+//
+//            throw new BusinException(ErrorCode.EXP_PASSWORD_ENCODE);
+//        }
+//
+//        if (!userVO.getPassword().equals(oldPwd)) {
+//            throw new BusinException(ErrorCode.EXP_PWD_OLDPWD);
+//        }
 
         try {
             String newPwd = RSAUtils.encryptContent(pwdVO.getNewPwd(), RSAUtils.AESKEY);
@@ -225,12 +229,12 @@ public class UserServiceImpl implements IUserService {
         int counts = userDao.modifyUserPwd(userVO);
         return new RestResponse<>(counts);
     }
-    
+
     @Override
 	@GetMapping("/testDB")
 	public RestResponse<String> testDB() {
 		Integer count = userDao.testDB();
-		
+
 		return new RestResponse(count.toString());
 	}
 }

@@ -43,8 +43,8 @@
     </select>
 
     <insert id="addNodes" parameterType="NodesVO">
-        insert into Nodes (addr,`delete`,`name`,descript,InstallPos,serialserver_ip,serialserver_port,TCurrentAlarm,TAlarm,TRiseMax,LCurrentMax,BOut,Switch1,Switch2,Switch3,Switch4,TCurrent1,TCurrent2,TCurrent3)
-        values (#{addr},#{delete},#{name},#{descript},#{InstallPos},#{serialserver_ip},#{serialserver_port},#{TCurrentAlarm},#{TAlarm},#{TRiseMax},#{LCurrentMax},#{BOut},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{TCurrent1},#{TCurrent2},#{TCurrent3})
+        insert into Nodes (addr,`delete`,`name`,descript,InstallPos,serialserver_ip,serialserver_port,TCurrentAlarm,TAlarm,TRiseMax,LCurrentMax,BOut,Switch1,Switch2,Switch3,Switch4,TCurrent1,TCurrent2,TCurrent3,longitude,latitude)
+        values (#{addr},#{delete},#{name},#{descript},#{InstallPos},#{serialserver_ip},#{serialserver_port},#{TCurrentAlarm},#{TAlarm},#{TRiseMax},#{LCurrentMax},#{BOut},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{TCurrent1},#{TCurrent2},#{TCurrent3},#{longitude},#{latitude})
     </insert>
 
     <update id="modifyNodes" parameterType="NodesVO">

@@ -172,7 +172,8 @@ public class SocketServiceImpl implements ISocketService {
 
         //记录日志
        // this.addSendClientLog(xmlData,type);
-
+        Socket socket = null;
+        OutputStream outputStream = null;
         //创建客户端socket建立连接，指定服务器地址和端口
         try {
             if(sererPort == null){
@@ -181,10 +182,10 @@ public class SocketServiceImpl implements ISocketService {
             if(StringUtils.isEmpty(sererIp)){
                 sererIp = "127.0.0.1";
             }
-            Socket socket = new Socket(sererIp,sererPort);//port);
+            socket = new Socket(sererIp,sererPort);
             socket.setSoTimeout(5000);
             //获取输出流，向服务器端发送信息
-            OutputStream outputStream = socket.getOutputStream();//字节输出流
+            outputStream = socket.getOutputStream();//字节输出流
             PrintWriter pw = new PrintWriter(outputStream); //将输出流包装为打印流
             String instr = xmlData;
 
@@ -261,7 +262,16 @@ public class SocketServiceImpl implements ISocketService {
             response.setMessage("socket 发送异常"+e.getMessage());
             response.setCode(500);
         }finally {
-
+            try {
+                if(outputStream != null){
+                    outputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try{
+                if(socket != null) socket.close(); //断开连接
+            }catch(IOException e){}
         }
         return response;
     }
@@ -303,7 +313,7 @@ public class SocketServiceImpl implements ISocketService {
         eventLogVO = this.eventLogDao.getEventLog(eventLogVO);
         return new RestResponse<>(eventLogVO);
     }
-    
+
     //更新一个交互日志
     @PutMapping("/eventLog}")
     public RestResponse<Integer> modifyEventLog(@PathVariable String seqNo, @RequestBody EventLogVO eventLogVO){

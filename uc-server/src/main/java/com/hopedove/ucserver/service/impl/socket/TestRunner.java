@@ -60,10 +60,21 @@ public class TestRunner implements CommandLineRunner {
                 new ThreadPoolExecutor.DiscardOldestPolicy()
         );
         while (true) {
-            socket = server.accept();
-            scount++;//
-            logger.debug("serversocket-Count="+scount);
-            pool.execute(new ServerConfig(socket));
+            try{
+                socket = server.accept();
+                scount++;//
+                logger.debug("serversocket-Count="+scount);
+                pool.execute(new ServerConfig(socket));
+            }catch (Exception e){
+                e.printStackTrace();
+                logger.error(e.getMessage());
+                if(socket != null){
+                    socket.close();
+                }
+            }finally {
+
+            }
+
         }
     }
 }

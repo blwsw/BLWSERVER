@@ -16,7 +16,7 @@
     </sql>
 
     <select id="getReals" parameterType="map" resultType="RealVO">
-        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `Real` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
+        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos,longitude,latitude  from `Real` t1 inner join Nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
         <include refid="RealsWhere"></include>
             order by t1.addr
         <if test=" pages != null ">
@@ -48,7 +48,7 @@
 
 
     <select id="getHistorys" parameterType="map" resultType="HistoryVO">
-        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `History` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
+        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos from `History` t1 inner join Nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
         <include refid="RealsWhere"></include>
             order by t1.In_Time desc
         <if test=" pages != null ">
@@ -105,8 +105,8 @@
 
     <insert id="copyRealsHistroys" parameterType="map">
         insert into `real_his` (addr,seqNo,ErrFlag,TTime,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time,createTime)
-        select addr,seqNo,ErrFlag,TTime,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time,#{createTime}
-        from `real`
+        select t1.addr,seqNo,ErrFlag,TTime,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,t1.Switch1,t1.Switch2,t1.Switch3,t1.Switch4,In_Time,#{createTime}
+        from `real` t1 inner join Nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
     </insert>
 
     <select id="getRealHisTJCount" parameterType="map" resultType="map">
