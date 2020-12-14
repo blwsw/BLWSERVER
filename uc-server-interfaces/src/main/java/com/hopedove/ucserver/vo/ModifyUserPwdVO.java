@@ -9,6 +9,8 @@ public class ModifyUserPwdVO extends BasicVO {
 
     private String newPwd2;
 
+    private String userId;
+
     public String getOldPwd() {
         return oldPwd;
     }
@@ -31,5 +33,13 @@ public class ModifyUserPwdVO extends BasicVO {
 
     public void setNewPwd2(String newPwd2) {
         this.newPwd2 = newPwd2;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

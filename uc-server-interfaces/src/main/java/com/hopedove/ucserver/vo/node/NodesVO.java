@@ -65,6 +65,9 @@ public class NodesVO extends BasicVO {
     @ApiModelProperty("漏电流3，E:开启 D:关闭")
     private String  TCurrent3;
 
+    private String longitude;//经纬度
+
+    private String latitude;//经纬度
 
     public Integer getAddr() {
         return addr;
@@ -232,5 +235,21 @@ public class NodesVO extends BasicVO {
 
     public void setTCurrent3(String TCurrent3) {
         this.TCurrent3 = TCurrent3;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 }

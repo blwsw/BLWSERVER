@@ -94,6 +94,10 @@ public class RealVO extends BasicVO {
     private String Deterior;
 
 
+    private String longitude;//经纬度
+
+    private String latitude;//经纬度
+
     public Integer getAddr() {
         return addr;
     }
@@ -308,5 +312,21 @@ public class RealVO extends BasicVO {
 
     public void setDeterior(String deterior) {
         Deterior = deterior;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 }

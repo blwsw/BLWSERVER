@@ -15,7 +15,8 @@ public interface INodesService {
     //创建一个节点
     @PostMapping("/nodes")
     RestResponse<Integer> addNodes(@RequestBody NodesVO NodesVO);
-
+    @PostMapping("/nodes/batch")
+    public RestResponse<Integer> addNodesBatch(@RequestBody List<NodesVO> nodesVOs);
     //更新一个节点
     @PutMapping("/nodes/{addr}")
     RestResponse<Integer> modifyNodes(@PathVariable String addr, @RequestBody NodesVO NodesVO);
