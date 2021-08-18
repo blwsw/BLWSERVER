@@ -15,7 +15,7 @@ public class NodesVO extends BasicVO {
     @ApiModelProperty("产品id")
     private Integer PID;
     @ApiModelProperty("节点类型")
-    private Integer NodeType;
+    private String NodeType;
 
     @ApiModelProperty("产品名称")
     private String prodName;
@@ -281,11 +281,11 @@ public class NodesVO extends BasicVO {
         this.PID = PID;
     }
 
-    public Integer getNodeType() {
+    public String getNodeType() {
         return NodeType;
     }
 
-    public void setNodeType(Integer nodeType) {
+    public void setNodeType(String nodeType) {
         NodeType = nodeType;
     }
 

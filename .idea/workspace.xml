@@ -20,114 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27c7d699-ce04-4b02-a3cf-400171153888" name="Default Changelist" comment="3333">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_net_commons_net_3_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__redis_clients_jedis_2_9_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-server-interfaces/core-server-interfaces.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-server-interfaces/src/main/java/com/hopedove/coreserver/service/real/IRealService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-server-interfaces/src/main/java/com/hopedove/coreserver/vo/real/NodesVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-server-interfaces/src/main/java/com/hopedove/coreserver/vo/real/RealVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-server/core-server.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-server/src/main/java/com/hopedove/coreserver/dao/real/IRealDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-server/src/main/java/com/hopedove/coreserver/service/impl/real/RealServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core-server/src/main/resources/mapper/real/IRealDao.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/node/UploadVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_hopedove_szgp_commons_0_0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_hopedove_szgp_commons_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_hopedove_szst_commons_0_0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_hopedove_szst_commons_0_0_1_SNAPSHOT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commons/commons.iml" beforeDir="false" afterPath="$PROJECT_DIR$/commons/commons.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commons/src/main/java/com/hopedove/commons/utils/UserUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/commons/src/main/java/com/hopedove/commons/utils/UserUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commons/target/classes/com/hopedove/commons/utils/UserUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/commons/target/classes/com/hopedove/commons/utils/UserUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commons/target/commons-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/commons/target/commons-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/target/eureka-server-0.0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/target/eureka-server-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/gateway-server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/gateway-server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/src/main/java/com/hopedove/gatewayserver/global/DocumentationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/src/main/java/com/hopedove/gatewayserver/global/DocumentationConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/src/main/java/com/hopedove/gatewayserver/global/WebMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/src/main/java/com/hopedove/gatewayserver/global/WebMvcConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/target/classes/com/hopedove/gatewayserver/global/DocumentationConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/target/classes/com/hopedove/gatewayserver/global/DocumentationConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/target/classes/com/hopedove/gatewayserver/global/WebMvcConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/target/classes/com/hopedove/gatewayserver/global/WebMvcConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/target/gateway-server-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/target/gateway-server-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/target/gateway-server-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/target/gateway-server-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway.log" beforeDir="false" afterPath="$PROJECT_DIR$/gateway.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/service/ISocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/service/ISocketService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/service/nodes/INodesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/service/nodes/INodesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/node/HistoryVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/node/HistoryVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/node/NodesVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/node/NodesVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/node/PDCVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/node/PDCVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/node/RealVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/node/RealVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/xmlvo/SubItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/src/main/java/com/hopedove/ucserver/vo/xmlvo/SubItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/service/ISocketService.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/service/ISocketService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/EventLogVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/EventLogVO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/ModifyUserPwdVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/ModifyUserPwdVO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/node/HistoryVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/node/HistoryVO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/node/NodesVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/node/NodesVO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/node/PDCVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/node/PDCVO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/node/RealVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/node/RealVO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/GetCollect.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/GetCollect.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/GetParams.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/GetParams.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/GetParamsRet.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/GetParamsRet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/InitHint.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/InitHint.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/InitHintRet.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/InitHintRet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/SetParams.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/SetParams.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/SetParamsRet.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/SetParamsRet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/SubItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/classes/com/hopedove/ucserver/vo/xmlvo/SubItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server-interfaces/target/uc-server-interfaces-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server-interfaces/target/uc-server-interfaces-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server.log" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/dao/node/INodeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/dao/node/INodeDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/dao/node/IPDCDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/dao/node/IPDCDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/dao/socket/ISocketDataDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/dao/socket/ISocketDataDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/DeptServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/DeptServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/Scheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/Scheduler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/TokenServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/TokenServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/node/NodesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/node/NodesServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/socket/ServerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/socket/ServerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/socket/SocketServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/socket/SocketServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/websocket/WebSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/java/com/hopedove/ucserver/service/impl/websocket/WebSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/resources/mapper/IDeptDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/resources/mapper/IDeptDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/resources/mapper/IDictDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/resources/mapper/IDictDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/resources/mapper/INodesDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/resources/mapper/INodesDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/resources/mapper/IPCDDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/resources/mapper/IPCDDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/src/main/resources/mapper/ISocketsDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/src/main/resources/mapper/ISocketsDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/UserCenterServerApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/UserCenterServerApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/dao/IEventLogDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/dao/IEventLogDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/dao/node/INodeDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/dao/node/INodeDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/dao/node/IPDCDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/dao/node/IPDCDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/dao/socket/ISocketDataDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/dao/socket/ISocketDataDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/DeptServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/DeptServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/TokenServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/TokenServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/socket/Hex.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/socket/Hex.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/socket/ServerConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/socket/ServerConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/socket/SocketServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/socket/SocketServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/socket/TestRunner.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/socket/TestRunner.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/websocket/WebSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/com/hopedove/ucserver/service/impl/websocket/WebSocket.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/mapper/IDictDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/mapper/IDictDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/mapper/IEventLogDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/mapper/IEventLogDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/mapper/INodesDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/mapper/INodesDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/mapper/IPCDDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/mapper/IPCDDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/mapper/ISocketsDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/mapper/ISocketsDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/classes/mapper/IUserDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/classes/mapper/IUserDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uc-server/target/uc-server-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/uc-server-0.0.1-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uc-server/target/uc-server-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/target/uc-server-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uc-server/uc-server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/uc-server/uc-server.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +50,7 @@
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../view/2.0" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -164,6 +61,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
@@ -317,7 +215,8 @@
       <workItem from="1628846354520" duration="2147000" />
       <workItem from="1628861115652" duration="24859000" />
       <workItem from="1629095863198" duration="9821000" />
-      <workItem from="1629255089625" duration="3826000" />
+      <workItem from="1629255089625" duration="4430000" />
+      <workItem from="1629276789278" duration="1850000" />
     </task>
     <task id="LOCAL-00001" summary="3333">
       <created>1614327751829</created>
@@ -361,42 +260,42 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="447" height="466" key="DebuggerActiveHint/0.0.1280.680@0.0.1280.680" timestamp="1629025757088" />
-    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1629098784307">
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1629276821932">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1629098784307" />
-    <state width="845" height="179" key="GridCell.Tab.0.bottom" timestamp="1629269204086">
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1629276821932" />
+    <state width="845" height="239" key="GridCell.Tab.0.bottom" timestamp="1629277973969">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="845" height="179" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1629269204086" />
-    <state width="845" height="179" key="GridCell.Tab.0.center" timestamp="1629269204086">
+    <state width="845" height="239" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1629277973969" />
+    <state width="845" height="239" key="GridCell.Tab.0.center" timestamp="1629277973967">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="845" height="179" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1629269204085" />
-    <state width="845" height="179" key="GridCell.Tab.0.left" timestamp="1629269204085">
+    <state width="845" height="239" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1629277973967" />
+    <state width="845" height="239" key="GridCell.Tab.0.left" timestamp="1629277973967">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="845" height="179" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1629269204085" />
-    <state width="845" height="179" key="GridCell.Tab.0.right" timestamp="1629269204086">
+    <state width="845" height="239" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1629277973967" />
+    <state width="845" height="239" key="GridCell.Tab.0.right" timestamp="1629277973967">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="845" height="179" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1629269204086" />
-    <state width="845" height="179" key="GridCell.Tab.1.bottom" timestamp="1629269204086">
+    <state width="845" height="239" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1629277973967" />
+    <state width="845" height="239" key="GridCell.Tab.1.bottom" timestamp="1629277973969">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="845" height="179" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1629269204086" />
-    <state width="845" height="179" key="GridCell.Tab.1.center" timestamp="1629269204086">
+    <state width="845" height="239" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1629277973969" />
+    <state width="845" height="239" key="GridCell.Tab.1.center" timestamp="1629277973969">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="845" height="179" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1629269204086" />
-    <state width="845" height="179" key="GridCell.Tab.1.left" timestamp="1629269204086">
+    <state width="845" height="239" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1629277973969" />
+    <state width="845" height="239" key="GridCell.Tab.1.left" timestamp="1629277973969">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="845" height="179" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1629269204086" />
-    <state width="845" height="179" key="GridCell.Tab.1.right" timestamp="1629269204086">
+    <state width="845" height="239" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1629277973969" />
+    <state width="845" height="239" key="GridCell.Tab.1.right" timestamp="1629277973969">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="845" height="179" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1629269204086" />
+    <state width="845" height="239" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1629277973969" />
     <state width="845" height="300" key="GridCell.Tab.2.bottom" timestamp="1629077124949">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -413,10 +312,18 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="845" height="300" key="GridCell.Tab.2.right/0.0.1280.680@0.0.1280.680" timestamp="1629077124949" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1629280247940">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1629280247940" />
     <state width="647" height="347" key="XDebugger.FullValuePopup" timestamp="1628758587179">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="647" height="347" key="XDebugger.FullValuePopup/0.0.1280.680@0.0.1280.680" timestamp="1628758587179" />
+    <state x="438" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1629276436251">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="438" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1629276436251" />
     <state x="523" y="88" width="603" height="560" key="find.popup" timestamp="1629255148766">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
