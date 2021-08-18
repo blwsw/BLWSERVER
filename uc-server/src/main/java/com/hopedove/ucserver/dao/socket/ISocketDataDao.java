@@ -33,5 +33,9 @@ public interface ISocketDataDao {
 
   int copyRealsHistroys(Map<String, Object> param);
 
+  int copyRealsHistroys2(Map<String, Object> param);
+
   List<Map<String,Object>> getRealHisTJCount(Map<String, Object> param);
+
+  Map<String,Object> getRealsHH(Map<String, Object> param);
 }

@@ -11,6 +11,16 @@ public class NodesVO extends BasicVO {
     private static final long serialVersionUID = 2L;
 
     @ApiModelProperty("节点编号")
+    private Integer ID;
+    @ApiModelProperty("产品id")
+    private Integer PID;
+    @ApiModelProperty("节点类型")
+    private Integer NodeType;
+
+    @ApiModelProperty("产品名称")
+    private String prodName;
+
+    @ApiModelProperty("节点编号")
     private Integer addr;
     @ApiModelProperty("0禁用 1启用")
     private String delete;
@@ -68,6 +78,8 @@ public class NodesVO extends BasicVO {
     private String longitude;//经纬度
 
     private String latitude;//经纬度
+
+    private String RAlarm;
 
     public Integer getAddr() {
         return addr;
@@ -251,5 +263,45 @@ public class NodesVO extends BasicVO {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    public Integer getID() {
+        return ID;
+    }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
+    }
+
+    public Integer getPID() {
+        return PID;
+    }
+
+    public void setPID(Integer PID) {
+        this.PID = PID;
+    }
+
+    public Integer getNodeType() {
+        return NodeType;
+    }
+
+    public void setNodeType(Integer nodeType) {
+        NodeType = nodeType;
+    }
+
+    public String getRAlarm() {
+        return RAlarm;
+    }
+
+    public void setRAlarm(String RAlarm) {
+        this.RAlarm = RAlarm;
+    }
+
+    public String getProdName() {
+        return prodName;
+    }
+
+    public void setProdName(String prodName) {
+        this.prodName = prodName;
     }
 }

@@ -91,7 +91,7 @@ public class DeptServiceImpl implements IDeptService {
     })
     @PostMapping("/depts")
     public RestResponse<Integer> addDept(@RequestBody DeptVO param) {
-        param.setFactoryId(UserUtil.get("factoryId", Integer.class));
+        param.setFactoryId(1);
         VOUtil.fillCreate(param);
 
         Integer node = deptDao.addDept(param);

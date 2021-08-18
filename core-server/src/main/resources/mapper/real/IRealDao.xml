@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.coreserver.dao.real.IRealDao">
+
+    <select id="getRealsLy" parameterType="Map" resultType="RealVO">
+        select
+        t1.ID id,t2.addr,t2.name pdcNo,t2.InstallPos ,t1.seqno,t1.ErrFlag,t1.TCurrent,t1.TTime,t1.Deterior,t1.OTemp,t1.LCurrent1,t1.LCurrent2,t1.LCurrent3,t1.ErrThunder,t1.ErrTemp,t1.ErrLeihua,t1.ErrLC1,t1.ErrLC2,t1.ErrLC3,t1.Switch1,t1.Switch2,t1.Switch3,t1.Switch4,t1.In_Time
+        from
+        real_ly t1,nodes t2
+        <include refid="realsWhere2"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+    <select id="getRealsCountLy" parameterType="Map" resultType="int">
+        select
+        count(*)
+        from
+        real_ly t1,nodes t2
+        <include refid="realsWhere2"></include>
+    </select>
+    <select id="getRealsResister" parameterType="Map" resultType="RealVO">
+        select
+             t1.*,t2.addr,t2.name pdcNo
+        from
+        real_resister t1,nodes t2
+        <include refid="realsWhere3"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+
+    <select id="getRealsCountResister" parameterType="Map" resultType="int">
+        select
+        count(*)
+        from
+        real_resister t1,nodes t2
+        <include refid="realsWhere3"></include>
+
+    </select>
+
+
+    <sql id="realsWhere2">
+        where t1.id = t2.id
+        and t2.delete ='0'
+        <if test=" (ztStaus != null and ztStaus != '') or (gzStaus != null and gzStaus != '') or (bjStaus != null and bjStaus != '') or (yjStaus != null and yjStaus != '') ">
+            and (
+            <if test=" ztStaus != null and ztStaus != '' ">
+                ErrFlag='F'
+                <if test=" (gzStaus != null and gzStaus != '') or (bjStaus != null and bjStaus != '') or (yjStaus != null and yjStaus != '') ">
+                    or
+                </if>
+            </if>
+            <if test=" gzStaus != null and gzStaus != '' ">
+
+                ErrFlag='D'
+                <if test=" (bjStaus != null and bjStaus != '') or (yjStaus != null and yjStaus != '') ">
+                    or
+                </if>
+            </if>
+            <if test=" bjStaus != null and bjStaus != '' ">
+                (ErrFlag='T' and (ErrThunder = '10' or ErrTemp = '10' or ErrLeihua = '10' or ErrLC1 = '10' or ErrLC2 =
+                '10'
+                or ErrLC2 = '10' or Switch1 ='1' or Switch2 ='1' or Switch3 ='1' or Switch4 ='1'))
+                <if test="  (yjStaus != null and yjStaus != '') ">
+                    or
+                </if>
+            </if>
+            <if test=" yjStaus != null and yjStaus != '' ">
+                (ErrFlag='T' and (ErrThunder = '01' or ErrTemp = '01' or ErrLeihua = '01' or ErrLC1 = '01' or ErrLC2 =
+                '01' or ErrLC2 = '01'))
+            </if>
+            )
+        </if>
+    </sql>
+    <sql id="realsWhere3">
+        where t1.id = t2.id
+        and t2.delete ='0'
+        <if test=" (ztStaus != null and ztStaus != '') or (gzStaus != null and gzStaus != '') or (bjStaus != null and bjStaus != '') or (yjStaus != null and yjStaus != '') ">
+            and (
+            <if test=" ztStaus != null and ztStaus != '' ">
+                ErrFlag='F'
+                <if test=" (gzStaus != null and gzStaus != '') or (bjStaus != null and bjStaus != '') or (yjStaus != null and yjStaus != '') ">
+                    or
+                </if>
+            </if>
+            <if test=" gzStaus != null and gzStaus != '' ">
+
+                ErrFlag='D'
+                <if test=" (bjStaus != null and bjStaus != '') or (yjStaus != null and yjStaus != '') ">
+                    or
+                </if>
+            </if>
+            <if test=" bjStaus != null and bjStaus != '' ">
+                (ErrFlag='T' and ErrR = '1' )
+                <if test="  (yjStaus != null and yjStaus != '') ">
+                    or
+                </if>
+            </if>
+            <if test=" yjStaus != null and yjStaus != '' ">
+                (ErrFlag='T' and ErrR = '0'  )
+            </if>
+            )
+        </if>
+    </sql>
+    <sql id="nodesWhere">
+        where `delete` =0
+        <if test=" InstallPos != null and InstallPos != '' ">
+            and (
+            name like concat('%', #{InstallPos}, '%')
+            or addr like concat('%', #{InstallPos}, '%')
+            or descript like concat('%', #{InstallPos}, '%')
+            or InstallPos like concat('%', #{InstallPos}, '%')
+            )
+        </if>
+        <if test=" nodeType != null and nodeType != '' ">
+            and nodeType in (${nodeType})
+        </if>
+
+    </sql>
+
+    <select id="getNodesCount" parameterType="Map" resultType="int">
+        select
+        count(*)
+        from
+        (
+        SELECT
+        n.ID,n.delete,n.name,n.PID,n.NodeType,n.descript,n.InstallPos,n.serialserver_ip,n.serialserver_port,n.longitude,
+        l.addr,l.TCurrentAlarm,l.TAlarm,l.TRiseMax,l.LCurrentMax,l.BOut,l.Switch1,l.Switch2,l.Switch3,
+        l.Switch4,l.TCurrent1,l.TCurrent2,l.TCurrent3,'' RAlarm,p.name prodName
+        from nodes n inner join nodesparams_ly l on n.id = l.id
+        left join products p on p.PID = n.PID
+
+        union all
+
+        SELECT
+        n.ID,n.delete,n.name,n.PID,n.NodeType,n.descript,n.InstallPos,n.serialserver_ip,n.serialserver_port,n.longitude,
+        l.addr,'' TCurrentAlarm,'' TAlarm,'' TRiseMax,'' LCurrentMax,'' BOut,'' Switch1,'' Switch2,'' Switch3,
+        '' Switch4,'' TCurrent1,'' TCurrent2,'' TCurrent3,l.RAlarm,p.name prodName
+        from nodes n inner join nodesparams_resister l on n.id = l.id
+        left join products p on p.PID = n.PID
+        )a
+        <include refid="nodesWhere"></include>
+    </select>
+
+    <select id="getNodes" parameterType="Map" resultType="NodesVO">
+
+        select * from (
+        SELECT
+        r.ErrFlag,n.ID,n.delete,n.name,n.PID,n.NodeType,n.descript,n.InstallPos,n.serialserver_ip,n.serialserver_port,n.longitude,
+        l.addr,l.TCurrentAlarm,l.TAlarm,l.TRiseMax,l.LCurrentMax,l.BOut,l.Switch1,l.Switch2,l.Switch3,
+        l.Switch4,l.TCurrent1,l.TCurrent2,l.TCurrent3,'' RAlarm,p.name prodName
+        from real_ly r left join nodes n on r.id = n.id inner join nodesparams_ly l on n.id = l.id
+        left join products p on p.PID = n.PID
+
+        union all
+
+        SELECT
+        r.ErrFlag,n.ID,n.delete,n.name,n.PID,n.NodeType,n.descript,n.InstallPos,n.serialserver_ip,n.serialserver_port,n.longitude,
+        l.addr,'' TCurrentAlarm,'' TAlarm,'' TRiseMax,'' LCurrentMax,'' BOut,'' Switch1,'' Switch2,'' Switch3,
+        '' Switch4,'' TCurrent1,'' TCurrent2,'' TCurrent3,l.RAlarm,p.name prodName
+        from real_resister r left join nodes n on r.id = n.id inner join nodesparams_resister l on n.id = l.id
+        left join products p on p.PID = n.PID
+        )a
+        <include refid="nodesWhere"></include>
+
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+
+    <select id="getNodeResister" parameterType="Map" resultType="NodesVO">
+        SELECT * from nodes n, nodesparams_resister l where n.id = l.id
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+
+    <select id="getRealsTJ" parameterType="Map" resultType="Map">
+        SELECT zccount,gzcount,yjcount,bjcount,HH from (
+            select
+            SUM(case when ErrFlag='F'
+            then 1
+            ELSE 0 END) zccount,
+            SUM(case when ErrFlag='D'
+            then 1
+            ELSE 0 END) gzcount,
+
+            SUM(case when ErrFlag='T' and (ErrThunder = '01' or ErrTemp = '01' or ErrLeihua = '01' or ErrLC1 = '01' or ErrLC2 = '01' or ErrLC2 = '01')
+            then 1
+            ELSE 0 END) yjcount,
+
+            SUM(case when ErrFlag='T' and (ErrThunder = '10' or ErrTemp = '10' or ErrLeihua = '10' or ErrLC1 = '10' or ErrLC2 = '10'
+                    or ErrLC2 = '10' or Switch1 ='1' or Switch2 ='1'  or Switch3 ='1' or Switch4 ='1')
+            then 1
+            ELSE 0 END) bjcount,
+
+            DATE_FORMAT(In_Time,"%H") HH
+
+
+            from real_ly l inner join realtj j on DATE_FORMAT(In_Time,"%H") = j.HH
+            where j.scbj=0
+            GROUP BY DATE_FORMAT(In_Time,"%H")
+            union all
+            SELECT zccount,gzcount,yjcount,bjcount,HH from realtj WHERE scbj =0
+            )a GROUP BY HH
+
+    </select>
+
+    <select id="getxjztList" parameterType="Map" resultType="RealVO">
+    select n.*,a.* from (
+    select l.ID,l.seqno,l.ErrFlag,l.TCurrent,l.TTime,l.Deterior,l.OTemp,l.LCurrent1,l.LCurrent2,l.LCurrent3,l.ErrThunder,l.ErrTemp,l.ErrLeihua,l.ErrLC1,l.ErrLC2,l.ErrLC3,l.Switch1,l.Switch2,l.Switch3,l.Switch4,'' RVal ,l.In_Time,'' ErrR
+    from  real_ly l
+
+
+    union all
+
+    select r.ID,r.seqno,r.ErrFlag,'' TCurrent,'' TTime,'' Deterior,'' OTemp,'' LCurrent1,'' LCurrent2,'' LCurrent3,'' ErrThunder,'' ErrTemp,'' ErrLeihua,'' ErrLC1,'' ErrLC2,'' ErrLC3,'' Switch1,'' Switch2,'' Switch3,'' Switch4,r.RVal,
+    r.In_Time,r.ErrR
+    from
+    real_resister r
+    ) a inner join nodes n on a.id = n.id
+    </select>
+
+    <sql id="realsWhere">
+        where n.`delete` =0
+        <if test=" InstallPos != null and InstallPos != '' ">
+            and InstallPos like concat('%', #{InstallPos}, '%')
+        </if>
+        <if test=" PID != null and PID != '' ">
+            and n.PID = #{PID}
+        </if>
+        <if test=" (ztStaus != null and ztStaus != '') or (gzStaus != null and gzStaus != '') or (bjStaus != null and bjStaus != '') or (yjStaus != null and yjStaus != '') ">
+            and (
+            <if test=" ztStaus != null and ztStaus != '' ">
+                ErrFlag='F'
+                <if test=" (gzStaus != null and gzStaus != '') or (bjStaus != null and bjStaus != '') or (yjStaus != null and yjStaus != '') ">
+                or
+                </if>
+            </if>
+            <if test=" gzStaus != null and gzStaus != '' ">
+
+                ErrFlag='D'
+                <if test=" (bjStaus != null and bjStaus != '') or (yjStaus != null and yjStaus != '') ">
+                    or
+                </if>
+            </if>
+            <if test=" bjStaus != null and bjStaus != '' ">
+               (ErrFlag='T' and (ErrThunder = '10' or ErrTemp = '10' or ErrLeihua = '10' or ErrLC1 = '10' or ErrLC2 =
+                '10'
+                or ErrLC2 = '10' or Switch1 ='1' or Switch2 ='1' or Switch3 ='1' or Switch4 ='1'))
+                <if test="  (yjStaus != null and yjStaus != '') ">
+                    or
+                </if>
+            </if>
+            <if test=" yjStaus != null and yjStaus != '' ">
+                (ErrFlag='T' and (ErrThunder = '01' or ErrTemp = '01' or ErrLeihua = '01' or ErrLC1 = '01' or ErrLC2 =
+                '01' or ErrLC2 = '01'))
+            </if>
+            )
+        </if>
+    </sql>
+
+    <select id="getReals" parameterType="Map" resultType="RealVO">
+
+        select n.*,a.*,p.name prodName from (
+        select l.ID,l.seqno,l.ErrFlag,l.TCurrent,l.TTime,l.Deterior,l.OTemp,l.LCurrent1,l.LCurrent2,l.LCurrent3,l.ErrThunder,l.ErrTemp,l.ErrLeihua,l.ErrLC1,l.ErrLC2,l.ErrLC3,l.Switch1,l.Switch2,l.Switch3,l.Switch4,'' RVal ,l.In_Time,'' ErrR
+        from  real_ly l
+
+
+        union all
+
+        select r.ID,r.seqno,r.ErrFlag,'' TCurrent,'' TTime,'' Deterior,'' OTemp,'' LCurrent1,'' LCurrent2,'' LCurrent3,'' ErrThunder,'' ErrTemp,'' ErrLeihua,'' ErrLC1,'' ErrLC2,'' ErrLC3,'' Switch1,'' Switch2,'' Switch3,'' Switch4,r.RVal,
+        r.In_Time,r.ErrR
+        from
+        real_resister r
+        ) a right join nodes n on a.id = n.id
+        and n.delete ='0'
+        left join products p on p.PID = n.PID
+        <include refid="realsWhere"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+
+    <select id="getRealsCount" parameterType="Map" resultType="int">
+            select
+            count(*) from
+        (
+        select l.ID,l.seqno,l.ErrFlag,l.TCurrent,l.TTime,l.Deterior,l.OTemp,l.LCurrent1,l.LCurrent2,l.LCurrent3,l.ErrThunder,l.ErrTemp,l.ErrLeihua,l.ErrLC1,l.ErrLC2,l.ErrLC3,l.Switch1,l.Switch2,l.Switch3,l.Switch4,'' RVal ,l.In_Time
+        from  real_ly l
+
+
+        union all
+
+        select r.ID,r.seqno,r.ErrFlag,'' TCurrent,'' TTime,'' Deterior,'' OTemp,'' LCurrent1,'' LCurrent2,'' LCurrent3,'' ErrThunder,'' ErrTemp,'' ErrLeihua,'' ErrLC1,'' ErrLC2,'' ErrLC3,'' Switch1,'' Switch2,'' Switch3,'' Switch4,r.RVal,
+        r.In_Time
+        from
+        real_resister r
+        ) a inner join nodes n on a.id = n.id
+        and n.delete ='0'
+        <include refid="realsWhere"></include>
+    </select>
+
+    <delete id="cleanHistroyLY" parameterType="Map">
+        delete from history_ly
+    </delete>
+    <delete id="cleanHistroyresister" parameterType="Map">
+        delete from history_resister
+    </delete>
+</mapper>

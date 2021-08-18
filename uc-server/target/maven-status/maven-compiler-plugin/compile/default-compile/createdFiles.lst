@@ -35,10 +35,12 @@ com\hopedove\ucserver\global\WebMvcConfig.class
 com\hopedove\ucserver\service\impl\websocket\WebSocket.class
 com\hopedove\ucserver\service\impl\VcodeServiceImpl.class
 com\hopedove\ucserver\service\impl\PlatformServiceImpl.class
+com\hopedove\ucserver\service\impl\Scheduler.class
 com\hopedove\ucserver\dao\IGlobalDao.class
 com\hopedove\ucserver\dao\IModuleDao.class
 com\hopedove\ucserver\service\impl\EnterpriseServiceImpl.class
 com\hopedove\ucserver\service\impl\socket\ServerConfig.class
+com\hopedove\ucserver\service\impl\node\NodesServiceImpl.class
 com\hopedove\ucserver\dao\IRoleTemplateDao.class
 com\hopedove\ucserver\service\impl\GlobalServiceImpl.class
 com\hopedove\ucserver\dao\IDictDao.class

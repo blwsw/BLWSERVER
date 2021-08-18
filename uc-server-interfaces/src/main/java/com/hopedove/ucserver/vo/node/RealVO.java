@@ -1,6 +1,11 @@
 package com.hopedove.ucserver.vo.node;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.hopedove.commons.vo.BasicVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,6 +17,9 @@ public class RealVO extends BasicVO {
     private static final long serialVersionUID = 3L;
     @ApiModelProperty("节点编号")
     private Integer  addr;
+
+    @ApiModelProperty("主键")
+    private Integer  Id;
 
     @ApiModelProperty("序列号")
     private String  seqNo;
@@ -82,8 +90,8 @@ public class RealVO extends BasicVO {
     private String   Switch4;
 
     @ApiModelProperty("录入时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime In_Time;
+   // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private String In_Time;
 
 
     private String pdcNo;//配电箱号
@@ -98,6 +106,23 @@ public class RealVO extends BasicVO {
 
     private String latitude;//经纬度
 
+    private String RVal;
+    private String ErrR;
+    @ApiModelProperty("产品id")
+    private Integer PID;
+    @ApiModelProperty("节点类型")
+    private Integer NodeType;
+
+    @ApiModelProperty("0禁用 1启用")
+    private String delete;
+
+    private String name;//名称
+    private String descript;//说明
+
+    private String prodName;
+    private String serialserver_ip;//串口服务器IP
+    private Integer pdcid;//配电柜序号
+    private Integer serialserver_port;//串口服务器端口
     public Integer getAddr() {
         return addr;
     }
@@ -242,11 +267,11 @@ public class RealVO extends BasicVO {
         Switch4 = switch4;
     }
 
-    public LocalDateTime getIn_Time() {
+    public String getIn_Time() {
         return In_Time;
     }
 
-    public void setIn_Time(LocalDateTime in_Time) {
+    public void setIn_Time(String in_Time) {
         In_Time = in_Time;
     }
 
@@ -328,5 +353,101 @@ public class RealVO extends BasicVO {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer id) {
+        Id = id;
+    }
+
+    public String getRVal() {
+        return RVal;
+    }
+
+    public void setRVal(String RVal) {
+        this.RVal = RVal;
+    }
+
+    public String getErrR() {
+        return ErrR;
+    }
+
+    public void setErrR(String errR) {
+        ErrR = errR;
+    }
+
+    public Integer getPID() {
+        return PID;
+    }
+
+    public void setPID(Integer PID) {
+        this.PID = PID;
+    }
+
+    public Integer getNodeType() {
+        return NodeType;
+    }
+
+    public void setNodeType(Integer nodeType) {
+        NodeType = nodeType;
+    }
+
+    public String getDelete() {
+        return delete;
+    }
+
+    public void setDelete(String delete) {
+        this.delete = delete;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescript() {
+        return descript;
+    }
+
+    public void setDescript(String descript) {
+        this.descript = descript;
+    }
+
+    public String getProdName() {
+        return prodName;
+    }
+
+    public void setProdName(String prodName) {
+        this.prodName = prodName;
+    }
+
+    public String getSerialserver_ip() {
+        return serialserver_ip;
+    }
+
+    public void setSerialserver_ip(String serialserver_ip) {
+        this.serialserver_ip = serialserver_ip;
+    }
+
+    public Integer getPdcid() {
+        return pdcid;
+    }
+
+    public void setPdcid(Integer pdcid) {
+        this.pdcid = pdcid;
+    }
+
+    public Integer getSerialserver_port() {
+        return serialserver_port;
+    }
+
+    public void setSerialserver_port(Integer serialserver_port) {
+        this.serialserver_port = serialserver_port;
     }
 }

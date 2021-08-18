@@ -1,13 +1,14 @@
 <component name="libraryTable">
   <library name="Maven: com.hopedove.szgp:commons:0.0.1-SNAPSHOT">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/hopedove/szgp/commons/0.0.1-SNAPSHOT/commons-0.0.1-20200825.025255-29.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/hopedove/szgp/commons/0.0.1-SNAPSHOT/commons-0.0.1-20210127.075036-40.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/hopedove/szgp/commons/0.0.1-SNAPSHOT/commons-0.0.1-20200825.025255-29-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/hopedove/szgp/commons/0.0.1-SNAPSHOT/commons-0.0.1-20210127.075036-40-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/hopedove/szgp/commons/0.0.1-SNAPSHOT/commons-0.0.1-20200825.025255-29-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/hopedove/szgp/commons/0.0.1-SNAPSHOT/commons-0.0.1-20210127.075036-40-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/hopedove/blw/commons/0.0.1-SNAPSHOT/commons-0.0.1-SNAPSHOT.jar!/" />
     </SOURCES>
   </library>
 </component>

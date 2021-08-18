@@ -10,6 +10,7 @@ public class PDCVO extends BasicVO {
     private String name;//名称
     private String descript;//说明
     private String unitid;//行政单位序号
+    private Integer pId;//产品编号
 
     public Integer getId() {
         return id;
@@ -41,5 +42,13 @@ public class PDCVO extends BasicVO {
 
     public void setUnitid(String unitid) {
         this.unitid = unitid;
+    }
+
+    public Integer getpId() {
+        return pId;
+    }
+
+    public void setpId(Integer pId) {
+        this.pId = pId;
     }
 }

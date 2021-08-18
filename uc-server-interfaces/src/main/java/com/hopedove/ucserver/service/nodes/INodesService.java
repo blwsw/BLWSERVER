@@ -3,6 +3,7 @@ package com.hopedove.ucserver.service.nodes;
 import com.hopedove.commons.response.RestPageResponse;
 import com.hopedove.commons.response.RestResponse;
 import com.hopedove.ucserver.vo.node.NodesVO;
+import com.hopedove.ucserver.vo.node.UploadVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +12,12 @@ import java.util.List;
 
 @FeignClient(value = "uc-server")
 public interface INodesService {
-    
+
     //创建一个节点
     @PostMapping("/nodes")
     RestResponse<Integer> addNodes(@RequestBody NodesVO NodesVO);
     @PostMapping("/nodes/batch")
-    public RestResponse<Integer> addNodesBatch(@RequestBody List<NodesVO> nodesVOs);
+    public RestResponse<Integer> addNodesBatch(@RequestBody UploadVO uploadVO);
     //更新一个节点
     @PutMapping("/nodes/{addr}")
     RestResponse<Integer> modifyNodes(@PathVariable String addr, @RequestBody NodesVO NodesVO);

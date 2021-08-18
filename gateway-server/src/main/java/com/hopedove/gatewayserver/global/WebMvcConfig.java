@@ -12,7 +12,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
-        registry.addResourceHandler("/szapk/**")
-                .addResourceLocations("classpath:/apk/");
+        //registry.addResourceHandler("/szapk/**")
+        //        .addResourceLocations("classpath:/apk/");
     }
 }

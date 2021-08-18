@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.coreserver.dao.core.IFileDao">
+
+    <select id="getFile" parameterType="int" resultType="FileVO">
+        select
+            top 1 t1.*
+        from
+        upload_files t1  with(nolock) 
+        where t1.disabled = 0
+        <if test=" _parameter != null and _parameter != '' ">
+            and id = #{id}
+        </if>
+    </select>
+
+    <insert id="addFile" parameterType="FileVO">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+        insert into upload_files
+        (fileName, fullPath, fileExtName, path, groupName, disabled, createUserId, createUserName, createDatetime, createDeptId, createIp, updateUserId, updateUserName, updateDatetime, updateDeptId, updateIp)
+        values
+        (#{fileName}, #{fullPath}, #{fileExtName}, #{path}, #{groupName}, #{disabled}, #{createUserId}, #{createUserName}, #{createDatetime},#{createDeptId}, #{createIp}, #{updateUserId}, #{updateUserName}, #{updateDatetime}, #{updateDeptId}, #{updateIp});
+        SELECT SCOPE_IDENTITY()
+        </selectKey>
+    </insert>
+
+    <update id="removeFile" parameterType="FileVO">
+        update
+        upload_files
+        <set>
+            disabled = #{disabled}
+        </set>
+        where id = #{id} and disabled = 0
+    </update>
+
+</mapper>

@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface IPDCDao {
 
-  List<PDCVO> getPCDs(Map<String, Object> param);
+  List<PDCVO> getProducts(Map<String, Object> param);
 
   int getPCDsCount(Map<String, Object> param);
 
@@ -18,4 +18,5 @@ public interface IPDCDao {
   int modifyPCDs(PDCVO PCDsVO);
 
   int removePCDs(String code, String typeCode);
+
 }

@@ -3,24 +3,60 @@
 <mapper namespace="com.hopedove.ucserver.dao.node.INodeDao">
 
     <sql id="nodesWhere">
-        where disabled = 0
-        <if test=" name != null and name != '' ">
-            and name like concat('%', #{name}, '%')
+        where 1=1
+        <if test=" queryString != null and queryString != '' ">
+          and n.PID = #{queryString}
         </if>
-        <if test=" factoryId != null and factoryId != '' ">
-            and factoryId = #{factoryId}
-        </if>
-        <if test=" type != null and type != '' ">
-            and type = #{type}
-        </if>
+
     </sql>
 
     <select id="getNodes" parameterType="map" resultType="NodesVO">
-        select * from nodes
+
+        SELECT
+        n.*,
+        a.*
+        FROM
+        nodes n
+        LEFT JOIN (
+        SELECT
+        l.id,
+        l.TCurrentAlarm,
+        l.TAlarm,
+        l.TRiseMax,
+        l.LCurrentMax,
+        l.BOut,
+        l.Switch1,
+        l.Switch2,
+        l.Switch3,
+        l.Switch4,
+        l.TCurrent1,
+        l.TCurrent2,
+        l.TCurrent3,
+        '' RAlarm
+        FROM
+        nodesparams_ly l UNION ALL
+        SELECT
+        l.id,
+        '' TCurrentAlarm,
+        '' TAlarm,
+        '' TRiseMax,
+        '' LCurrentMax,
+        '' BOut,
+        '' Switch1,
+        '' Switch2,
+        '' Switch3,
+        '' Switch4,
+        '' TCurrent1,
+        '' TCurrent2,
+        '' TCurrent3,
+        l.RAlarm
+        FROM
+        nodesparams_resister l
+        ) a ON ( n.id = a.id )
+
+
         <include refid="nodesWhere"></include>
-        <if test=" sorts != null and sorts != '' ">
-            order by ${sorts}
-        </if>
+            order by n.id asc
         <if test=" pages != null ">
             limit ${pages.page_startIndex},${pages.page_pageSize}
         </if>
@@ -29,8 +65,7 @@
     <select id="getNodesCount" parameterType="map" resultType="int">
         select
         count(*)
-        from
-        nodes
+        from nodes n
         <include refid="nodesWhere"></include>
     </select>
 
@@ -38,21 +73,29 @@
         select
             t1.*
         from
-        nodes t1
-        where id = #{id} and t1.disabled = 0
+        Nodes t1
+        where addr = #{addr}
     </select>
 
     <insert id="addNodes" parameterType="NodesVO">
-        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
-            select LAST_INSERT_ID() as id
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="ID">
+            select LAST_INSERT_ID() as ID
         </selectKey>
-        insert into nodes (addr,name,descript,serialserver_ip,pdcid,serialserver_port)
-        values (#{addr},#{name},#{descript},#{serialserver_ip},#{pdcid},#{serialserver_port})
+        insert into Nodes (addr,`delete`,`name`, PID,NodeType,descript,InstallPos,serialserver_ip,serialserver_port,longitude,latitude)
+        values (#{addr},#{delete},#{name},#{PID},#{NodeType},#{descript},#{InstallPos},#{serialserver_ip},#{serialserver_port},#{longitude},#{latitude})
+    </insert>
+    <insert id="addNodeParamsLY" parameterType="NodesVO">
+        insert into nodesparams_ly (id,addr,TCurrentAlarm,TAlarm,TRiseMax,LCurrentMax,BOut,Switch1,Switch2,Switch3,Switch4,TCurrent1,TCurrent2,TCurrent3)
+            values (#{ID},#{addr},#{TCurrentAlarm},#{TAlarm},#{TRiseMax},#{LCurrentMax},#{BOut},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{TCurrent1},#{TCurrent2},#{TCurrent3})
+    </insert>
+    <insert id="addNodeParamsResister" parameterType="NodesVO">
+        insert into nodesparams_resister (id,addr,RAlarm)
+            values (#{ID},#{addr},#{RAlarm})
     </insert>
 
-    <update id="modifyNode" parameterType="NodesVO">
+    <update id="modifyNodes" parameterType="NodesVO">
         update
-        nodes
+        Nodes
         <set>
             <if test=" name != null and name != '' ">
                 name = #{name},
@@ -60,23 +103,59 @@
             <if test=" descript != null and descript != '' ">
                 descript = #{descript},
             </if>
+            <if test=" NodeType != null and NodeType != '' ">
+                NodeType = #{NodeType},
+            </if>
             <if test=" serialserver_ip != null and serialserver_ip != '' ">
                 serialserver_ip = #{serialserver_ip},
             </if>
-            <if test=" pdcid != null and pdcid != '' ">
-                pdcid = #{pdcid},
+            <if test=" delete != null and delete != '' ">
+                `delete` = #{delete},
             </if>
             <if test=" serialserver_port != null and serialserver_port != '' ">
                 serialserver_port = #{serialserver_port},
             </if>
-
+            <if test=" InstallPos != null and InstallPos != '' ">
+                InstallPos = #{InstallPos},
+            </if>
+            <if test=" PID != null and PID != '' ">
+                PID = #{PID},
+            </if>
         </set>
         where addr = #{addr}
     </update>
 
     <delete id="removeNodes" parameterType="NodesVO">
-        update nodes set disabled = '1' where addr = #{addr}
+        delete from Nodes where 1=1
+        <if test=" addr != null and addr != '' ">
+            and addr = #{addr}
+        </if>
     </delete>
 
+    <delete id="removeNodeParams" parameterType="NodesVO">
+        delete from nodesparams_resister where 1=1
+        <if test=" addr != null and addr != '' ">
+            and addr = #{addr}
+        </if>
+    </delete>
+    <delete id="removeNodeParamsLy" parameterType="NodesVO">
+        delete from nodesparams_Ly where 1=1
+        <if test=" addr != null and addr != '' ">
+            and addr = #{addr}
+        </if>
+    </delete>
+    <select id="getxjztList" parameterType="Map" resultType="RealVO">
+    select n.*,a.* from (
+    select l.ID,l.seqno,l.ErrFlag,l.TCurrent,l.TTime,l.Deterior,l.OTemp,l.LCurrent1,l.LCurrent2,l.LCurrent3,l.ErrThunder,l.ErrTemp,l.ErrLeihua,l.ErrLC1,l.ErrLC2,l.ErrLC3,l.Switch1,l.Switch2,l.Switch3,l.Switch4,'' RVal ,l.In_Time,'' ErrR
+    from  real_ly l
 
+
+    union all
+
+    select r.ID,r.seqno,r.ErrFlag,'' TCurrent,'' TTime,'' Deterior,'' OTemp,'' LCurrent1,'' LCurrent2,'' LCurrent3,'' ErrThunder,'' ErrTemp,'' ErrLeihua,'' ErrLC1,'' ErrLC2,'' ErrLC3,'' Switch1,'' Switch2,'' Switch3,'' Switch4,r.RVal,
+    r.In_Time,r.ErrR
+    from
+    real_resister r
+    ) a right join nodes n on a.id = n.id
+    </select>
 </mapper>

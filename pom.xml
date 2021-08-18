@@ -109,6 +109,8 @@
 
     <modules>
         <module>eureka-server</module>
+        <module>core-server</module>
+        <module>core-server-interfaces</module>
         <module>uc-server</module>
         <module>uc-server-interfaces</module>
         <module>gateway-server</module>

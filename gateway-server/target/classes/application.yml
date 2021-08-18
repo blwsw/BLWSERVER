@@ -33,6 +33,9 @@ zuul:
     uc:
       path: /uc/**
       serviceId: uc-server
+    core:
+      path: /core/**
+      serviceId: core-server
 hystrix:
   command:
     default:
@@ -42,13 +45,13 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 600000
-#熔断器失败100个   后短路默认是20个 短路默认时间为5秒            
+#熔断器失败100个   后短路默认是20个 短路默认时间为5秒
 #      circuitBreaker:
 #        requestVolumeThreshold: 100
-#feign核心线程池的数量 默认为10这边改为100                
+#feign核心线程池的数量 默认为10这边改为100
 #  threadpool:
 #    default:
-#      coreSize: 30          
+#      coreSize: 30
 eureka:
   client:
     registryFetchIntervalSeconds: 5
@@ -70,9 +73,9 @@ spring:
   profiles: dev
   datasource:
     name: test
-    url: jdbc:mysql://127.0.0.1:3306/warning?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://101.200.162.47:3306/ly2?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
-    password: root
+    password: 1QAzxsw@
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     filters: stat
@@ -103,7 +106,7 @@ spring:
   profiles: test
   datasource:
     name: test
-    url: jdbc:sqlserver://127.0.0.1:3306;databasename=warning
+    url: jdbc:sqlserver://127.0.0.1:3306;databasename=ly2
     username: sa
     password: Root123abc@hd
     type: com.alibaba.druid.pool.DruidDataSource
@@ -138,7 +141,7 @@ spring:
   profiles: prod1
   datasource:
     name: test
-    url: jdbc:mysql://127.0.0.1:3306/warning?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/ly2?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: 1QAzxsw@
     type: com.alibaba.druid.pool.DruidDataSource
@@ -231,4 +234,3 @@ eureka:
 gateway-config:
   rsaPrivateKey: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ4QScPdDOqFr030Ue4FdBoLg3ixyA3s92U5M0xOSbb+DSdlBO54fRPGmw1hkoZHeQUDP+dYsP5JMJRyHfYFj0ycUX8pke3GarbLy5VdrAyEkrvayn5aWWB0VtcgdI95HRv6T71DyrYAKjZbgq84xEwmtnZCMM3MzeQNKh5xF/BjAgMBAAECgYBXI5+nDRxrxluI3GK2l+cT3LkUNt6VXshc05YGQTq+WXyi9Twsw9wgpOMiE2KWCJ0dOFdokSqyZWMU03zU/ueqclHe54R07DyC/3YIIGKq6pPi/wu1qBOCPNxf0kITcgBE/JKRb/c79o4srV3UlLXXi6LV4YcOQHf+NLFNb7+jcQJBAOmk+YjEj1Pow4hDoyngTx351bgLtl83VsFhxfmwooumzMNksp9jiWkPLAgtIDqwVvs4aZL/WmV65lgdmzCzXFUCQQCtL/4HmoGEBuwxUF7DhvVhuxxj2zBsUrL0l9+TnSfWChehNENoWwQTo8vggKrSEug/5V/EQkX9H+ZOU5C/xNHXAkEAtcIgWTRIJ8eQrSWo/b/A7JnZl8aMxj+/nsrX/2lY2fkVm/9vMa12TSN/ZpDsXJun3uFAyBkcEovsO6o0e0tczQJAOSYPE38+ocyPAC7fNnJAYsGVurXHotcfSmsbUeCYFp858O4IGFWAYOK6EhkjRTMMBJmyIlckNUTjgJE+wKk3/QJBAN/E05QAv8YlS8NVfqylS9OCcbuH+pSkYJHc14P7+cNG2mrcWh5Y10QWhV+aHruutOLTtBQBN71tsvUu2l3O4Go=
   rsaPublicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCeEEnD3Qzqha9N9FHuBXQaC4N4scgN7PdlOTNMTkm2/g0nZQTueH0TxpsNYZKGR3kFAz/nWLD+STCUch32BY9MnFF/KZHtxmq2y8uVXawMhJK72sp+WllgdFbXIHSPeR0b+k+9Q8q2ACo2W4KvOMRMJrZ2QjDNzM3kDSoecRfwYwIDAQAB
-  

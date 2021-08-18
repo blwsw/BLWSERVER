@@ -4,23 +4,59 @@
 
     <sql id="nodesWhere">
         where 1=1
-        <if test=" querySring != null and querySring != '' ">
-            and (
-            name like concat('%', #{querySring}, '%')
-            or addr like concat('%', #{querySring}, '%')
-            or descript like concat('%', #{querySring}, '%')
-            or InstallPos like concat('%', #{querySring}, '%')
-            )
+        <if test=" queryString != null and queryString != '' ">
+          and n.PID = #{queryString}
         </if>
 
     </sql>
 
     <select id="getNodes" parameterType="map" resultType="NodesVO">
-        select * from Nodes
+
+        SELECT
+        n.*,
+        a.*
+        FROM
+        nodes n
+        LEFT JOIN (
+        SELECT
+        l.id,
+        l.TCurrentAlarm,
+        l.TAlarm,
+        l.TRiseMax,
+        l.LCurrentMax,
+        l.BOut,
+        l.Switch1,
+        l.Switch2,
+        l.Switch3,
+        l.Switch4,
+        l.TCurrent1,
+        l.TCurrent2,
+        l.TCurrent3,
+        '' RAlarm
+        FROM
+        nodesparams_ly l UNION ALL
+        SELECT
+        l.id,
+        '' TCurrentAlarm,
+        '' TAlarm,
+        '' TRiseMax,
+        '' LCurrentMax,
+        '' BOut,
+        '' Switch1,
+        '' Switch2,
+        '' Switch3,
+        '' Switch4,
+        '' TCurrent1,
+        '' TCurrent2,
+        '' TCurrent3,
+        l.RAlarm
+        FROM
+        nodesparams_resister l
+        ) a ON ( n.id = a.id )
+
+
         <include refid="nodesWhere"></include>
-        <if test=" sorts != null and sorts != '' ">
-            order by ${sorts}
-        </if>
+            order by n.id asc
         <if test=" pages != null ">
             limit ${pages.page_startIndex},${pages.page_pageSize}
         </if>
@@ -29,8 +65,7 @@
     <select id="getNodesCount" parameterType="map" resultType="int">
         select
         count(*)
-        from
-        Nodes
+        from nodes n
         <include refid="nodesWhere"></include>
     </select>
 
@@ -43,8 +78,19 @@
     </select>
 
     <insert id="addNodes" parameterType="NodesVO">
-        insert into Nodes (addr,`delete`,`name`,descript,InstallPos,serialserver_ip,serialserver_port,TCurrentAlarm,TAlarm,TRiseMax,LCurrentMax,BOut,Switch1,Switch2,Switch3,Switch4,TCurrent1,TCurrent2,TCurrent3,longitude,latitude)
-        values (#{addr},#{delete},#{name},#{descript},#{InstallPos},#{serialserver_ip},#{serialserver_port},#{TCurrentAlarm},#{TAlarm},#{TRiseMax},#{LCurrentMax},#{BOut},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{TCurrent1},#{TCurrent2},#{TCurrent3},#{longitude},#{latitude})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="ID">
+            select LAST_INSERT_ID() as ID
+        </selectKey>
+        insert into Nodes (addr,`delete`,`name`, PID,NodeType,descript,InstallPos,serialserver_ip,serialserver_port,longitude,latitude)
+        values (#{addr},#{delete},#{name},#{PID},#{NodeType},#{descript},#{InstallPos},#{serialserver_ip},#{serialserver_port},#{longitude},#{latitude})
+    </insert>
+    <insert id="addNodeParamsLY" parameterType="NodesVO">
+        insert into nodesparams_ly (id,addr,TCurrentAlarm,TAlarm,TRiseMax,LCurrentMax,BOut,Switch1,Switch2,Switch3,Switch4,TCurrent1,TCurrent2,TCurrent3)
+            values (#{ID},#{addr},#{TCurrentAlarm},#{TAlarm},#{TRiseMax},#{LCurrentMax},#{BOut},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{TCurrent1},#{TCurrent2},#{TCurrent3})
+    </insert>
+    <insert id="addNodeParamsResister" parameterType="NodesVO">
+        insert into nodesparams_resister (id,addr,RAlarm)
+            values (#{ID},#{addr},#{RAlarm})
     </insert>
 
     <update id="modifyNodes" parameterType="NodesVO">
@@ -56,6 +102,9 @@
             </if>
             <if test=" descript != null and descript != '' ">
                 descript = #{descript},
+            </if>
+            <if test=" NodeType != null and NodeType != '' ">
+                NodeType = #{NodeType},
             </if>
             <if test=" serialserver_ip != null and serialserver_ip != '' ">
                 serialserver_ip = #{serialserver_ip},
@@ -69,41 +118,8 @@
             <if test=" InstallPos != null and InstallPos != '' ">
                 InstallPos = #{InstallPos},
             </if>
-            <if test=" TCurrentAlarm != null and TCurrentAlarm != '' ">
-                TCurrentAlarm = #{TCurrentAlarm},
-            </if>
-            <if test=" TAlarm != null and TAlarm != '' ">
-                TAlarm = #{TAlarm},
-            </if>
-            <if test=" TRiseMax != null and TRiseMax != '' ">
-                TRiseMax = #{TRiseMax},
-            </if>
-            <if test=" LCurrentMax != null and LCurrentMax != '' ">
-                LCurrentMax = #{LCurrentMax},
-            </if>
-            <if test=" BOut != null and BOut != '' ">
-                BOut = #{BOut},
-            </if>
-            <if test=" Switch1 != null and Switch1 != '' ">
-                Switch1 = #{Switch1},
-            </if>
-            <if test=" Switch2 != null and Switch2 != '' ">
-                Switch2 = #{Switch2},
-            </if>
-            <if test=" Switch3 != null and Switch3 != '' ">
-                Switch3 = #{Switch3},
-            </if>
-            <if test=" Switch4 != null and Switch4 != '' ">
-                Switch4 = #{Switch4},
-            </if>
-            <if test=" TCurrent1 != null and TCurrent1 != '' ">
-                TCurrent1 = #{TCurrent1},
-            </if>
-            <if test=" TCurrent2 != null and TCurrent2 != '' ">
-                TCurrent2 = #{TCurrent2},
-            </if>
-            <if test=" TCurrent3 != null and TCurrent3 != '' ">
-                TCurrent3 = #{TCurrent3},
+            <if test=" PID != null and PID != '' ">
+                PID = #{PID},
             </if>
         </set>
         where addr = #{addr}
@@ -114,8 +130,32 @@
         <if test=" addr != null and addr != '' ">
             and addr = #{addr}
         </if>
-
     </delete>
 
+    <delete id="removeNodeParams" parameterType="NodesVO">
+        delete from nodesparams_resister where 1=1
+        <if test=" addr != null and addr != '' ">
+            and addr = #{addr}
+        </if>
+    </delete>
+    <delete id="removeNodeParamsLy" parameterType="NodesVO">
+        delete from nodesparams_Ly where 1=1
+        <if test=" addr != null and addr != '' ">
+            and addr = #{addr}
+        </if>
+    </delete>
+    <select id="getxjztList" parameterType="Map" resultType="RealVO">
+    select n.*,a.* from (
+    select l.ID,l.seqno,l.ErrFlag,l.TCurrent,l.TTime,l.Deterior,l.OTemp,l.LCurrent1,l.LCurrent2,l.LCurrent3,l.ErrThunder,l.ErrTemp,l.ErrLeihua,l.ErrLC1,l.ErrLC2,l.ErrLC3,l.Switch1,l.Switch2,l.Switch3,l.Switch4,'' RVal ,l.In_Time,'' ErrR
+    from  real_ly l
 
+
+    union all
+
+    select r.ID,r.seqno,r.ErrFlag,'' TCurrent,'' TTime,'' Deterior,'' OTemp,'' LCurrent1,'' LCurrent2,'' LCurrent3,'' ErrThunder,'' ErrTemp,'' ErrLeihua,'' ErrLC1,'' ErrLC2,'' ErrLC3,'' Switch1,'' Switch2,'' Switch3,'' Switch4,r.RVal,
+    r.In_Time,r.ErrR
+    from
+    real_resister r
+    ) a right join nodes n on a.id = n.id
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 com\hopedove\ucserver\service\IDictService.class
 com\hopedove\ucserver\vo\UserRoleVO.class
+com\hopedove\ucserver\service\nodes\INodesService.class
 com\hopedove\ucserver\service\IFactoryService.class
 com\hopedove\ucserver\service\ITokenService.class
 com\hopedove\ucserver\vo\node\PDCVO.class
@@ -13,9 +14,11 @@ com\hopedove\ucserver\vo\FactoryVO.class
 com\hopedove\ucserver\vo\RoleTemplateFunctionVO.class
 com\hopedove\ucserver\vo\xmlvo\InitHint.class
 com\hopedove\ucserver\vo\MultipleDictVO.class
+com\hopedove\ucserver\vo\node\UploadVO.class
 com\hopedove\ucserver\vo\EmployeeVO.class
 com\hopedove\ucserver\service\ISocketService.class
 com\hopedove\ucserver\vo\node\UNITVO.class
+com\hopedove\ucserver\vo\xmlvo\ClearFault.class
 com\hopedove\ucserver\service\IFactoryRoleService.class
 com\hopedove\ucserver\service\IPlatformService.class
 com\hopedove\ucserver\vo\MenuVO.class
@@ -27,7 +30,9 @@ com\hopedove\ucserver\vo\FactoryRoleVO.class
 com\hopedove\ucserver\vo\xmlvo\GetParams.class
 com\hopedove\ucserver\service\IUserService.class
 com\hopedove\ucserver\vo\ModifyUserPwdVO.class
+com\hopedove\ucserver\vo\xmlvo\DTCollector.class
 com\hopedove\ucserver\vo\ModuleVO.class
+com\hopedove\ucserver\vo\xmlvo\ClearFaultRet.class
 com\hopedove\ucserver\vo\xmlvo\GetParamsRet.class
 com\hopedove\ucserver\vo\FunctionVO.class
 com\hopedove\ucserver\vo\node\HistoryVO.class
@@ -47,10 +52,13 @@ com\hopedove\ucserver\vo\DeptVO.class
 com\hopedove\ucserver\service\IModuleService.class
 com\hopedove\ucserver\vo\node\NodeParamsVO.class
 com\hopedove\ucserver\vo\UserPermissionVO.class
+com\hopedove\ucserver\vo\node\RealStatisticsVO.class
 com\hopedove\ucserver\vo\AuthTokenVO.class
 com\hopedove\ucserver\vo\RoleTemplateAuthorizationVO.class
 com\hopedove\ucserver\vo\EventLogVO.class
+com\hopedove\ucserver\vo\FileVO.class
 com\hopedove\ucserver\vo\xmlvo\SetParamsRet.class
+com\hopedove\ucserver\vo\xmlvo\DTCollectorRet.class
 com\hopedove\ucserver\vo\xmlvo\UploadCollect.class
 com\hopedove\ucserver\vo\DictVO.class
 com\hopedove\ucserver\vo\VcodeFormVO.class

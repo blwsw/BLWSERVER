@@ -16,20 +16,15 @@
     </sql>
 
     <select id="getDicts" parameterType="Map" resultType="DictVO">
-        <if test=" pages != null ">
-            select
-            top ${pages.page_pageSize} *
-            from
-            (
-        </if>
-        select top 100 percent row_number() over(order by typeCode) as rows, * from dict
+
+        select * from dict
         <include refid="dictsWhere"></include>
+
         <if test=" sorts != null and sorts != '' ">
             order by ${sorts}
         </if>
         <if test=" pages != null ">
-            ) as t
-            where rows > ${pages.page_startIndex}
+            limit ${pages.page_startIndex},${pages.page_pageSize}
         </if>
     </select>
 

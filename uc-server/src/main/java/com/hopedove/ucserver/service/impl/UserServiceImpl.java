@@ -159,7 +159,7 @@ public class UserServiceImpl implements IUserService {
         param.setId(id);
         param.setDisabled(1);
         Integer node = userDao.modifyUser(param);
-        userDao.removeUserFactoryRoleRec(id);
+        // userDao.removeUserFactoryRoleRec(id);
         return new RestResponse<>(node);
     }
 

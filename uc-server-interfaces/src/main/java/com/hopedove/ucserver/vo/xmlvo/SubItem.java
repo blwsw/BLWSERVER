@@ -13,7 +13,10 @@ public class SubItem {
 
     @XmlAttribute
     private String addr;//addr为节点编号
+    @XmlAttribute
+    private String id;//节点ID
 
+    private String PID;
     private String TCurrentAlarm;//TCurrentAlarm雷击电流报警设定值，单位：A
     private String TAlarm;//TAlarm温度报警设定值，单位：摄氏度
     private String TRiseMax;//TRiseMax温升限值设定值，单位：摄氏度
@@ -86,6 +89,14 @@ public class SubItem {
 
     @ApiModelProperty("劣化度，单位：%")
     private String Deterior;
+
+    @ApiModelProperty("接地电阻测量值，单位：欧姆")
+    private String RVal;
+
+    @ApiModelProperty("RAlarm，接地电阻报警值，单位：欧姆")
+    private String RAlarm;
+
+    private String ErrR;
 
     public String getAddr() {
         return addr;
@@ -373,5 +384,45 @@ public class SubItem {
 
     public void setDeterior(String deterior) {
         Deterior = deterior;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPID() {
+        return PID;
+    }
+
+    public void setPID(String PID) {
+        this.PID = PID;
+    }
+
+    public String getRVal() {
+        return RVal;
+    }
+
+    public void setRVal(String RVal) {
+        this.RVal = RVal;
+    }
+
+    public String getRAlarm() {
+        return RAlarm;
+    }
+
+    public void setRAlarm(String RAlarm) {
+        this.RAlarm = RAlarm;
+    }
+
+    public String getErrR() {
+        return ErrR;
+    }
+
+    public void setErrR(String errR) {
+        ErrR = errR;
     }
 }

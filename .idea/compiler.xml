@@ -6,45 +6,33 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="uc-server" />
-        <module name="commons" />
-        <module name="admin-server" />
         <module name="core-server-interfaces" />
-        <module name="batch-server" />
-        <module name="uc-server-interfaces" />
-        <module name="stream-server-interfaces" />
-        <module name="core-server" />
-        <module name="stream-server" />
-        <module name="gateway-server" />
+        <module name="commons" />
+        <module name="uc-server" />
         <module name="eureka-server" />
+        <module name="uc-server-interfaces" />
+        <module name="core-server" />
+        <module name="gateway-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="admin-server" target="1.8" />
-      <module name="batch-server" target="1.8" />
+      <module name="BLWSERVER" target="1.8" />
       <module name="commons" target="1.8" />
       <module name="core-server" target="1.8" />
       <module name="core-server-interfaces" target="1.8" />
       <module name="eureka-server" target="1.8" />
       <module name="gateway-server" target="1.8" />
-      <module name="stream-server" target="1.8" />
-      <module name="stream-server-interfaces" target="1.8" />
-      <module name="SZSTSERVER" target="1.8" />
       <module name="uc-server" target="1.8" />
       <module name="uc-server-interfaces" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="admin-server" options="-parameters" />
-      <module name="batch-server" options="-parameters" />
       <module name="commons" options="-parameters" />
       <module name="core-server" options="-parameters" />
       <module name="core-server-interfaces" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="gateway-server" options="-parameters" />
-      <module name="stream-server" options="-parameters" />
-      <module name="stream-server-interfaces" options="-parameters" />
       <module name="uc-server" options="-parameters" />
       <module name="uc-server-interfaces" options="-parameters" />
     </option>

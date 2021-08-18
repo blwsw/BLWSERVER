@@ -2,7 +2,10 @@ E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucse
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\AuthTokenFormVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\PlatformVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\node\UNITVO.java
+E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\xmlvo\DTCollector.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\FunctionVO.java
+E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\nodes\INodesService.java
+E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\node\UploadVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\IFactoryService.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\IDeptService.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\IVcodeService.java
@@ -11,6 +14,7 @@ E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucse
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\IEnterpriseService.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\xmlvo\UploadCollect.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\xmlvo\GetCollect.java
+E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\xmlvo\ClearFault.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\VcodeFormVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\MultipleDictVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\RoleTemplateVO.java
@@ -23,11 +27,13 @@ E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucse
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\xmlvo\SetParams.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\RoleVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\IRoleTemplateService.java
+E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\xmlvo\DTCollectorRet.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\IEmployeeService.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\IDictService.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\RoleTemplateAuthorizationVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\xmlvo\SetParamsRet.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\IModuleService.java
+E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\xmlvo\ClearFaultRet.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\xmlvo\InitHint.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\IPlatformService.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\IFcuntionService.java
@@ -46,7 +52,9 @@ E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucse
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\RoleFunctionVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\xmlvo\GetParams.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\service\ISocketService.java
+E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\node\RealStatisticsVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\DictVO.java
+E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\FileVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\node\NodesVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\ModuleVO.java
 E:\WorkSpace\YJXT\BLWSERVER\uc-server-interfaces\src\main\java\com\hopedove\ucserver\vo\RoleTemplateFunctionVO.java

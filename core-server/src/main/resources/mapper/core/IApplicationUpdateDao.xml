@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.coreserver.dao.core.IApplicationUpdateDao">
+
+    <select id="getApplicationUpdatesNews" parameterType="ApplicationUpdateVO" resultType="ApplicationUpdateVO">
+        select * from application_update  with(nolock)  where disabled = 0 and factoryId = #{factoryId} and clientType = #{clientType} and state = '2' order by version, subVersion
+    </select>
+
+    <sql id="appsWhere">
+        where t1.disabled=0
+        <if test=" factoryId != null and factoryId != '' ">
+            and t1.factoryId = #{factoryId}
+        </if>
+        <if test=" state != null and state != '' ">
+            and t1.state = #{state}
+        </if>
+        <if test=" clientType != null and clientType != '' ">
+            and t1.clientType = #{clientType}
+        </if>
+        <if test=" version != null and version != '' ">
+            and t1.version like '%'+#{version}+'%'
+        </if>
+        <if test=" subVersion != null and subVersion != '' ">
+            and t1.subVersion like '%'+#{subVersion}+'%'
+        </if>
+    </sql>
+
+    <select id="getApplicationUpdates" parameterType="Map" resultType="ApplicationUpdateVO">
+        <if test=" pages != null ">
+            select
+            top ${pages.page_pageSize} *
+            from
+            (
+        </if>
+        select top 100 percent row_number() over(order by t1.createDatetime desc ) as rows, t1.*,t2.name factoryName 
+        from application_update t1  with(nolock) 
+        left join uc_factory t2  with(nolock) on t1.factoryId = t2.id
+        <include refid="appsWhere"></include>
+            order by createDatetime desc
+       
+        <if test=" pages != null ">
+            ) as t
+            where rows > ${pages.page_startIndex}
+             order by createDatetime desc
+        </if>
+    </select>
+
+    <select id="getApplicationUpdatesCount" parameterType="Map" resultType="int">
+        select count(*) from application_update t1 with(nolock) 
+        left join uc_factory t2  with(nolock) on t1.factoryId = t2.id
+        <include refid="appsWhere"></include>
+    </select>
+
+    <select id="getApplicationUpdate" parameterType="ApplicationUpdateVO" resultType="ApplicationUpdateVO">
+        select top 1 * from application_update  with(nolock) 
+        where disabled=0
+        <if test=" id != null and id != '' ">
+            and id = #{id}
+        </if>
+        <if test=" version != null and version != '' ">
+            and version like concat('%', #{version}, '%')
+        </if>
+        <if test=" subVersion != null and subVersion != '' ">
+            and subVersion like concat('%', #{subVersion}, '%')
+        </if>
+        order by id desc
+    </select>
+
+    <insert id="addApplicationUpdate" parameterType="ApplicationUpdateVO">
+        insert into application_update (factoryId,clientType,title,updateContent,version, subVersion,files, state, disabled,createUserId,createUserName,createDeptId,createDatetime,createIp,updateUserId,updateUserName,updateDeptId,updateDatetime,updateIp)
+        values (#{factoryId},#{clientType},#{title},#{updateContent},#{version}, #{subVersion}, #{files}, #{state}, #{disabled},#{createUserId},#{createUserName},#{createDeptId},#{createDatetime},#{createIp},#{updateUserId},#{updateUserName},#{updateDeptId},#{updateDatetime},#{updateIp})
+    </insert>
+
+    <update id="modifyApplicationUpdate" parameterType="ApplicationUpdateVO">
+        update application_update
+        <trim prefix="set" suffixOverrides=",">
+            <if test=" factoryId != null">factoryId=#{factoryId},</if>
+            <if test=" clientType != null and clientType != '' ">clientType=#{clientType},</if>
+            <if test=" title != null ">title=#{title},</if>
+            <if test=" updateContent != null ">updateContent=#{updateContent},</if>
+            <if test=" version != null  ">version=#{version},</if>
+            <if test=" subVersion != null ">subVersion=#{subVersion},</if>
+            <if test=" files != null">files=#{files},</if>
+            <if test=" state != null and state != '' ">state=#{state},</if>
+            <if test=" disabled != null ">disabled=#{disabled},</if>
+            <if test=" updateUserId != null and updateUserId != '' ">updateUserId=#{updateUserId},</if>
+            <if test=" updateUserName != null and updateUserName != '' ">updateUserName=#{updateUserName},</if>
+            <if test=" updateDatetime != null ">updateDatetime=#{updateDatetime},</if>
+            <if test=" updateDeptId != null and updateDeptId != '' ">updateDeptId=#{updateDeptId},</if>
+            <if test=" updateIp != null and updateIp != '' ">updateIp=#{updateIp},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="removeApplicationUpdate" parameterType="ApplicationUpdateVO">
+        update application_update 
+           <trim prefix="set" suffixOverrides=",">
+            <if test=" disabled != null ">disabled=#{disabled},</if>
+            <if test=" updateUserId != null and updateUserId != '' ">updateUserId=#{updateUserId},</if>
+            <if test=" updateUserName != null and updateUserName != '' ">updateUserName=#{updateUserName},</if>
+            <if test=" updateDatetime != null ">updateDatetime=#{updateDatetime},</if>
+            <if test=" updateDeptId != null and updateDeptId != '' ">updateDeptId=#{updateDeptId},</if>
+            <if test=" updateIp != null and updateIp != '' ">updateIp=#{updateIp},</if>
+        </trim>
+         where id = #{id}
+    </update>
+</mapper>

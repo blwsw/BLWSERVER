@@ -77,14 +77,14 @@ public class UserUtil {
     //获取缓存数据
     public static Map<String, Object> getCache(String key) {
         String cacheJson = stringRedisTemplate.opsForValue().get(L1_KEY + key);
-        stringRedisTemplate.expire(L1_KEY + key, INVALID_TIMEOUT, INVALID_TIMEUNIT);
+        //stringRedisTemplate.expire(L1_KEY + key, INVALID_TIMEOUT, INVALID_TIMEUNIT);
         return JsonUtil.readValue(cacheJson, Map.class);
     }
 
     //设置缓存数据
     public static void setCache(String key, Object value) {
         stringRedisTemplate.opsForValue().set(L1_KEY + key, JsonUtil.writeValueAsString(value));
-        stringRedisTemplate.expire(L1_KEY + key, INVALID_TIMEOUT, INVALID_TIMEUNIT);
+       // stringRedisTemplate.expire(L1_KEY + key, INVALID_TIMEOUT, INVALID_TIMEUNIT);
     }
 
     //获得当前登录用户的会话数据
@@ -118,7 +118,7 @@ public class UserUtil {
 
         return (T) userMap.get(filedName);
     }
-    
+
     //获得当前登录用户的会话数据中的具体用户属性
     @SuppressWarnings("unchecked")
 	public final static List<Map<String, Object>>  getUserRoles() {
@@ -126,7 +126,7 @@ public class UserUtil {
 		List<Map<String, Object>> userRoleList =  (List<Map<String, Object>>) contentMap.get("userRoles");
         return userRoleList;
     }
-    
+
     public static void main(String[] args) {
         long randomSeed = 19890918;
         Random random = new Random(randomSeed);

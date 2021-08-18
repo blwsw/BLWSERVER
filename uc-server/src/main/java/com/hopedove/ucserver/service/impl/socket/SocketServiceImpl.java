@@ -294,7 +294,7 @@ public class SocketServiceImpl implements ISocketService {
             eventLogList = new ArrayList<>();
         }
         eventLogList.add(eventLogVO);
-        if(eventLogList.size() >100){
+        //if(eventLogList.size() >100){
             Map<String,Object> paramMap = new HashMap<>();
             paramMap.put("logList",eventLogList);
             this.eventLogDao.addEventLogBatch(paramMap);
@@ -303,7 +303,7 @@ public class SocketServiceImpl implements ISocketService {
             if(logCount>=logsLimit){
                 this.eventLogDao.deleteEventLogVO();
             }
-        }
+        //}
         //int node = this.eventLogDao.addEventLog(eventLogVO);
         return new RestResponse<>(1);
     }
@@ -375,7 +375,7 @@ public class SocketServiceImpl implements ISocketService {
     }
     //发送接收的数据
     @PostMapping("/new/real")
-    public void sendRealNewData(@RequestBody UploadCollect uploadCollect){
+    public synchronized  void sendRealNewData(@RequestBody UploadCollect uploadCollect){
         List<SubItem> subItems = uploadCollect.getSubItem();
         String newValues = "";
         String oldValues = "";
@@ -383,6 +383,13 @@ public class SocketServiceImpl implements ISocketService {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("type","real");
         NodesVO nodesVO =null;
+
+        String realListString =  this.stringRedisTemplate.opsForValue().get("realVOList");
+        List<RealVO> realVOList = new ArrayList<>();
+        if(StringUtils.isNotEmpty(realListString)){
+            realVOList = JsonUtil.readValueList(realListString,RealVO.class);
+        }
+
         for(SubItem s:subItems){
             nodesVO = new NodesVO();
             realVO = new RealVO();
@@ -391,35 +398,57 @@ public class SocketServiceImpl implements ISocketService {
             log.debug("errflag="+s.getErrFlag());
 
             BeanUtils.copyProperties(s,realVO);
-            realVO.setAddr(Integer.parseInt(s.getAddr()));
-            realVO.setIn_Time(LocalDateTime.now());
+            realVO.setId(Integer.parseInt(s.getId()));
+            realVO.setIn_Time(LocalDateTimeUtil.formatNow());
             realVO.setOTemp(Integer.parseInt(s.getOTemp()));
             realVO.setTCurrent(Integer.parseInt(s.getTCurrent()));
             realVO.setLCurrent1(Integer.parseInt(s.getLCurrent1()));
             realVO.setLCurrent2(Integer.parseInt(s.getLCurrent2()));
             realVO.setLCurrent3(Integer.parseInt(s.getLCurrent3()));
+            // realVO.setAddr(realVO.getId());
             newValues = realVO.getErrFlag()+"-"+realVO.getTCurrent()+"-"+
                     realVO.getTTime()+"-"+realVO.getDeterior()+"-"+realVO.getOTemp()+
                     realVO.getLCurrent1()+"-"+realVO.getLCurrent2()+"-"+realVO.getLCurrent3()+
                     realVO.getErrThunder()+"-"+realVO.getErrTemp()+"-"+realVO.getErrLeihua()+
                     realVO.getErrLC1()+"-"+realVO.getErrLC2()+"-"+realVO.getErrLC3()+
                     realVO.getSwitch1()+"-"+realVO.getSwitch2()+realVO.getSwitch3()+
-                    realVO.getSwitch4();
-            oldValues= this.stringRedisTemplate.opsForValue().get(this.realsKey+s.getAddr());
+                    realVO.getSwitch4()+"-"+realVO.getErrR()+"-"+realVO.getRVal();
+            oldValues= this.stringRedisTemplate.opsForValue().get(this.realsKey+s.getId());
             log.debug("newValues=="+newValues);
             log.debug("oldValues=="+oldValues);
             if(!newValues.equals(oldValues)){
-                paramMap.put("data",realVO);
-                nodesVO.setAddr(realVO.getAddr());
-                nodesVO = iNodeDao.getNodesVO(nodesVO);
-                if(nodesVO != null){
-                    realVO.setInstallPos(nodesVO.getInstallPos());
-                    realVO.setPdcNo(nodesVO.getName());
+
+                //nodesVO.setAddr(realVO.getAddr());
+//                nodesVO = iNodeDao.getNodesVO(nodesVO);
+//                if(nodesVO != null){
+//                    realVO.setInstallPos(nodesVO.getInstallPos());
+//                    realVO.setPdcNo(nodesVO.getName());
+//                }
+                boolean isNew =true;
+                for(RealVO r : realVOList){
+                    if(r.getId() == realVO.getId()){
+                       // r.setErrFlag(realVO.getErrFlag());
+                        realVO.setPdcNo(r.getPdcNo());
+                        realVO.setInstallPos(r.getInstallPos());
+                        realVO.setNodeType(r.getNodeType());
+                        realVO.setName(r.getName());
+                        realVO.setPID(r.getPID());
+                        realVO.setAddr(r.getAddr());
+                        BeanUtils.copyProperties(realVO,r);
+                        isNew =false;
+                    }
                 }
-                this.stringRedisTemplate.opsForValue().set(this.realsKey+s.getAddr(),newValues);
-                this.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
+//                if(isNew){
+//                    realVOList.add(realVO);
+//                }
+                paramMap.put("data",realVOList);
+                this.stringRedisTemplate.opsForValue().set(this.realsKey+s.getId(),newValues);
             }
            // this.iSocketDataDao.addReals(realVO);
+        }
+        if(paramMap.containsKey("data") && !realVOList.isEmpty()){
+            this.stringRedisTemplate.opsForValue().set("realVOList",JsonUtil.writeValueAsString(realVOList));
+            this.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
         }
 
         //this.sendWebSocket(JsonUtil.writeValueAsString(uploadCollect));
@@ -459,7 +488,7 @@ public class SocketServiceImpl implements ISocketService {
                        realVO.getErrLC1()+"-"+realVO.getErrLC2()+"-"+realVO.getErrLC3()+
                        realVO.getSwitch1()+"-"+realVO.getSwitch2()+realVO.getSwitch3()+
                        realVO.getSwitch4();
-               this.stringRedisTemplate.opsForValue().set(this.realsKey+realVO.getAddr(),newValues);
+               this.stringRedisTemplate.opsForValue().set(this.realsKey+realVO.getId(),newValues);
            }
 
         }
@@ -500,7 +529,8 @@ public class SocketServiceImpl implements ISocketService {
     @GetMapping("/get/history")
     public RestPageResponse<List<HistoryVO>> getHistorys(@RequestParam(required = false) Integer currentPage,
                                                          @RequestParam(required = false) Integer pageSize,
-                                                         @RequestParam(required = false) String sort){
+                                                         @RequestParam(required = false) String sort,
+                                                         @RequestParam(required = false) String PID){
         //1.查询主数据
         BasicPageVO page = null;
         if (currentPage != null) {
@@ -512,7 +542,7 @@ public class SocketServiceImpl implements ISocketService {
         Map<String, Object> param = new HashMap<>();
 
 //        param.put("eventType", eventType);
-//        param.put("seqNo", seqNo);
+        param.put("PID", PID);
         param.put(QueryEnum.PAGES.getValue(), page);
         param.put(QueryEnum.SORTS.getValue(), sort);
 
@@ -565,7 +595,45 @@ public class SocketServiceImpl implements ISocketService {
         LocalDateTime nowDay = LocalDateTime.now();
         param.put("createTime",nowDay);
         int ret =this.iSocketDataDao.copyRealsHistroys(param);
+        this.iSocketDataDao.copyRealsHistroys2(param);
         return new RestResponse<>(ret);
+    }
+    @PostMapping("/real/HH")
+    public RestResponse<Integer> copyRealsHH(){
+        Map<String,Object> hhMap = this.iSocketDataDao.getRealsHH(null);
+        LocalDateTime now = LocalDateTime.now();
+        String realsHH = this.stringRedisTemplate.opsForValue().get("RealsHH");
+        List<Map> hhMapList = new ArrayList<>();
+        String nowHour = now.getHour()+"";
+        if(now.getHour() == 1){
+            realsHH = "";
+        }
+        if(now.getHour() <10){
+            nowHour = "0"+now.getHour();
+        }
+        hhMap.put("HH", nowHour);
+        if(StringUtils.isEmpty(realsHH)){
+            hhMapList.add(hhMap);
+
+        }else{
+            hhMapList = JsonUtil.readValueList(realsHH,Map.class);
+            if(!hhMapList.isEmpty()){
+                boolean isHave = false;
+                for(Map m:hhMapList){
+                    if((m.get("HH")+"").equals(nowHour)){
+                        hhMapList.remove(m);
+                        hhMapList.add(hhMap);
+                        isHave = true;
+                        break;
+                    }
+                }
+                if(!isHave){
+                    hhMapList.add(hhMap);
+                }
+            }
+        }
+        this.stringRedisTemplate.opsForValue().set("RealsHH",JsonUtil.writeValueAsString(hhMapList));
+        return new RestResponse<>();
     }
     public static void main(String[] args) {
 //        byte[] content = new byte[4];

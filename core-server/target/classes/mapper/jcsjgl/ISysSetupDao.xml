@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.coreserver.dao.jcsjgl.ISysSetupDao">
+
+    <sql id="condition">
+        where disabled=0
+        <if test="systemName != null and systemName != ''"> and systemName = #{systemName}</if>
+        <if test="decimalPlaces != null and decimalPlaces != ''"> and decimalPlaces = #{decimalPlaces}</if> 
+        <if test="terminalName != null and terminalName != ''"> and terminalName = #{terminalName}</if> 
+        <if test="breakfastStartTime != null "> and breakfastStartTime >= #{breakfastStartTime}</if> 
+        <if test="breakfastEndTime != null "> and breakfastEndTime &lt;= #{breakfastEndTime}</if> 
+        <if test="lunchStartTime != null "> and lunchStartTime >= #{lunchStartTime}</if> 
+        <if test="lunchEndTime != null "> and lunchEndTime &lt;= #{lunchEndTime}</if> 
+        <if test="dinnerStartTime != null "> and dinnerStartTime >= #{dinnerStartTime}</if> 
+        <if test="dinnerEndTime != null "> and dinnerEndTime &lt;= #{dinnerEndTime}</if> 
+        <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+    </sql>
+
+    <select id="getOne" parameterType="map" resultType="com.hopedove.coreserver.vo.jcsjgl.SysSetup">
+        select * from sys_setup  with(nolock) 
+        <include refid="condition"></include>
+    </select>
+
+    <select id="getList" parameterType="map" resultType="com.hopedove.coreserver.vo.jcsjgl.SysSetup">
+       <if test=" pages != null ">
+            select
+            top ${pages.page_pageSize} *
+            from
+            (
+        </if>
+        select top 100 percent row_number() over(order by pkid) as rows, * from sys_setup  with(nolock) 
+        <include refid="condition"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            ) as t
+            where rows > ${pages.page_startIndex}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.hopedove.coreserver.vo.jcsjgl.SysSetup">
+    	 <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="pkid">
+        insert into sys_setup
+        (
+        	systemName,
+			decimalPlaces,
+			terminalName,
+		<if test="breakfastStartTime != null"> breakfastStartTime , </if>
+		<if test="breakfastEndTime != null"> breakfastEndTime , </if>
+		<if test="lunchStartTime != null"> lunchStartTime, </if>
+		<if test="lunchEndTime != null"> lunchEndTime, </if>
+		<if test="dinnerStartTime != null"> dinnerStartTime , </if>
+		<if test="dinnerEndTime != null"> dinnerEndTime , </if>
+			remark,
+			disabled,
+			createUserId,
+			createUserName,
+			createDatetime,
+			createIp,
+			updateUserId,
+			updateUserName,
+			updateDatetime,
+			updateIp
+        ) values (
+        	#{systemName},
+			#{decimalPlaces},
+			#{terminalName},
+		<if test="breakfastStartTime != null"> #{breakfastStartTime}, </if>
+		<if test="breakfastEndTime != null"> #{breakfastEndTime}, </if>
+		<if test="lunchStartTime != null"> #{lunchStartTime}, </if>
+		<if test="lunchEndTime != null"> #{lunchEndTime}, </if>
+		<if test="dinnerStartTime != null"> #{dinnerStartTime}, </if>
+		<if test="dinnerEndTime != null"> #{dinnerEndTime}, </if>
+			#{remark},
+			#{disabled},
+			#{createUserId},
+			#{createUserName},
+			#{createDatetime},
+			#{createIp},
+			#{updateUserId},
+			#{updateUserName},
+			#{updateDatetime},
+			#{updateIp}
+        );
+              SELECT SCOPE_IDENTITY()
+        </selectKey>
+    </insert>
+    
+    <update id="updateById" parameterType="com.hopedove.coreserver.vo.jcsjgl.SysSetup">
+    	update sys_setup
+    	<set>
+    		<if test="systemName != null and systemName != ''"> systemName =#{systemName }, </if>
+			<if test="decimalPlaces != null and decimalPlaces != ''"> decimalPlaces =#{decimalPlaces },</if>
+			<if test="terminalName != null and terminalName != ''"> terminalName =#{ terminalName }, </if>
+			<if test="breakfastStartTime != null"> breakfastStartTime =Convert(time, #{ breakfastStartTime }, 108), </if>
+			<if test="breakfastEndTime != null"> breakfastEndTime =Convert(time, #{ breakfastEndTime }, 108), </if>
+			<if test="lunchStartTime != null"> lunchStartTime =Convert(time,#{ lunchStartTime }, 108), </if>
+			<if test="lunchEndTime != null"> lunchEndTime =Convert(time, #{ lunchEndTime }, 108), </if>
+			<if test="dinnerStartTime != null"> dinnerStartTime =Convert(time, #{ dinnerStartTime }, 108), </if>
+			<if test="dinnerEndTime != null"> dinnerEndTime =Convert(time, #{ dinnerEndTime }, 108), </if>
+			<if test="remark != null and remark != ''"> remark =#{remark }, </if>
+			<if test="disabled != null and disabled != ''"> disabled =#{disabled },</if>
+			<if test="createUserId != null and createUserId != ''"> createUserId =#{createUserId },</if>
+			<if test="createUserName != null and createUserName != ''"> createUserName=#{ createUserName},</if>
+			<if test="createDatetime != null "> createDatetime=#{ createDatetime},</if>
+			<if test="createIp != null and createIp != ''"> createIp =#{createIp },</if>
+			<if test="updateUserId != null and updateUserId != ''"> updateUserId =#{updateUserId },</if>
+			<if test="updateUserName != null and updateUserName != ''"> updateUserName=#{ updateUserName},</if>
+			<if test="updateDatetime != null "> updateDatetime=#{ updateDatetime},</if>
+    		
+            <if test="minRechargeAmount != null"> minRechargeAmount =#{ minRechargeAmount }, </if>
+			<if test="maxRechargeAmount != null"> maxRechargeAmount =#{ maxRechargeAmount }, </if>
+			<if test="maxConsumptionAmount != null"> maxConsumptionAmount =#{ maxConsumptionAmount }, </if>
+    	
+    	</set>
+    	where pkid=#{pkid}
+    </update>
+    
+    
+    
+    <update id="update" parameterType="map">
+    	update sys_setup
+    	<set>
+    		<if test="systemName != null and systemName != ''"> systemName =#{systemName }, </if>
+			<if test="decimalPlaces != null and decimalPlaces != ''"> decimalPlaces =#{decimalPlaces },</if>
+			<if test="terminalName != null and terminalName != ''"> terminalName =#{ terminalName }, </if>
+			<if test="breakfastStartTime != null"> breakfastStartTime =#{ breakfastStartTime }, </if>
+			<if test="breakfastEndTime != null"> breakfastEndTime =#{ breakfastEndTime }, </if>
+			<if test="lunchStartTime != null"> lunchStartTime =#{ lunchStartTime }, </if>
+			<if test="breakfastEndTime != null"> breakfastEndTime =#{ breakfastEndTime }, </if>
+			<if test="dinnerStartTime != null"> dinnerStartTime =#{ dinnerStartTime }, </if>
+			<if test="dinnerEndTime != null"> dinnerEndTime =#{ dinnerEndTime }, </if>
+			<if test="remark != null and remark != ''"> remark =#{remark }, </if>
+			<if test="disabled != null and disabled != ''"> disabled =#{disabled },</if>
+			<if test="createUserId != null and createUserId != ''"> createUserId =#{createUserId },</if>
+			<if test="createUserName != null and createUserName != ''"> createUserName=#{ createUserName},</if>
+			<if test="createDatetime != null "> createDatetime=#{ createDatetime},</if>
+			<if test="createIp != null and createIp != ''"> createIp =#{createIp },</if>
+			<if test="updateUserId != null and updateUserId != ''"> updateUserId =#{updateUserId },</if>
+			<if test="updateUserName != null and updateUserName != ''"> updateUserName=#{ updateUserName},</if>
+			<if test="updateDatetime != null "> updateDatetime=#{ updateDatetime},</if>
+    	</set>
+    	<include refid="condition"></include>
+    </update>
+    
+    <update id="updateOnly" parameterType="map">
+    	update sys_setup
+    	<set>
+			<if test="terminalName != null "> terminalName =#{ terminalName }, </if>
+			<if test="disabled != null and disabled != ''"> disabled =#{disabled },</if>
+			<if test="createUserId != null and createUserId != ''"> createUserId =#{createUserId },</if>
+			<if test="createUserName != null and createUserName != ''"> createUserName=#{ createUserName},</if>
+			<if test="createDatetime != null "> createDatetime=#{ createDatetime},</if>
+			<if test="createIp != null and createIp != ''"> createIp =#{createIp },</if>
+			<if test="updateUserId != null and updateUserId != ''"> updateUserId =#{updateUserId },</if>
+			<if test="updateUserName != null and updateUserName != ''"> updateUserName=#{ updateUserName},</if>
+			<if test="updateDatetime != null "> updateDatetime=#{ updateDatetime},</if>
+    	</set>
+    </update>
+</mapper>

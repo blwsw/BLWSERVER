@@ -39,9 +39,9 @@ spring:
   profiles: dev
   datasource:
     name: test
-    url: jdbc:mysql://127.0.0.1:3306/warning?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://101.200.162.47:3306/ly2?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
-    password: root
+    password: 1QAzxsw@
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     filters: stat
@@ -94,6 +94,11 @@ socket:
   pool-max: 30
   # 线程队列容量 10
   pool-queue-init: 10
+  #serverId
+  server-ip: 127.0.0.1
+  #serverport
+  server-port: 9006
+logsLimit: 20000
 ---
 #测试环境配置
 #容器端口
@@ -151,7 +156,7 @@ spring:
   profiles: prod1
   datasource:
     name: test
-    url: jdbc:mysql://127.0.0.1:3306/warning?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/ly2?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: 1QAzxsw@
     type: com.alibaba.druid.pool.DruidDataSource
@@ -180,12 +185,15 @@ spring:
         max-wait: 500
         max-idle: 200
         min-idle: 0
+  activemq:
+    broker-url: tcp://127.0.0.1:61616
+    maximum-redeliveries: 0
 logging:
   config: classpath:logback-prod.xml
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://127.0.0.1:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 fdfs:
   connect-timeout: 30000
   so-timeout: 30000
@@ -203,10 +211,16 @@ socket:
   # 线程池 - 核心线程数 10
   pool-core: 10
   # 线程池 - 最大线程数 20
-  pool-max: 30
+  pool-max: 20
   # 线程队列容量 10
   pool-queue-init: 10
+  #serverId
+  server-ip: 127.0.0.1
+  #serverport
+  server-port: 9003
+logsLimit: 10000
 ---
+
 
 spring:
   profiles: preprod1
@@ -303,7 +317,7 @@ fdfs:
 
   pool:
     jmx-enabled: false
-    
+
 ---
 #测试环境配置
 #容器端口
@@ -354,9 +368,9 @@ fdfs:
   so-timeout: 3000
   tracker-list: 115.28.145.79:22122
   pool:
-    jmx-enabled: false        
+    jmx-enabled: false
 
-    
+
 ---
 #越南产线环境配置1
 spring:
@@ -405,4 +419,4 @@ fdfs:
     - 10.10.115.69:22122
 
   pool:
-    jmx-enabled: false    
+    jmx-enabled: false

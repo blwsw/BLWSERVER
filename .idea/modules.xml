@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SZSTSERVER.iml" filepath="$PROJECT_DIR$/SZSTSERVER.iml" />
-      <module fileurl="file://$PROJECT_DIR$/admin-server/admin-server.iml" filepath="$PROJECT_DIR$/admin-server/admin-server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/batch-server/batch-server.iml" filepath="$PROJECT_DIR$/batch-server/batch-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BLWSERVER.iml" filepath="$PROJECT_DIR$/BLWSERVER.iml" />
       <module fileurl="file://$PROJECT_DIR$/commons/commons.iml" filepath="$PROJECT_DIR$/commons/commons.iml" />
       <module fileurl="file://$PROJECT_DIR$/core-server/core-server.iml" filepath="$PROJECT_DIR$/core-server/core-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/core-server-interfaces/core-server-interfaces.iml" filepath="$PROJECT_DIR$/core-server-interfaces/core-server-interfaces.iml" />
       <module fileurl="file://$PROJECT_DIR$/eureka-server/eureka-server.iml" filepath="$PROJECT_DIR$/eureka-server/eureka-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/gateway-server/gateway-server.iml" filepath="$PROJECT_DIR$/gateway-server/gateway-server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/stream-server/stream-server.iml" filepath="$PROJECT_DIR$/stream-server/stream-server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/stream-server-interfaces/stream-server-interfaces.iml" filepath="$PROJECT_DIR$/stream-server-interfaces/stream-server-interfaces.iml" />
       <module fileurl="file://$PROJECT_DIR$/uc-server/uc-server.iml" filepath="$PROJECT_DIR$/uc-server/uc-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/uc-server-interfaces/uc-server-interfaces.iml" filepath="$PROJECT_DIR$/uc-server-interfaces/uc-server-interfaces.iml" />
     </modules>

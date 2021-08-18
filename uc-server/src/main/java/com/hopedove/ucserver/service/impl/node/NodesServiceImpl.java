@@ -3,14 +3,12 @@ package com.hopedove.ucserver.service.impl.node;
 import com.hopedove.commons.exception.BusinException;
 import com.hopedove.commons.response.RestPageResponse;
 import com.hopedove.commons.response.RestResponse;
-import com.hopedove.commons.utils.JsonUtil;
-import com.hopedove.commons.utils.LocalDateTimeUtil;
-import com.hopedove.commons.utils.SortUtil;
-import com.hopedove.commons.utils.XMLParser;
+import com.hopedove.commons.utils.*;
 import com.hopedove.commons.vo.BasicPageVO;
 import com.hopedove.commons.vo.QueryEnum;
 import com.hopedove.ucserver.dao.IEventLogDao;
 import com.hopedove.ucserver.dao.node.INodeDao;
+import com.hopedove.ucserver.dao.node.IPDCDao;
 import com.hopedove.ucserver.dao.socket.ISocketDataDao;
 import com.hopedove.ucserver.service.ISocketService;
 import com.hopedove.ucserver.service.impl.websocket.WebSocket;
@@ -18,7 +16,9 @@ import com.hopedove.ucserver.service.nodes.INodesService;
 import com.hopedove.ucserver.vo.EnterpriseVO;
 import com.hopedove.ucserver.vo.EventLogVO;
 import com.hopedove.ucserver.vo.node.NodesVO;
+import com.hopedove.ucserver.vo.node.PDCVO;
 import com.hopedove.ucserver.vo.node.RealVO;
+import com.hopedove.ucserver.vo.node.UploadVO;
 import com.hopedove.ucserver.vo.xmlvo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,6 +56,9 @@ public class NodesServiceImpl implements INodesService{
     private ISocketService iSocketService;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private IPDCDao ipdcDao;
+
     private String seqKey = "blwkey";
 
     //创建一个节点
@@ -65,6 +68,9 @@ public class NodesServiceImpl implements INodesService{
         if(nodesVO1 != null){
             logger.debug("已存在节点编号为["+nodesVO.getAddr()+"]的设备节点");
             this.iNodeDao.modifyNodes(nodesVO);
+            RestResponse<Integer> response = new RestResponse<Integer>();
+            response.setMessage("已存在节点编号为["+nodesVO.getAddr()+"]的设备节点");
+            return response;
         }else{
             this.iNodeDao.addNodes(nodesVO);
         }
@@ -73,11 +79,51 @@ public class NodesServiceImpl implements INodesService{
     }
     //创建一个节点
     @PostMapping("/nodes/batch")
-    public RestResponse<Integer> addNodesBatch(@RequestBody List<NodesVO> nodesVOs){
-        this.iNodeDao.removeNodes(null);
+    public RestResponse<Integer> addNodesBatch(@RequestBody UploadVO uploadVO){
+
+        List<NodesVO> nodesVOs = uploadVO.getDataList();
+        String type = uploadVO.getType();
+        if(StringUtils.isEmpty(type)){
+            return  new RestResponse<>(500);
+        }
+        if("node".equals(type)){
+            this.iNodeDao.removeNodes(null);
+        }else if("LY".equals(type)){
+            this.iNodeDao.removeNodeParamsLy(null);
+        }else if("Params".equals(type)){
+            this.iNodeDao.removeNodeParams(null);
+        }
+
+        List<PDCVO> pdcvos = this.ipdcDao.getProducts(null);
+        Map<String,String> pMap = new HashMap<>();
+        for(PDCVO p:pdcvos){
+            pMap.put(p.getName(),p.getpId()+"");
+        }
         if(nodesVOs != null && nodesVOs.size() >0){
             for(NodesVO nodesVO:nodesVOs){
-                this.iNodeDao.addNodes(nodesVO);
+
+                if(nodesVO.getAddr() == null){
+                    continue;
+                }
+//                if(pMap.containsKey(nodesVO.getProdName())){
+//                    nodesVO.setPID(Integer.parseInt(pMap.get(nodesVO.getProdName())));
+//                }else{
+//                    PDCVO p = new PDCVO();
+//                    p.setName(nodesVO.getProdName());
+//                    int Pid = this.ipdcDao.addPCDs(p);
+//                    nodesVO.setPID(Pid);
+//                    pMap.put(p.getName(),Pid+"");
+//                }
+                if("node".equals(type)){
+                    this.iNodeDao.addNodes(nodesVO);
+                }else if("LY".equals(type)){
+                    this.iNodeDao.addNodeParamsLY(nodesVO);
+                }else if("Params".equals(type)){
+                    if(nodesVO.getRAlarm() == null || StringUtils.isEmpty(nodesVO.getRAlarm())){
+                        nodesVO.setRAlarm("0");
+                    }
+                    this.iNodeDao.addNodeParamsResister(nodesVO);
+                }
             }
         }
         return new RestResponse<>(2);
@@ -91,7 +137,7 @@ public class NodesServiceImpl implements INodesService{
 
     @ApiOperation(value = "查询节点")
     @GetMapping("/nodes")
-    public RestPageResponse<List<NodesVO>> getNodes(@RequestParam(required = false) String querySring, @RequestParam(required = false) Integer currentPage, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sort){
+    public RestPageResponse<List<NodesVO>> getNodes(@RequestParam(required = false) String queryString, @RequestParam(required = false) Integer currentPage, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sort){
         //1.查询主数据
         BasicPageVO page = null;
         if (currentPage != null) {
@@ -102,7 +148,7 @@ public class NodesServiceImpl implements INodesService{
         sort = SortUtil.format(sort);
         Map<String, Object> param = new HashMap<>();
 
-        param.put("querySring", querySring);
+        param.put("queryString", queryString);
         param.put(QueryEnum.PAGES.getValue(), page);
         param.put(QueryEnum.SORTS.getValue(), sort);
 
@@ -125,7 +171,9 @@ public class NodesServiceImpl implements INodesService{
         SubItem item = new SubItem();
         BeanUtils.copyProperties(nodesVO,item);
 
-        item.setAddr(nodesVO.getAddr().toString());
+        //item.setAddr(nodesVO.getAddr().toString());
+        item.setId(nodesVO.getID().toString());
+        item.setPID(nodesVO.getPID().toString());
         item.setTCurrentAlarm(nodesVO.getTCurrentAlarm().toString());
         item.setTAlarm(nodesVO.getTAlarm().toString());
         item.setTRiseMax(nodesVO.getTRiseMax().toString());
@@ -176,6 +224,12 @@ public class NodesServiceImpl implements INodesService{
             eventLogVO.setStatus("3");//异常
             this.iSocketService.modifyEventLog(seqNo,eventLogVO);
         }
+
+        List<RealVO> realVOList = this.iNodeDao.getxjztList(null);
+        if(realVOList != null && !realVOList.isEmpty()){
+            this.stringRedisTemplate.opsForValue().set("realVOList",JsonUtil.writeValueAsString(realVOList));
+        }
+
         return restResponse;
     }
 
@@ -198,6 +252,7 @@ public class NodesServiceImpl implements INodesService{
             eventLogVO.setStatus("3");//异常
             this.iSocketService.modifyEventLog(seqNo,eventLogVO);
         }
+
         return restResponse;
     }
 
@@ -215,7 +270,7 @@ public class NodesServiceImpl implements INodesService{
             SubItem subItem =null;
             for(String addr : addrArr){
                 subItem = new SubItem();
-                subItem.setAddr(addr);
+                subItem.setId(addr);
                 subItemList.add(subItem);
             }
             clearFault.setSubItem(subItemList);
@@ -252,7 +307,7 @@ public class NodesServiceImpl implements INodesService{
             SubItem subItem =null;
             for(String addr : addrArr){
                 subItem = new SubItem();
-                subItem.setAddr(addr);
+                subItem.setId(addr);
                 subItemList.add(subItem);
             }
             getParams.setSubItem(subItemList);

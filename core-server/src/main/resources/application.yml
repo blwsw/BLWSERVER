@@ -1,0 +1,364 @@
+#spring 基础配置文件，dev 表示开发环境， test 表示测试环境， product 表示生产环境
+server:
+  port: 18763
+spring:
+  profiles:
+    active: dev
+  application:
+    name: core-server
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 200MB
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.hopedove.coreserver.vo
+ribbon:
+  ReadTimeout: 50000
+  ConnectTimeout: 50000
+eureka:
+  client:
+    registryFetchIntervalSeconds: 5
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+---
+#开发环境配置
+#容器端口
+spring:
+  profiles: dev
+  datasource:
+    name: test
+    url: jdbc:mysql://101.200.162.47:3306/ly2?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 1QAzxsw@
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+#    password: password
+    jedis:
+      pool:
+        max-active: 200
+        max-wait: 1
+        max-idle: 10
+        min-idle: 0
+  activemq:
+    broker-url: tcp://127.0.0.1:61616
+    maximum-redeliveries: 0
+    #spring.activemq.broker-url=failover:(tcp://172.18.1.188:61616,tcp://172.18.1.18:61616)
+logging:
+  config: classpath:logback-dev.xml
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:18761/eureka/
+fdfs:
+  connect-timeout: 3000
+  so-timeout: 30000
+  tracker-list: 115.28.145.79:22122
+  pool:
+    jmx-enabled: false
+ftp:
+  ip: 58.213.72.26
+  port: 21
+  bastPath: /
+  username: anonymous
+  password: pwd
+fileServerType: dfs
+
+sdk.sdk-lib-path: D:\arcsoft_lib
+sdk.app-id: FHCYFNryTQhxkH3BsNyssGiymRFamziaYQJjiEGTb9kU
+sdk.sdk-key: 7mfZmWDZD31RST65pQb1PhmXUbZVRQNQuzbisJ84UZog
+sdk.activeKey: 8611-113A-K13Q-RRYH
+sdk.detect-pool-size: 5
+sdk.compare-pool-size: 5
+kqdburl: "[zhouwx_NinGangKQ].[dbo]"
+---
+#测试环境配置
+spring:
+  profiles: test
+  datasource:
+    name: test
+    url: jdbc:sqlserver://47.105.107.250:1433;databasename=zhouwx_fljh
+    username: sa
+    password: Root123abc@hd
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
+    timeout: 5000
+    #    password: password
+    jedis:
+      pool:
+        max-active: 200
+        max-wait: 1
+        max-idle: 10
+        min-idle: 0
+  activemq:
+    broker-url: tcp://127.0.0.1:61616
+    maximum-redeliveries: 0
+    #spring.activemq.broker-url=failover:(tcp://172.18.1.188:61616,tcp://172.18.1.18:61616)
+logging:
+  config: classpath:logback-test.xml
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:18761/eureka/
+fdfs:
+  connect-timeout: 3000
+  so-timeout: 30000
+  tracker-list: 115.28.145.79:22122
+  pool:
+    jmx-enabled: false
+ftp:
+  ip: 192.168.0.10
+  port: 21
+  bastPath: /
+  username: anonymous
+  password: pwd
+fileServerType: dfs
+
+sdk.sdk-lib-path: D:\arcsoft_lib
+sdk.app-id: FHCYFNryTQhxkH3BsNyssGiymRFamziaYQJjiEGTb9kU
+sdk.sdk-key: 7mfZmWDZD31RST65pQb1PhmXUbZVRQNQuzbisJ84UZog
+sdk.activeKey: 8611-113A-K13Q-RRYH
+sdk.detect-pool-size: 5
+sdk.compare-pool-size: 5
+kqdburl: "[zhouwx_NinGangKQ].[dbo]"
+---
+#生产环境配置
+server:
+  port: 8763
+spring:
+  profiles: prod1
+  datasource:
+    name: test
+    url: jdbc:mysql://127.0.0.1:3306/ly2?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 1QAzxsw@
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 500
+    initialSize: 100
+    maxWait: 60000
+    minIdle: 100
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+    jedis:
+      pool:
+        max-active: 5000
+        max-wait: 500
+        max-idle: 200
+        min-idle: 100
+  activemq:
+    broker-url: tcp://127.0.0.1:61616
+    maximum-redeliveries: 0
+logging:
+  config: classpath:logback-prod.xml
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+fdfs:
+  connect-timeout: 30000
+  so-timeout: 30000
+  tracker-list:
+    - 10.10.31.109:22122
+
+  pool:
+    jmx-enabled: false
+
+fileServerType: dfs
+sdk.sdk-lib-path: D:\\arcsoft_lib
+sdk.app-id: FHCYFNryTQhxkH3BsNyssGiymRFamziaYQJjiEGTb9kU
+sdk.sdk-key: 7mfZmWDZD31RST65pQb1PhmXUbZVRQNQuzbisJ84UZog
+sdk.activeKey: 8611-113A-K11N-T5HC
+sdk.detect-pool-size: 5
+sdk.compare-pool-size: 5
+kqdburl: "[192.168.1.82\\szsql82].[NinGangKQ].[dbo]"
+---
+server:
+  port: 8763
+spring:
+  profiles: sztest
+  datasource:
+    name: test
+    url: jdbc:sqlserver://47.105.107.250:1433;databasename=zhouwx_fljh
+    username: sa
+    password: Root123abc@hd
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+    #    password: password
+    jedis:
+      pool:
+        max-active: 200
+        max-wait: 1
+        max-idle: 10
+        min-idle: 0
+  activemq:
+    broker-url: tcp://127.0.0.1:61616
+    maximum-redeliveries: 0
+    #spring.activemq.broker-url=failover:(tcp://172.18.1.188:61616,tcp://172.18.1.18:61616)
+logging:
+  config: classpath:logback-dev.xml
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+fdfs:
+  connect-timeout: 3000
+  so-timeout: 3000
+  tracker-list: 10.10.31.148:22122
+  pool:
+    jmx-enabled: false
+ftp:
+  ip: 192.168.0.10
+  port: 21
+  bastPath: /
+  username: anonymous
+  password: pwd
+fileServerType: dfs
+
+---
+#测试环境配置
+spring:
+  profiles: aliyun
+  datasource:
+    name: test
+    url: jdbc:sqlserver://47.105.107.250:1433;databasename=zhouwx_fljh
+    username: sa
+    password: Root123abc@hd
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
+    timeout: 5000
+    #    password: password
+    jedis:
+      pool:
+        max-active: 200
+        max-wait: 1
+        max-idle: 10
+        min-idle: 0
+  activemq:
+    broker-url: tcp://localhost:61616
+    maximum-redeliveries: 0
+    #spring.activemq.broker-url=failover:(tcp://172.18.1.188:61616,tcp://172.18.1.18:61616)
+logging:
+  config: classpath:logback-test.xml
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:18761/eureka/
+fdfs:
+  connect-timeout: 3000
+  so-timeout: 300000
+  tracker-list: localhost:22122
+  pool:
+    jmx-enabled: false
+ftp:
+  ip: localhost
+  port: 18721
+  bastPath: /
+  username: anonymous
+  password: pwd
+fileServerType: ftp
+sdk.sdk-lib-path: D:\\arcsoft_lib
+sdk.app-id: FHCYFNryTQhxkH3BsNyssGiymRFamziaYQJjiEGTb9kU
+sdk.sdk-key: 7mfZmWDZD31RST65pQb1PhmXUbZVRQNQuzbisJ84UZog
+sdk.activeKey: 8611-113A-K11N-T5HC
+sdk.detect-pool-size: 5
+sdk.compare-pool-size: 5
+kqdburl: "[zhouwx_NinGangKQ].[dbo]"

@@ -25,6 +25,9 @@ public class HistoryVO extends BasicVO {
     @ApiModelProperty("故障标志位，T有故障，F无故障，D离线")
     private String ErrFlag;
 
+    @ApiModelProperty("接地电阻警报 0正常，1警报")
+    private String ErrR;
+
     @ApiModelProperty("雷击故障代码，00正常01预警10报警")
     private String  ErrThunder;
 
@@ -244,5 +247,13 @@ public class HistoryVO extends BasicVO {
 
     public void setSwitch4(String switch4) {
         Switch4 = switch4;
+    }
+
+    public String getErrR() {
+        return ErrR;
+    }
+
+    public void setErrR(String errR) {
+        ErrR = errR;
     }
 }

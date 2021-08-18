@@ -1,6 +1,7 @@
 package com.hopedove.ucserver.dao.node;
 import com.hopedove.ucserver.vo.EventLogVO;
 import com.hopedove.ucserver.vo.node.NodesVO;
+import com.hopedove.ucserver.vo.node.RealVO;
 import com.hopedove.ucserver.vo.xmlvo.SubItem;
 
 import java.util.List;
@@ -19,4 +20,15 @@ public interface INodeDao {
   int modifyNodes(NodesVO nodesVO);
 
   int removeNodes(NodesVO nodesVO);
+
+  int addNodeParamsLY(NodesVO nodesVO);
+
+  int addNodeParamsResister(NodesVO nodesVO);
+
+  int removeNodeParams(NodesVO nodesVO);
+
+  int removeNodeParamsLy(NodesVO nodesVO);
+
+  List<RealVO> getxjztList(Map<String,Object> param);
+
 }

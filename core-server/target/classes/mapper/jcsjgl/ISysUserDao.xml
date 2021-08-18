@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hopedove.coreserver.dao.jcsjgl.ISysUserDao">
+
+    <sql id="condition">
+        where disabled=0
+        <if test="userId != null and userId != ''"> and userId = #{userId}</if>
+        <if test="loginAccount != null and loginAccount != ''"> and loginAccount like '%'+#{loginAccount}+'%'</if> 
+        <if test="userName != null and userName != ''"> and userName like '%'+#{userName}+'%'</if> 
+        <if test="password != null and password != ''"> and password = #{password}</if> 
+        <if test="roleId != null and roleId != ''"> and roleId = #{roleId}</if> 
+    </sql>
+
+    <select id="getOne" parameterType="map" resultType="com.hopedove.coreserver.vo.jcsjgl.SysUser">
+        select * from sys_user with(nolock) 
+        <include refid="condition"></include>
+    </select>
+
+    <select id="getList" parameterType="map" resultType="com.hopedove.coreserver.vo.jcsjgl.SysUser">
+       <if test=" pages != null ">
+            select
+            top ${pages.page_pageSize} *
+            from
+            (
+        </if>
+        select top 100 percent row_number() over(order by pkid) as rows, * from sys_user  with(nolock) 
+        <include refid="condition"></include>
+        <if test=" sorts != null and sorts != '' ">
+            order by ${sorts}
+        </if>
+        <if test=" pages != null ">
+            ) as t
+            where rows > ${pages.page_startIndex}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.hopedove.coreserver.vo.jcsjgl.SysUser">
+    	 <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="pkid">
+        insert into sys_user
+        (
+        	loginAccount,
+			userName,
+			password,
+			disabled,
+			createUserId,
+			createUserName,
+			createDatetime,
+			createIp,
+			updateUserId,
+			updateUserName,
+			updateDatetime,
+			updateIp
+        ) values (
+        	#{loginAccount},
+			#{userName},
+			#{password},
+			#{disabled},
+			#{createUserId},
+			#{createUserName},
+			#{createDatetime,jdbcType=DATE},
+			#{createIp},
+			#{updateUserId},
+			#{updateUserName},
+			#{updateDatetime,jdbcType=DATE},
+			#{updateIp}
+        );
+              SELECT SCOPE_IDENTITY()
+        </selectKey>
+    </insert>
+    
+    <update id="updateById" parameterType="com.hopedove.coreserver.vo.jcsjgl.SysUser">
+    	update sys_user
+    	<set>
+    		<if test="loginAccount != null and loginAccount != ''"> loginAccount =#{loginAccount }, </if>
+			<if test="userName != null and userName != ''"> userName =#{userName },</if>
+			<if test="password != null and password != ''"> password =#{ password }, </if>
+			<if test="remark != null and remark != ''"> remark =#{ remark }, </if>
+			<if test="disabled != null and disabled != ''"> disabled =#{disabled },</if>
+			<if test="createUserId != null and createUserId != ''"> createUserId =#{createUserId },</if>
+			<if test="createUserName != null and createUserName != ''"> createUserName=#{ createUserName},</if>
+			<if test="createDatetime != null "> createDatetime=#{ createDatetime},</if>
+			<if test="createIp != null and createIp != ''"> createIp =#{createIp },</if>
+			<if test="updateUserId != null and updateUserId != ''"> updateUserId =#{updateUserId },</if>
+			<if test="updateUserName != null and updateUserName != ''"> updateUserName=#{ updateUserName},</if>
+			<if test="updateDatetime != null "> updateDatetime=#{ updateDatetime},</if>
+    	</set>
+    	where pkid=#{pkid}
+    </update>
+    
+    
+    
+    <update id="update" parameterType="map">
+    	update sys_user
+    	<set>
+    		<if test="loginAccount != null and loginAccount != ''"> loginAccount =#{loginAccount }, </if>
+			<if test="userName != null and userName != ''"> userName =#{userName },</if>
+			<if test="password != null and password != ''"> password =#{ password }, </if>
+			<if test="remark != null and remark != ''"> remark =#{ remark }, </if>
+			<if test="disabled != null and disabled != ''"> disabled =#{disabled },</if>
+			<if test="createUserId != null and createUserId != ''"> createUserId =#{createUserId },</if>
+			<if test="createUserName != null and createUserName != ''"> createUserName=#{ createUserName},</if>
+			<if test="createDatetime != null "> createDatetime=#{ createDatetime},</if>
+			<if test="createIp != null and createIp != ''"> createIp =#{createIp },</if>
+			<if test="updateUserId != null and updateUserId != ''"> updateUserId =#{updateUserId },</if>
+			<if test="updateUserName != null and updateUserName != ''"> updateUserName=#{ updateUserName},</if>
+			<if test="updateDatetime != null "> updateDatetime=#{ updateDatetime},</if>
+    	</set>
+    	<include refid="condition"></include>
+    </update>
+    
+    
+    <update id="updatePwd" parameterType="com.hopedove.coreserver.vo.jcsjgl.SysUser">
+    	update sys_user 
+    	<set>
+			<if test="newPassword != null and newPassword != ''"> password =#{ newPassword }, </if>
+			<if test="disabled != null and disabled != ''"> disabled =#{disabled },</if>
+			<if test="createUserId != null and createUserId != ''"> createUserId =#{createUserId },</if>
+			<if test="createUserName != null and createUserName != ''"> createUserName=#{ createUserName},</if>
+			<if test="createDatetime != null "> createDatetime=#{ createDatetime},</if>
+			<if test="createIp != null and createIp != ''"> createIp =#{createIp },</if>
+			<if test="updateUserId != null and updateUserId != ''"> updateUserId =#{updateUserId },</if>
+			<if test="updateUserName != null and updateUserName != ''"> updateUserName=#{ updateUserName},</if>
+			<if test="updateDatetime != null "> updateDatetime=#{ updateDatetime},</if>
+    	</set>
+    	where disabled = 0
+    	  and loginAccount = #{loginAccount}
+    	  and password = #{password}
+    </update>
+    
+
+    
+</mapper>

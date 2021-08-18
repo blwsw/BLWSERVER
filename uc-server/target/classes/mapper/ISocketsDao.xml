@@ -13,14 +13,15 @@
         <if test=" type != null and type != '' ">
             and type = #{type}
         </if>
+        <if test=" PID != null and PID != '' ">
+            and PID = #{PID}
+        </if>
     </sql>
 
     <select id="getReals" parameterType="map" resultType="RealVO">
-        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.pdcid pdcNo from `real` t1 inner join nodes t2 on (t1.addr = t2.addr and t2.delete ='0')
+        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos,longitude,latitude  from `Real_ly` t1 inner join Nodes t2 on (t1.id = t2.id and t2.delete ='0')
         <include refid="RealsWhere"></include>
-        <if test=" sorts != null and sorts != '' ">
-            order by ${sorts}
-        </if>
+            order by t1.addr
         <if test=" pages != null ">
             limit ${pages.page_startIndex},${pages.page_pageSize}
         </if>
@@ -30,7 +31,7 @@
         select
         count(*)
         from
-        `real`
+        `Real`
         <include refid="RealsWhere"></include>
     </select>
 
@@ -38,16 +39,251 @@
         select
             t1.*
         from
-        `real` t1
+        `Real` t1
         where id = #{id} and t1.disabled = 0
     </select>
 
     <insert id="addReals" parameterType="RealVO">
 
-        insert into `Real` (addr,seqNo,ErrFlag,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time)
-        values (#{addr},#{seqNo},#{ErrFlag},#{TCurrent},#{OTemp},#{LCurrent1},#{LCurrent2},#{LCurrent3},#{ErrThunder},#{ErrTemp},#{ErrLeihua},#{ErrLC1},#{ErrLC2},#{ErrLC3},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{In_Time})
+        insert into `Real` (addr,seqNo,ErrFlag,TTime,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time)
+        values (#{addr},#{seqNo},#{ErrFlag},#{TTime},#{TCurrent},#{OTemp},#{LCurrent1},#{LCurrent2},#{LCurrent3},#{ErrThunder},#{ErrTemp},#{ErrLeihua},#{ErrLC1},#{ErrLC2},#{ErrLC3},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{In_Time})
     </insert>
 
 
+    <select id="getHistorys" parameterType="map" resultType="HistoryVO">
+        select * from (
+        select t1.NID,
+        t1.ID,
+        t1.ErrFlag,
+        '' ErrR,
+        t1.ErrThunder,
+        t1.ErrTemp,
+        t1.ErrLeihua,
+        t1.ErrLC1,
+        t1.ErrLC2,
+        t1.ErrLC3,
+        t1.Switch1,
+        t1.Switch2,
+        t1.Switch3,
+        t1.Switch4,
+        t1.In_Time,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos,t2.addr,t2.PID from
+        `history_ly` t1 inner join Nodes t2 on (t1.id = t2.id and t2.delete ='0')
+        union all
+        select t1.NID,
+        t1.ID,
+        t1.ErrFlag,
+        t1.ErrR,
+        '' ErrThunder,
+        '' ErrTemp,
+        '' ErrLeihua,
+        '' ErrLC1,
+        '' ErrLC2,
+        '' ErrLC3,
+        '' Switch1,
+        '' Switch2,
+        '' Switch3,
+        '' Switch4,
+        t1.In_Time
+        ,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos,t2.addr ,t2.PID from
+        `history_resister` t1 inner join Nodes t2 on (t1.id = t2.id and t2.delete ='0')
+        ) t1
+        <include refid="RealsWhere"></include>
+            order by t1.In_Time desc
+        <if test=" pages != null ">
+            limit ${pages.page_startIndex},${pages.page_pageSize}
+        </if>
+    </select>
+
+    <select id="getHistorysCount" parameterType="map" resultType="int">
+        select
+        count(*)
+        from
+        (
+        select t1.NID,
+        t1.ID,
+        t1.ErrFlag,
+        t1.ErrThunder,
+        t1.ErrTemp,
+        t1.ErrLeihua,
+        t1.ErrLC1,
+        t1.ErrLC2,
+        t1.ErrLC3,
+        t1.Switch1,
+        t1.Switch2,
+        t1.Switch3,
+        t1.Switch4,
+        t1.In_Time,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos,t2.addr,t2.PID from
+        `history_ly` t1 inner join Nodes t2 on (t1.id = t2.id and t2.delete ='0')
+        union all
+        select t1.NID,
+        t1.ID,
+        t1.ErrFlag,
+        '' ErrThunder,
+        '' ErrTemp,
+        '' ErrLeihua,
+        '' ErrLC1,
+        '' ErrLC2,
+        '' ErrLC3,
+        '' Switch1,
+        '' Switch2,
+        '' Switch3,
+        '' Switch4,
+        t1.In_Time
+        ,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos,t2.addr,t2.PID from
+        `history_resister` t1 inner join Nodes t2 on (t1.id = t2.id and t2.delete ='0')
+        ) t1
+        <include refid="RealsWhere"></include>
+    </select>
+
+    <insert id="addHistorys" parameterType="HistoryVO">
+        insert into `History` (addr,ErrFlag,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time)
+        values (#{addr},#{ErrFlag},#{ErrThunder},#{ErrTemp},#{ErrLeihua},#{ErrLC1},#{ErrLC2},#{ErrLC3},#{Switch1},#{Switch2},#{Switch3},#{Switch4},#{In_Time})
+    </insert>
+
+    <insert id="addHistorysBatch" parameterType="map" useGeneratedKeys="false">
+        insert into `History` (addr,ErrFlag,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time)
+        values
+        <foreach collection="historyVOs" item="item" index="index" separator=",">
+            (#{item.addr},#{item.ErrFlag},#{item.ErrThunder},#{item.ErrTemp},#{item.ErrLeihua},#{item.ErrLC1},#{item.ErrLC2},#{item.ErrLC3},#{item.Switch1},#{item.Switch2},#{item.Switch3},#{item.Switch4},#{item.In_Time})
+        </foreach>
+    </insert>
+    <delete id="removeHistory">
+       delete from  `History`
+    </delete>
+    <select id="getHistorysTJCount" parameterType="map" resultType="map">
+        SELECT sum(zccount) zccount,sum(gzcount) gzcount,sum(yjcount) yjcount,sum(bjcount) bjcount,In_Time from (
+        SELECT count(*) zccount,0 gzcount,0 yjcount,0 bjcount,date_format(In_Time,'%Y-%m-%d') In_Time FROM history
+        where ErrFlag = 'F'
+        and In_Time > #{near7Day}
+        GROUP BY date_format(In_Time,'%Y-%m-%d')
+        union all
+        SELECT 0 zccount,count(*) gzcount,0 yjcount,0 bjcount,date_format(In_Time,'%Y-%m-%d') In_Time FROM history
+        where ErrFlag = 'D'
+        and In_Time > #{near7Day}
+        GROUP BY date_format(In_Time,'%Y-%m-%d')
+        union all
+        SELECT 0 zccount,0 gzcount,count(*) yjcount,0 bjcount,date_format(In_Time,'%Y-%m-%d') In_Time FROM history
+        where ErrFlag = 'T' and (ErrThunder = '01' or ErrTemp = '01' or ErrLeihua = '01' or ErrLC1 = '01' or ErrLC2 = '01' or ErrLC2 = '01')
+        and In_Time > #{near7Day}
+        GROUP BY date_format(In_Time,'%Y-%m-%d')
+        union all
+        SELECT 0 zccount,0 gzcount,0 yjcount,count(*) bjcount,date_format(In_Time,'%Y-%m-%d') In_Time FROM history
+        where ErrFlag = 'T' and (ErrThunder = '10' or ErrTemp = '10' or ErrLeihua = '10' or ErrLC1 = '10' or ErrLC2 = '10' or ErrLC2 = '10')
+        and In_Time > #{near7Day}
+        GROUP BY date_format(In_Time,'%Y-%m-%d'))a
+        GROUP BY In_Time
+    </select>
+
+    <insert id="copyRealsHistroys" parameterType="map">
+        insert into `real_ly_his` (id,seqNo,ErrFlag,TTime,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,Switch1,Switch2,Switch3,Switch4,In_Time,createTime)
+        select t1.id,seqNo,ErrFlag,TTime,TCurrent,OTemp,LCurrent1,LCurrent2,LCurrent3,ErrThunder,ErrTemp,ErrLeihua,ErrLC1,ErrLC2,ErrLC3,t1.Switch1,t1.Switch2,t1.Switch3,t1.Switch4,In_Time,#{createTime}
+        from `real_ly` t1 inner join Nodes t2 on (t1.id = t2.id and t2.delete ='0')
+    </insert>
+    <insert id="copyRealsHistroys2" parameterType="map">
+        insert into `real_resister_his` (`ID`, `seqno`, `ErrFlag`, `RVal`, `In_Time`,createTime)
+        select t1.id,seqNo,ErrFlag,RVal,In_Time,#{createTime}
+        from `real_resister` t1 inner join Nodes t2 on (t1.id = t2.id and t2.delete ='0')
+    </insert>
+
+    <select id="getRealHisTJCount" parameterType="map" resultType="map">
+        SELECT sum(zccount) zccount,sum(gzcount) gzcount,sum(yjcount) yjcount,sum(bjcount) bjcount,sum(TTime) TTime, In_Time from (
+
+        SELECT count(*) zccount,0 gzcount,0 yjcount,0 bjcount,0 TTime,date_format(createTime,'%Y-%m-%d') In_Time FROM real_ly_his
+        where ErrFlag = 'F'
+        and createTime > #{near7Day}
+        GROUP BY date_format(createTime,'%Y-%m-%d')
+
+        union all
+        SELECT count(*) zccount,0 gzcount,0 yjcount,0 bjcount,0 TTime,date_format(createTime,'%Y-%m-%d') In_Time FROM real_resister_his
+        where ErrFlag = 'F'
+        and createTime > #{near7Day}
+        GROUP BY date_format(createTime,'%Y-%m-%d')
+
+        union all
+        SELECT 0 zccount,count(*) gzcount,0 yjcount,0 bjcount,0 TTime,date_format(createTime,'%Y-%m-%d') In_Time FROM real_ly_his
+        where ErrFlag = 'D'
+        and createTime > #{near7Day}
+        GROUP BY date_format(createTime,'%Y-%m-%d')
+
+        union all
+        SELECT 0 zccount,count(*) gzcount,0 yjcount,0 bjcount,0 TTime,date_format(createTime,'%Y-%m-%d') In_Time FROM real_resister_his
+        where ErrFlag = 'D'
+        and createTime > #{near7Day}
+        GROUP BY date_format(createTime,'%Y-%m-%d')
+
+        union all
+        SELECT 0 zccount,0 gzcount,count(*) yjcount,0 bjcount,0 TTime,date_format(createTime,'%Y-%m-%d') In_Time FROM real_ly_his
+        where ErrFlag = 'T' and (ErrThunder = '01' or ErrTemp = '01' or ErrLeihua = '01' or ErrLC1 = '01' or ErrLC2 = '01' or ErrLC2 = '01')
+        and createTime > #{near7Day}
+        GROUP BY date_format(createTime,'%Y-%m-%d')
+        union all
+        SELECT 0 zccount,0 gzcount,0 yjcount,count(*) bjcount,0 TTime,date_format(createTime,'%Y-%m-%d') In_Time FROM real_ly_his
+        where ErrFlag = 'T' and (ErrThunder = '10' or ErrTemp = '10' or ErrLeihua = '10' or ErrLC1 = '10' or ErrLC2 = '10'
+        or ErrLC2 = '10' or Switch1 ='1' or Switch2 ='1'  or Switch3 ='1' or Switch4 ='1')
+        and createTime > #{near7Day}
+        GROUP BY date_format(createTime,'%Y-%m-%d')
+
+        union all
+
+        	SELECT
+	0 zccount,
+	0 gzcount,
+	0 yjcount,
+	0 bjcount,
+	sum(TTime) TTime,
+	date_format( createTime, '%Y-%m-%d' ) In_Time
+    FROM
+        real_ly_his
+    where
+    createTime > #{near7Day}
+    GROUP BY
+	date_format( createTime, '%Y-%m-%d' )
+
+        )a
+        GROUP BY In_Time
+    </select>
+
+    <select id="getRealsHH" parameterType="Map" resultType="Map">
+         SELECT SUM(zccount) zccount,SUM(gzcount) gzcount,SUM(yjcount) yjcount,SUM(bjcount) bjcount from (
+select
+            SUM(case when ErrFlag='F'
+            then 1
+            ELSE 0 END) zccount,
+            SUM(case when ErrFlag='D'
+            then 1
+            ELSE 0 END) gzcount,
+
+            SUM(case when ErrFlag='T' and (ErrThunder = '01' or ErrTemp = '01' or ErrLeihua = '01' or ErrLC1 = '01' or ErrLC2 = '01' or ErrLC2 = '01')
+            then 1
+            ELSE 0 END) yjcount,
+
+            SUM(case when ErrFlag='T' and (ErrThunder = '10' or ErrTemp = '10' or ErrLeihua = '10' or ErrLC1 = '10' or ErrLC2 = '10'
+                    or ErrLC2 = '10' or Switch1 ='1' or Switch2 ='1'  or Switch3 ='1' or Switch4 ='1')
+            then 1
+            ELSE 0 END) bjcount
+
+            from real_ly l
+						UNION all
+						select
+            IFNULL(sum(case when ErrFlag='F'
+            then 1
+            ELSE 0 END),0) zccount,
+            IFNULL(SUM(case when ErrFlag='D'
+            then 1
+            ELSE 0 END),0) gzcount,
+
+            IFNULL(SUM(case when ErrFlag='T'
+            then 1
+            ELSE 0 END),0) yjcount,
+
+            IFNULL(SUM(case when ErrFlag='T'
+            then 1
+            ELSE 0 END),0) bjcount
+
+            from real_resister l
+						)a
+
+
+    </select>
 
 </mapper>

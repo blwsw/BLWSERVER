@@ -3,20 +3,15 @@
 <mapper namespace="com.hopedove.ucserver.dao.node.IPDCDao">
 
     <sql id="pdcWhere">
-        where disabled = 0
+        where 1=1
         <if test=" name != null and name != '' ">
             and name like concat('%', #{name}, '%')
         </if>
-        <if test=" factoryId != null and factoryId != '' ">
-            and factoryId = #{factoryId}
-        </if>
-        <if test=" type != null and type != '' ">
-            and type = #{type}
-        </if>
+
     </sql>
 
-    <select id="getpdcs" parameterType="map" resultType="PDCVO">
-        select * from pdc
+    <select id="getProducts" parameterType="map" resultType="PDCVO">
+        select * from products
         <include refid="pdcWhere"></include>
         <if test=" sorts != null and sorts != '' ">
             order by ${sorts}
@@ -30,7 +25,7 @@
         select
         count(*)
         from
-        pdc
+        products
         <include refid="pdcWhere"></include>
     </select>
 
@@ -42,12 +37,12 @@
         where id = #{id} and t1.disabled = 0
     </select>
 
-    <insert id="addpdc" parameterType="PDCVO">
+    <insert id="addPCDs" parameterType="PDCVO">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
-            select LAST_INSERT_ID() as id
+            select LAST_INSERT_ID() as pId
         </selectKey>
-        insert into pdc (addr,name,descript,unitid)
-        values (#{addr},#{name},#{descript},#{unitid})
+        insert into products (name)
+        values (#{name})
     </insert>
 
     <update id="modifypdc" parameterType="PDCVO">

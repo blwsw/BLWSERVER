@@ -7,27 +7,5 @@
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/classes" />
-  </component>
-  <component name="SvnBranchConfigurationManager">
-    <option name="myConfigurationMap">
-      <map>
-        <entry key="$PROJECT_DIR$">
-          <value>
-            <SvnBranchConfiguration>
-              <option name="branchUrls">
-                <list>
-                  <option value="svn://115.28.145.79/hopedove/SZST/%E6%96%87%E6%A1%A3" />
-                  <option value="svn://115.28.145.79/hopedove/SZST/branches" />
-                  <option value="svn://115.28.145.79/hopedove/SZST/tags" />
-                </list>
-              </option>
-              <option name="trunkUrl" value="svn://115.28.145.79/hopedove/SZST/trunk" />
-            </SvnBranchConfiguration>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>

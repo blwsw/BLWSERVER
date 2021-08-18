@@ -170,6 +170,7 @@ public class ServerConfig extends Thread {
      * 0x44	表示服务初始化反馈
      */
     public void dispatch(byte btype,String xmlData) throws Exception{
+        logger.debug("xmlData===="+xmlData);
         int type = (int) (btype & 0xFF);
         String seqNo = "";
         if (type == 65){//0x41	表示服务反馈/推送采集数据

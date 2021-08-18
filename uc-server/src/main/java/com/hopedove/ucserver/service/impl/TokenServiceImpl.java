@@ -126,7 +126,7 @@ public class TokenServiceImpl implements ITokenService {
 
         if (LocalDateTimeUtil.getCurrentMill() > validTime) {
             //失效凭证
-            throw new BusinException(ErrorCode.EXP_BAD_CREDENTIALS);
+          //  throw new BusinException(ErrorCode.EXP_BAD_CREDENTIALS);
         }
 
         //先验证刷新凭证有效期

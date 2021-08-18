@@ -67,4 +67,12 @@ public class Scheduler {
         RestResponse<Integer> restResponse = this.iSocketService.copyRealsHistroys();
         log.debug("copyRealsTasks====ret="+restResponse.getResponseBody());
     }
+
+    //每小时59分执行一次
+    @Scheduled(cron = "0 59 * * * ?")
+    //@Scheduled(cron = "0 0/1 * * * ?")
+    public void copyRealsHHTasks() {
+        RestResponse<Integer> restResponse = this.iSocketService.copyRealsHH();
+        log.debug("copyRealsHHTasks====ret=");
+    }
 }

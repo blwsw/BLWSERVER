@@ -43,6 +43,14 @@ public class WebSocket {
     public void onMessage(String message) {
         System.out.println("【websocket消息】收到客户端消息:"+message);
 
+        for(WebSocket webSocket : webSockets) {
+            System.out.println("【websocket消息】广播消息:"+message);
+            try {
+                webSocket.session.getAsyncRemote().sendText(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // 此为广播消息

@@ -73,7 +73,8 @@ public interface ISocketService {
     @GetMapping("/get/history")
     public RestPageResponse<List<HistoryVO>> getHistorys(@RequestParam(required = false) Integer currentPage,
                                                       @RequestParam(required = false) Integer pageSize,
-                                                      @RequestParam(required = false) String sort);
+                                                      @RequestParam(required = false) String sort,
+                                                         @RequestParam(required = false) String PID);
     //创建历史记录
     @PostMapping("/history")
     RestResponse<Integer> addHistroys(@RequestBody HistoryVO historyVO);
@@ -87,4 +88,7 @@ public interface ISocketService {
 
     @PostMapping("/real/his")
     RestResponse<Integer> copyRealsHistroys();
+
+    @PostMapping("/real/HH")
+    RestResponse<Integer> copyRealsHH();
 }
