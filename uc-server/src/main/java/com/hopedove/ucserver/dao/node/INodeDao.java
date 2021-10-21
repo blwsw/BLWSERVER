@@ -31,4 +31,10 @@ public interface INodeDao {
 
   List<RealVO> getxjztList(Map<String,Object> param);
 
+    List<RealVO> getLYList(final Map<String, Object> param);
+    
+    int getLYListCount(final Map<String, Object> param);
+    
+    List<RealVO> getRESList(final Map<String, Object> param);
+    int getRESListCount(final Map<String, Object> param);
 }

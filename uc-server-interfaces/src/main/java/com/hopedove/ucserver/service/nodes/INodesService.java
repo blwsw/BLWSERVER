@@ -3,12 +3,14 @@ package com.hopedove.ucserver.service.nodes;
 import com.hopedove.commons.response.RestPageResponse;
 import com.hopedove.commons.response.RestResponse;
 import com.hopedove.ucserver.vo.node.NodesVO;
+import com.hopedove.ucserver.vo.node.RealVO;
 import com.hopedove.ucserver.vo.node.UploadVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @FeignClient(value = "uc-server")
 public interface INodesService {
@@ -47,4 +49,10 @@ public interface INodesService {
 
     @GetMapping("get/seqno")
     String getSeqNo(int id);
+
+    @GetMapping({ "/getAllReals" })
+    public RestResponse<Map<String, List<RealVO>>> getAllReals();
+
+    @GetMapping({ "/getRealsData" })
+    public RestResponse<Map<String, Object>> getRealsData();
 }

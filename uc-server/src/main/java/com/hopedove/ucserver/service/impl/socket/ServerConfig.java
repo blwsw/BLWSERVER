@@ -141,6 +141,21 @@ public class ServerConfig extends Thread {
             logger.error(e.getMessage());
             e.printStackTrace();
             System.out.println("发生异常");
+            try {
+                writer.close();
+                inputStream.close();
+            }
+            catch (IOException e2) {
+                e2.printStackTrace();
+            }
+            try {
+                if (this.socket != null) {
+                    this.socket.close();
+                }
+            }
+            catch (IOException e2) {
+                e2.printStackTrace();
+            }
         } finally {
             try {
                 writer.close();
@@ -176,7 +191,7 @@ public class ServerConfig extends Thread {
         if (type == 65){//0x41	表示服务反馈/推送采集数据
             UploadCollect uploadCollect= (UploadCollect)XMLParser.convertXmlStrToObject(UploadCollect.class,xmlData);
             seqNo = uploadCollect.getSeqno();
-            this.service.sendRealNewData(uploadCollect);
+            // this.service.sendRealNewData(uploadCollect);
         }else if(type == 66){//0x42	表示服务召唤设备参数反馈
             GetParamsRet getParamsRet= (GetParamsRet)XMLParser.convertXmlStrToObject(GetParamsRet.class,xmlData);
             seqNo = getParamsRet.getSeqno();
@@ -216,14 +231,14 @@ public class ServerConfig extends Thread {
                 this.service.addEventLogBatch(eventLogVO);
             }
         }
-        else{
-            eventLogVO.setEventType(type+"");
-            eventLogVO.setStatus("6");//数据返回
-            eventLogVO.setResponseBody(xmlData);
-            eventLogVO.setResponseTime(LocalDateTime.now());
-            //RestResponse<Integer> restResponse = this.service.addEventLog(eventLogVO);
-            this.service.addEventLogBatch(eventLogVO);
-        }
+//        else{
+//            eventLogVO.setEventType(type+"");
+//            eventLogVO.setStatus("6");//数据返回
+//            eventLogVO.setResponseBody(xmlData);
+//            eventLogVO.setResponseTime(LocalDateTime.now());
+//            //RestResponse<Integer> restResponse = this.service.addEventLog(eventLogVO);
+//            this.service.addEventLogBatch(eventLogVO);
+//        }
     }
 
 

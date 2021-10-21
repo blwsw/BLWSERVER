@@ -635,6 +635,44 @@ public class SocketServiceImpl implements ISocketService {
         this.stringRedisTemplate.opsForValue().set("RealsHH",JsonUtil.writeValueAsString(hhMapList));
         return new RestResponse<>();
     }
+  @GetMapping({ "/getTimeTJ" })
+    public RestResponse<List<Map>> getTimeTJ() {
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        final String realsHH = (String)this.stringRedisTemplate.opsForValue().get((Object)"RealsHH");
+        List<Map> realVOList = new ArrayList<Map>();
+        if (StringUtils.isNotEmpty(realsHH)) {
+            realVOList = (List<Map>)JsonUtil.readValueList(realsHH, (Class)Map.class);
+        }
+        final String[] HHArr = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24" };
+        final List<Map> retList = new ArrayList<Map>();
+        for (final String HH : HHArr) {
+            boolean haveExist = false;
+            for (final Map m : realVOList) {
+                if ((m.get("HH") + "").equals(HH)) {
+                    retList.add(m);
+                    haveExist = true;
+                    break;
+                }
+            }
+            if (!haveExist) {
+                paramMap = new HashMap<String, Object>();
+                paramMap.put("HH", HH);
+                paramMap.put("zccount", 0);
+                paramMap.put("gzcount", 0);
+                paramMap.put("yjcount", 0);
+                paramMap.put("bjcount", 0);
+                retList.add(paramMap);
+            }
+        }
+        return (RestResponse<List<Map>>)new RestResponse((Object)retList);
+    }
+    
+    @GetMapping({ "/getRealsNowData" })
+    public RestResponse<Map<String, Object>> getRealsNowData() {
+        final Map<String, Object> nowDataMap = (Map<String, Object>)this.iSocketDataDao.getRealsNowData();
+        return (RestResponse<Map<String, Object>>)new RestResponse((Object)nowDataMap);
+    }
+    
     public static void main(String[] args) {
 //        byte[] content = new byte[4];
 //        int pacLen = 135;

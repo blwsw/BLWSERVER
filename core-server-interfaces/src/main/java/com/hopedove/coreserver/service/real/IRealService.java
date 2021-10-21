@@ -44,4 +44,7 @@ public interface IRealService {
 
     @GetMapping("/clean/history")
     RestResponse<Integer> cleanHistroy(@RequestParam(required = false) String PID);
+	
+	 @GetMapping({ "/new/data" })
+    public RestResponse<List<RealVO>> getNewData() ;
 }

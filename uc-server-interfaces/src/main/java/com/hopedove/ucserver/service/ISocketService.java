@@ -91,4 +91,10 @@ public interface ISocketService {
 
     @PostMapping("/real/HH")
     RestResponse<Integer> copyRealsHH();
+
+    @GetMapping({ "/getTimeTJ" })
+    public RestResponse<List<Map>> getTimeTJ();
+
+    @GetMapping({ "/getRealsNowData" })
+    public RestResponse<Map<String, Object>> getRealsNowData();
 }

@@ -145,17 +145,46 @@
         </if>
     </delete>
     <select id="getxjztList" parameterType="Map" resultType="RealVO">
-    select n.*,a.* from (
-    select l.ID,l.seqno,l.ErrFlag,l.TCurrent,l.TTime,l.Deterior,l.OTemp,l.LCurrent1,l.LCurrent2,l.LCurrent3,l.ErrThunder,l.ErrTemp,l.ErrLeihua,l.ErrLC1,l.ErrLC2,l.ErrLC3,l.Switch1,l.Switch2,l.Switch3,l.Switch4,'' RVal ,l.In_Time,'' ErrR
-    from  real_ly l
-
+    select n.*,l.ID,l.seqno,l.ErrFlag,l.TCurrent,l.TTime,l.Detlerior,l.OTemp,l.LCurrent1,l.LCurrent2,l.LCurrent3,l.ErrThunder,l.ErrTemp,l.ErrLeihua,l.ErrLC1,l.ErrLC2,l.ErrLC3,l.Switch1,l.Switch2,l.Switch3,l.Switch4,'' RVal ,l.In_Time,'' ErrR
+    from  real_ly l inner join nodes n on l.id = n.id
+ORDER BY n.addr asc
+    limit ${page_startIndex},${page_pageSize}
 
     union all
 
-    select r.ID,r.seqno,r.ErrFlag,'' TCurrent,'' TTime,'' Deterior,'' OTemp,'' LCurrent1,'' LCurrent2,'' LCurrent3,'' ErrThunder,'' ErrTemp,'' ErrLeihua,'' ErrLC1,'' ErrLC2,'' ErrLC3,'' Switch1,'' Switch2,'' Switch3,'' Switch4,r.RVal,
+    select n.*,r.ID,r.seqno,r.ErrFlag,'' TCurrent,'' TTime,'' Deterior,'' OTemp,'' LCurrent1,'' LCurrent2,'' LCurrent3,'' ErrThunder,'' ErrTemp,'' ErrLeihua,'' ErrLC1,'' ErrLC2,'' ErrLC3,'' Switch1,'' Switch2,'' Switch3,'' Switch4,r.RVal,
     r.In_Time,r.ErrR
     from
-    real_resister r
-    ) a right join nodes n on a.id = n.id
+    real_resister r inner join nodes n on a.id = n.id
+    ORDER BY n.addr asc
+    limit ${page_startIndex},${page_pageSize}
+
+
     </select>
+
+
+    <select id="getLYList" parameterType="Map" resultType="RealVO">
+    select n.*,l.ID,l.seqno,l.ErrFlag,l.TCurrent,l.TTime,l.Deterior,l.OTemp,l.LCurrent1,l.LCurrent2,l.LCurrent3,l.ErrThunder,l.ErrTemp,l.ErrLeihua,l.ErrLC1,l.ErrLC2,l.ErrLC3,l.Switch1,l.Switch2,l.Switch3,l.Switch4,'' RVal ,l.In_Time,'' ErrR
+    from  real_ly l inner join nodes n on L.id = n.id
+ORDER BY n.addr asc
+    limit ${page_startIndex},${page_pageSize}
+    </select>
+
+    <select id="getLYListCount" parameterType="Map" resultType="Int">
+    select count(*) from  real_ly l inner join nodes n on L.id = n.id
+    </select>
+
+    <select id="getRESList" parameterType="Map" resultType="RealVO">
+    select n.*,r.ID,r.seqno,r.ErrFlag,'' TCurrent,'' TTime,'' Deterior,'' OTemp,'' LCurrent1,'' LCurrent2,'' LCurrent3,'' ErrThunder,'' ErrTemp,'' ErrLeihua,'' ErrLC1,'' ErrLC2,'' ErrLC3,'' Switch1,'' Switch2,'' Switch3,'' Switch4,r.RVal,
+    r.In_Time,r.ErrR
+    from
+    real_resister r inner join nodes n on R.id = N.id
+ORDER BY n.addr asc
+    limit ${page_startIndex},${page_pageSize}
+    </select>
+
+    <select id="getRESListCount" parameterType="Map" resultType="Int">
+    select count(*) from  real_resister l inner join nodes n on L.id = n.id
+    </select>
+
 </mapper>

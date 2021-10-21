@@ -5,6 +5,7 @@ import com.hopedove.commons.utils.JsonUtil;
 import com.hopedove.commons.utils.XMLParser;
 import com.hopedove.ucserver.service.ISocketService;
 import com.hopedove.ucserver.service.nodes.INodesService;
+import com.hopedove.ucserver.vo.node.RealVO;
 import com.hopedove.ucserver.vo.xmlvo.DTCollector;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -74,5 +76,27 @@ public class Scheduler {
     public void copyRealsHHTasks() {
         RestResponse<Integer> restResponse = this.iSocketService.copyRealsHH();
         log.debug("copyRealsHHTasks====ret=");
+    }
+    @Scheduled(cron = "0/3 * * * * ?")
+    public void pushDataToPage() {
+      log.debug("\u5b9a\u65f6\u63a8\u9001\u4efb\u52a1\u6267\u884c\u65f6\u95f4\uff1a" + Scheduler.dateFormat.format(new Date()));
+        RestResponse<List<Map<String,Object>>> retlist = this.iSocketService.getHistorysTJCount((String)null);
+         RestResponse<List<Map>> retHHData = (RestResponse<List<Map>>)this.iSocketService.getTimeTJ();
+         RestResponse<Map<String, List<RealVO>>> realResponse = this.iNodesService.getAllReals();
+         RestResponse<Map<String, Object>> restResponse = this.iSocketService.getRealsNowData();
+         String pageCount = (String)this.stringRedisTemplate.opsForValue().get((Object)"pageCount");
+         String npageCount = JsonUtil.writeValueAsString(restResponse.getResponseBody());
+        if (StringUtils.isNotEmpty((CharSequence)pageCount) && npageCount.equals(pageCount)) {
+            return;
+        }
+        this.stringRedisTemplate.opsForValue().set("pageCount",npageCount);
+        final Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("type", "TJDATA");
+        paramMap.put("data", restResponse.getResponseBody());
+        paramMap.put("hisData", retlist.getResponseBody());
+        paramMap.put("HHData", retHHData.getResponseBody());
+        paramMap.put("RealData", realResponse.getResponseBody());
+        this.iSocketService.sendWebSocket(JsonUtil.writeValueAsString(paramMap));
+        Scheduler.log.debug("\u5b9a\u65f6\u63a8\u9001\u4efb\u52a1\u5b8c\u6210");
     }
 }

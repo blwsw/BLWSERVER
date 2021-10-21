@@ -348,4 +348,113 @@ public class NodesServiceImpl implements INodesService{
         seqNo+=df.format(sequence);
         return  seqNo;
     }
+
+    @PutMapping({ "nodes/compare/reals" })
+    public RestResponse<Integer> compareReals() {
+        final List<RealVO> realVOList = this.iNodeDao.getxjztList(null);
+        final String realListString = (String)this.stringRedisTemplate.opsForValue().get((Object)"realVOList");
+        if (realVOList != null && !realVOList.isEmpty() && StringUtils.isEmpty((CharSequence)realListString)) {
+            this.stringRedisTemplate.opsForValue().set("realVOList", JsonUtil.writeValueAsString(realVOList));
+            return (RestResponse<Integer>)new RestResponse();
+        }
+        List<RealVO> sessionRealVOList = new ArrayList<RealVO>();
+        if (org.apache.commons.lang.StringUtils.isNotEmpty(realListString)) {
+            sessionRealVOList = (List<RealVO>)JsonUtil.readValueList(realListString, (Class)RealVO.class);
+        }
+        boolean isbh = false;
+        for (final RealVO r : realVOList) {
+            boolean isnotexits = true;
+            for (final RealVO sr : sessionRealVOList) {
+                if (r.getId() == sr.getId()) {
+                    isnotexits = false;
+                    if (StringUtils.isNotEmpty((CharSequence)sr.getIn_Time())) {
+                        sr.setIn_Time(sr.getIn_Time().substring(0, 19));
+                    }
+                    if (StringUtils.isNotEmpty((CharSequence)r.getIn_Time())) {
+                        r.setIn_Time(r.getIn_Time().substring(0, 19));
+                    }
+                    if (LocalDateTimeUtil.convertStringToLDT(sr.getIn_Time()).isBefore(LocalDateTimeUtil.convertStringToLDT(r.getIn_Time()))) {
+                        BeanUtils.copyProperties((Object)r, (Object)sr);
+                        isbh = true;
+                        break;
+                    }
+                    break;
+                }
+            }
+            if (isnotexits) {
+                sessionRealVOList.add(r);
+                isbh = true;
+            }
+        }
+        if (isbh) {
+            this.stringRedisTemplate.opsForValue().set("realVOList", JsonUtil.writeValueAsString((Object)sessionRealVOList));
+        }
+        return (RestResponse<Integer>)new RestResponse();
+    }
+
+    @GetMapping({ "/getAllReals" })
+    public RestResponse<Map<String, List<RealVO>>> getAllReals() {
+        final String currPageString = (String)this.stringRedisTemplate.opsForValue().get((Object)"currPage");
+        NodesServiceImpl.logger.debug("currPage={}", (Object)currPageString);
+        int currPage = 1;
+        if (StringUtils.isEmpty((CharSequence)currPageString)) {
+            currPage = 0;
+        }
+        else {
+            currPage = Integer.parseInt(currPageString);
+            ++currPage;
+        }
+        final int pageSize = 15;
+        final int totalLy = this.iNodeDao.getLYListCount(null);
+        int maxPage = totalLy / pageSize;
+        final Map<String, Object> params = new HashMap<String, Object>();
+        if (currPage * pageSize > totalLy) {
+            params.put("page_startIndex", 0);
+        }
+        else {
+            params.put("page_startIndex", currPage * pageSize);
+        }
+        params.put("page_pageSize", pageSize);
+        final List<RealVO> lyList = this.iNodeDao.getLYList(params);
+        final int totalre = this.iNodeDao.getRESListCount(null);
+        if (currPage * pageSize > totalre) {
+            params.put("page_startIndex", 0);
+        }
+        else {
+            params.put("page_startIndex", currPage * pageSize);
+        }
+        if (maxPage < totalre / pageSize) {
+            maxPage = totalre / pageSize;
+        }
+        if (currPage >= maxPage) {
+            currPage = 0;
+        }
+        this.stringRedisTemplate.opsForValue().set("currPage", (currPage + ""));
+        final List<RealVO> resList = this.iNodeDao.getRESList(params);
+        final Map<String, List<RealVO>> retMap = new HashMap<String, List<RealVO>>();
+        retMap.put("lyList", lyList);
+        retMap.put("resList", resList);
+        return (RestResponse<Map<String, List<RealVO>>>)new RestResponse((Object)retMap);
+    }
+
+    @GetMapping({ "/getRealsData" })
+    public RestResponse<Map<String, Object>> getRealsData() {
+        final RestResponse<List<Map<String, Object>>> retlist = (RestResponse<List<Map<String, Object>>>)this.iSocketService.getHistorysTJCount((String)null);
+        final RestResponse<List<Map>> retHHData = (RestResponse<List<Map>>)this.iSocketService.getTimeTJ();
+        final RestResponse<Map<String, List<RealVO>>> realResponse = this.getAllReals();
+        final RestResponse<Map<String, Object>> restResponse = (RestResponse<Map<String, Object>>)this.iSocketService.getRealsNowData();
+        final Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("type", "TJDATA");
+        paramMap.put("data", restResponse.getResponseBody());
+        paramMap.put("hisData", retlist.getResponseBody());
+        paramMap.put("HHData", retHHData.getResponseBody());
+        paramMap.put("RealData", realResponse.getResponseBody());
+        return (RestResponse<Map<String, Object>>)new RestResponse((Object)paramMap);
+    }
+
+    public static void main(final String[] args) {
+        final LocalDateTime now = LocalDateTime.now();
+        final LocalDateTime end = LocalDateTimeUtil.convertStringToLDT("2021-08-20 15:25:30");
+        System.out.println(now.isBefore(end));
+    }
 }

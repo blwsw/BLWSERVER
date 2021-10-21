@@ -19,12 +19,18 @@
     </sql>
 
     <select id="getReals" parameterType="map" resultType="RealVO">
-        select t1.*,t2.name,t2.descript,t2.serialserver_ip,t2.serialserver_port,t2.name pdcNo,t2.InstallPos,longitude,latitude  from `Real_ly` t1 inner join Nodes t2 on (t1.id = t2.id and t2.delete ='0')
-        <include refid="RealsWhere"></include>
-            order by t1.addr
-        <if test=" pages != null ">
-            limit ${pages.page_startIndex},${pages.page_pageSize}
-        </if>
+           select n.*,a.* from (
+    select l.ID,l.seqno,l.ErrFlag,l.TCurrent,l.TTime,l.Deterior,l.OTemp,l.LCurrent1,l.LCurrent2,l.LCurrent3,l.ErrThunder,l.ErrTemp,l.ErrLeihua,l.ErrLC1,l.ErrLC2,l.ErrLC3,l.Switch1,l.Switch2,l.Switch3,l.Switch4,'' RVal ,l.In_Time,'' ErrR
+    from  real_ly l
+
+
+    union all
+
+    select r.ID,r.seqno,r.ErrFlag,'' TCurrent,'' TTime,'' Deterior,'' OTemp,'' LCurrent1,'' LCurrent2,'' LCurrent3,'' ErrThunder,'' ErrTemp,'' ErrLeihua,'' ErrLC1,'' ErrLC2,'' ErrLC3,'' Switch1,'' Switch2,'' Switch3,'' Switch4,r.RVal,
+    r.In_Time,r.ErrR
+    from
+    real_resister r
+    ) a right join nodes n on a.id = n.id
     </select>
 
     <select id="getRealsCount" parameterType="map" resultType="int">
@@ -283,6 +289,57 @@ select
             from real_resister l
 						)a
 
+
+    </select>
+
+
+    <select id="getRealsNowData" parameterType="Map" resultType="Map">
+            SELECT sum(zccountr) zccountr,sum(zccountl) zccountl,sum(gzcountl) gzcountl,sum(gzcountr) gzcountr,sum(yjcountl) yjcountl,sum(bjcountl) bjcountl, sum(TTime) TTime,sum(bjcountr) bjcountr from (
+
+        SELECT 0 zccountr,count(*) zccountl,0 gzcountl,0 gzcountr,0 yjcountl,0 bjcountl,0 TTime,0 bjcountr FROM real_ly
+        where ErrFlag = 'F'
+
+        union all
+        SELECT count(*) zccountr,0 zccountl,0 gzcountl,0 gzcountr,0 yjcountl,0 bjcountl,0 TTime,0 bjcountr FROM real_resister
+        where ErrFlag = 'F'
+
+        union all
+        SELECT 0 zccountr,0 zccountl,count(*) gzcountl,0 gzcountr,0 yjcountl,0 bjcountl,0 TTime,0 bjcountr FROM real_ly
+        where ErrFlag = 'D'
+
+
+        union all
+        SELECT 0 zccountr,0 zccountl,0 gzcountl,count(*) gzcountr,0 yjcountl,0 bjcountl,0 TTime,0 bjcountr FROM real_resister
+        where ErrFlag = 'D'
+
+
+        union all
+        SELECT 0 zccountr,0 zccountl,0 gzcountl,0 gzcountr,count(*) yjcountl,0 bjcountl,0 TTime,0 bjcountr FROM real_ly
+        where ErrFlag = 'T' and (ErrThunder = '01' or ErrTemp = '01' or ErrLeihua = '01' or ErrLC1 = '01' or ErrLC2 = '01' or ErrLC2 = '01')
+
+        union all
+
+
+        SELECT 0 zccountr,0 zccountl,0 gzcountl,0 gzcountr,0 yjcountl,count(*) bjcountl,0 TTime,0 bjcountr FROM real_ly
+        where ErrFlag = 'T' and (ErrThunder = '10' or ErrTemp = '10' or ErrLeihua = '10' or ErrLC1 = '10' or ErrLC2 = '10'
+        or ErrLC2 = '10' or Switch1 ='1' or Switch2 ='1'  or Switch3 ='1' or Switch4 ='1')
+
+				union all
+
+				        SELECT 0 zccountr,0 zccountl,0 gzcountl,0 gzcountr,0 yjcountl,0 bjcountl,0 TTime,count(*) bjcountr FROM real_resister
+        where ErrFlag = 'T' and ErrR ='1'
+
+        union all
+
+        	SELECT
+	0 zccountr,0 zccountl,0 gzcountl,0 gzcountr,0 yjcountl,0 bjcountl,
+	sum(TTime) TTime,0 bjcountr
+
+    FROM
+        real_ly
+
+
+        )a
 
     </select>
 

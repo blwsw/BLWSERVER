@@ -38,4 +38,5 @@ public interface ISocketDataDao {
   List<Map<String,Object>> getRealHisTJCount(Map<String, Object> param);
 
   Map<String,Object> getRealsHH(Map<String, Object> param);
+    Map<String, Object> getRealsNowData();
 }

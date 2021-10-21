@@ -242,4 +242,18 @@ public class RealServiceImpl implements IRealService {
 
         return new RestResponse<>(i);
     }
+ @GetMapping({ "/new/data" })
+    public RestResponse<List<RealVO>> getNewData() {
+        final Map<String, Object> paramMap = new HashMap<String, Object>();
+        final List<RealVO> realVOList = this.iRealDao.getxjztList(paramMap);
+        if (realVOList != null && realVOList.size() > 0) {
+            String newValues = "";
+            for (final RealVO realVO : realVOList) {
+                newValues = realVO.getErrFlag() + "-" + realVO.getTCurrent() + "-" + realVO.getTTime() + "-" + realVO.getDeterior() + "-" + realVO.getOTemp() + realVO.getLCurrent1() + "-" + realVO.getLCurrent2() + "-" + realVO.getLCurrent3() + realVO.getErrThunder() + "-" + realVO.getErrTemp() + "-" + realVO.getErrLeihua() + realVO.getErrLC1() + "-" + realVO.getErrLC2() + "-" + realVO.getErrLC3() + realVO.getSwitch1() + "-" + realVO.getSwitch2() + realVO.getSwitch3() + realVO.getSwitch4() + "-" + realVO.getErrR() + "-" + realVO.getRVal();
+                this.stringRedisTemplate.opsForValue().set((this.realsKey + realVO.getId()), newValues);
+            }
+            this.stringRedisTemplate.opsForValue().set("realVOList",JsonUtil.writeValueAsString((Object)realVOList));
+        }
+        return (RestResponse<List<RealVO>>)new RestResponse((Object)realVOList);
+    }
 }
